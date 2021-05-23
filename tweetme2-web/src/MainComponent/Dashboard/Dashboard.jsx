@@ -10,15 +10,7 @@ import Footer from '../../Common/footer';
 import './Dashboard.css';
 
 export default function Dashboard(props) {
-    const [newTweets, setNewTweets] = useState([{
-        id: 1,
-        content: "My first tweet",
-        user: {
-            first_name: "Gagan",
-            last_name: "Parmar",
-            username: "shanu123"
-        }
-    }])
+    const [newTweets, setNewTweets] = useState([])
     // const { Content, Footer } = Layout;
     const { Meta } = Card;
     const navOption = {
