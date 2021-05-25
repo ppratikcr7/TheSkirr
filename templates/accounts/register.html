@@ -1,55 +1,13 @@
 {% extends "base.html" %}
 
-{% load crispy_forms_tags %}
-
 {% block content %}
-
-<!-- <div class='col-12 col-md-4 mx-auto'> -->
-     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-    <div class="mb-4">
-      <label class="block text-grey-darker text-sm font-bold mb-2" for="{{ form.username.id_for_label }}">
-        User Name
-      </label>
-      {{ form.username }}
-      <!-- <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="Username"> -->
-    </div>
-    <div class="mb-6">
-      <label class="block text-grey-darker text-sm font-bold mb-2" for="{{ form.password.id_for_label }}">
-        Password
-      </label>
-      {{ form.password1 }}
-        {{ form.password.errors }}
-      <!-- <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="******************"> -->
-      <!-- <p class="text-red text-xs italic">Please choose a password.</p> -->
-    </div>
-     <div class="mb-6">
-      <label class="block text-grey-darker text-sm font-bold mb-2" for="{{ form.password.id_for_label }}">
-        Confirm Password
-      </label>
-      {{ form.password2 }}
-        {{ form.password.errors }}
-      <!-- <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="******************"> -->
-      <!-- <p class="text-red text-xs italic">Please choose a password.</p> -->
-    </div>
-    <div class="flex items-center justify-between">
-        <button type='submit' class='btn btn-primary'>{% if btn_label %}
-        {{btn_label}} {% else %}Save{% endif %}</button>
-      <!-- <button class="bg-red hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" type="button">
-        Sign In
-      </button> -->
-      <a class="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#">
-        Forgot Password?
-      </a>
-    </div>
-</div>
-     <!-- <h1 class="mt-2">{{ title }}</h1>
-    <hr class="mt-0 mb-4"> -->
-    <!-- {% if description %}
+<div class='col-12 col-md-4 mx-auto'>
+        <h1 class="mt-2" style="text-align: center;">{{ title }}</h1>
+    <hr class="mt-0 mb-4">
+    {% if description %}
     <p>{{ description }} </p>
     {% endif %}
-    {% include "components/form.html" with form=form btn_label=btn_label %} -->
-<!-- </div>
-</div>
-</div> -->
+    {% include "components/RegisterForm.html" with form=form btn_label=btn_label %}
+    </div>
 
 {% endblock content %}
