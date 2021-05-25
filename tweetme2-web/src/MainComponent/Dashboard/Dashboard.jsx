@@ -10,15 +10,7 @@ import Footer from '../../Common/footer';
 import './Dashboard.css';
 
 export default function Dashboard(props) {
-    const [newTweets, setNewTweets] = useState([{
-        id: 1,
-        content: "My first tweet",
-        user: {
-            first_name: "Gagan",
-            last_name: "Parmar",
-            username: "shanu123"
-        }
-    }])
+    const [newTweets, setNewTweets] = useState([])
     // const { Content, Footer } = Layout;
     const { Meta } = Card;
     const navOption = {
@@ -44,19 +36,19 @@ export default function Dashboard(props) {
                         <ul class="list-reset flex">
                             <li class="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
                                 <a href="#" class="text-grey-darker no-underline hover:no-underline">
-                                    <div class="text-sm font-bold tracking-tight mb-1">Tweets</div>
+                                    <div class="text-sm font-bold tracking-tight mb-1">Clacks</div>
                                     <div class="text-lg tracking-tight font-bold text-teal">1</div>
                                 </a>
                             </li>
                             <li class="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
                                 <a href="#" class="text-grey-darker no-underline hover:no-underline">
-                                    <div class="text-sm font-bold tracking-tight mb-1">Following</div>
+                                    <div class="text-sm font-bold tracking-tight mb-1">Fans</div>
                                     <div class="text-lg tracking-tight font-bold hover:text-teal">0</div>
                                 </a>
                             </li>
                             <li class="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
                                 <a href="#" class="text-grey-darker no-underline hover:no-underline">
-                                    <div class="text-sm font-bold tracking-tight mb-1">Followers</div>
+                                    <div class="text-sm font-bold tracking-tight mb-1">Companion</div>
                                     <div class="text-lg tracking-tight font-bold hover:text-teal">0</div>
                                 </a>
                             </li>
@@ -84,11 +76,11 @@ export default function Dashboard(props) {
 
             <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                 <div class="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-                    <h1><a href="#" class="text-black font-bold no-underline hover:underline">Gagan Parmar</a></h1>
-                    <div class="mb-4"><a href="#" class="text-grey-darker no-underline hover:underline">@gagan123</a></div>
+                    <h1><a href="#" class="text-black font-bold no-underline hover:underline">First name</a></h1>
+                    <div class="mb-4"><a href="#" class="text-grey-darker no-underline hover:underline">@username</a></div>
 
-                    <div class="mb-2"><i class="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">my-blog.com</a></div>
-                    <div class="mb-4"><i class="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">Joined May 2021</a></div>
+                    <div class="mb-2"><i class="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">email@gmail.com</a></div>
+                    <div class="mb-4"><i class="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">Joined 25 May 2021</a></div>
 
                     <div class="mb-4">
                         <button class="bg-teal hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Tweet to Tailwind CSS</button>
@@ -165,24 +157,6 @@ export default function Dashboard(props) {
                 </div>
             </div>
             <Footer />
-            {/* <Footer style={{ textAlign: 'center' }}>
-                <Space size={3}>
-                    <Button type="link">About</Button>
-                    <Button type="link">Help Center</Button>
-                    <Button type="link">Terms Of Service</Button>
-                    <Button type="link">Privacy Policy</Button>
-                    <Button type="link">Cookie Policy</Button>
-                    <Button type="link">Ads info</Button>
-                    <Button type="link">Blog</Button>
-                    <Button type="link">Status</Button>
-                    <Button type="link">Careers</Button>
-                    <Button type="link">Brand Resources</Button>
-                    <Button type="link">Advertising</Button>
-                    <Button type="link">Marketing</Button>
-                </Space>
-                <Typography>Covid Blog ©2021 Created by NSAII</Typography>
-            </Footer> */}
-
         </>
     )
 }

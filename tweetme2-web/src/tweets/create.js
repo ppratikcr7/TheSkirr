@@ -8,9 +8,10 @@ export function TweetCreate(props){
     const handleBackendUpdate = (response, status) =>{
       if (status === 201){
         didTweet(response)
-      } else {
+      } 
+      else {
         console.log(response)
-        alert("An error occured please try again")
+        // alert("An error occured please try again")
       }
     }
 
@@ -23,10 +24,10 @@ export function TweetCreate(props){
     }
     return <div className={props.className}>
           <form onSubmit={handleSubmit}>
-            <textarea ref={textAreaRef} required={true} className='form-control' name='tweet'>
+            <textarea ref={textAreaRef} required={true} className='form-control' name='tweet' placeholder='Enter Your Clack...'>
 
             </textarea>
-            <button type='submit' className='btn btn-primary my-3'>Tweet</button>
+            <button type='submit' className='btn btn-primary my-3'>Clack</button>
         </form>
   </div>
 }

@@ -14,7 +14,7 @@ this is amazing!!!!
 
 <div class='row text-center d-none'>
     <div class='col'>
-        <h1>Welcome to Tweetme 2</h1>
+        <h1>Welcome to theSkirr</h1>
     </div>
 </div>
 
@@ -24,8 +24,8 @@ this is amazing!!!!
             {% csrf_token %}
             <div class='d-none alert alert-danger' id='tweet-create-form-error'></div>
             <input type='hidden' value='/' name='next' />
-            <textarea required='required' class='form-control' name='content' placeholder='Your tweet...'></textarea>
-            <button type='submit' class='btn btn-primary'>Tweet</button>
+            <textarea required='required' class='form-control' name='content' placeholder='Your Clack...'></textarea>
+            <button type='submit' class='btn btn-primary'>Clack</button>
         </form>
     </div>
 </div>
@@ -176,7 +176,7 @@ function handleTweetActionBtn(tweet_id, currentCount, action) {
 
 function RetweetBtn(tweet) {
     return "<button class='btn btn-outline-success btn-sm' onclick=handleTweetActionBtn(" + 
-    tweet.id + "," + tweet.likes + ",'retweet')>Retweet</button>"
+    tweet.id + "," + tweet.likes + ",'retweet')>ReClack</button>"
 }
 
 
