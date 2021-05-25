@@ -39,7 +39,7 @@ export function Tweet(props) {
 
   return <div class="flex border-b border-solid border-grey-light">
     {isRetweet === true && <div className='mb-2'>
-      <span className='small text-muted'>Retweet via <UserDisplay user={retweeter} /></span>
+      <span className='small text-muted'>ReClack via <UserDisplay user={retweeter} /></span>
     </div>}
     <div class="w-1/8 text-right pl-3 pt-3">
       <div><a href="#"><img src={BlankImage} /></a></div>
@@ -65,7 +65,7 @@ export function Tweet(props) {
         {(actionTweet && hideActions !== true) && <React.Fragment>
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
-          <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Retweet" }} />
+          <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
         </React.Fragment>
         }
         {isDetail === true ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View</button>}
