@@ -20,8 +20,8 @@ from ..serializers import (
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 @api_view(['POST']) # http method the client == POST
-# @authentication_classes([SessionAuthentication])
-# @permission_classes([IsAuthenticated]) 
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated]) 
 # REST API course
 def tweet_create_view(request, *args, **kwargs):
     serializer = TweetCreateSerializer(data=request.data)
@@ -40,7 +40,7 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 @api_view(['DELETE', 'POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def tweet_delete_view(request, tweet_id, *args, **kwargs):
     qs = Tweet.objects.filter(id=tweet_id)
     if not qs.exists():
@@ -53,7 +53,7 @@ def tweet_delete_view(request, tweet_id, *args, **kwargs):
     return Response({"message": "Tweet removed"}, status=200)
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def tweet_action_view(request, *args, **kwargs):
     '''
     id is required.
@@ -97,7 +97,7 @@ def get_paginated_queryset_response(qs, request):
 
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def tweet_feed_view(request, *args, **kwargs):
     user = request.user
     qs = Tweet.objects.feed(user)
