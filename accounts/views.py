@@ -51,9 +51,10 @@ def register_view(request, *args, **kwargs):
         ins = UserRegisterDetails(username=username,user_FirstName=user_FirstName,user_LasttName=user_LasttName,phone_number=phone_number, email_id=email_id,dob=dob,password1=password1, password2=password2,gender=gender)
         ins.save()
         print("result:",ins)
-        # user.set_password(form.cleaned_data.get("password1"))
+        user = form.save(commit=True)
+        user.set_password(form.cleaned_data.get("password1"))
         # send a confirmation email to verify their account
-        # login(request, user)
+        login(request, user)
         return redirect("/")
     context = {
         "form": form,
