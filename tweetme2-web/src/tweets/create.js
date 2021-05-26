@@ -8,9 +8,10 @@ export function TweetCreate(props){
     const handleBackendUpdate = (response, status) =>{
       if (status === 201){
         didTweet(response)
-      } else {
+      } 
+      else {
         console.log(response)
-        alert("An error occured please try again")
+        // alert("An error occured please try again")
       }
     }
 

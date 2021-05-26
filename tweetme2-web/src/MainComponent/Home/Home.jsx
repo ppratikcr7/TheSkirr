@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Button, Row, Col, Card, Avatar, Typography, Space } from 'antd';
 import 'antd/dist/antd.css';
-
+import Footer from '../../Common/footer';
 // Add component
 import Home_image from "../../Assets/banner.jpeg";
 import card1 from "../../Assets/card1.png";
@@ -32,23 +32,23 @@ export default class Home extends React.PureComponent {
 
     }
     render() {
-        const { Content, Footer } = Layout;
+        const { Content } = Layout;
         const { Meta } = Card;
         return (
             <>
                 <Layout>
                     <WrapperHome>
-                        <Content className="site-layout" style={{ padding: '0 50px' }}>
+                        <Content className="site-layout" style={{ padding: '0 0px' }}>
                             {/* marginTop: 104 */}
                             <div className="site-layout-background">
                                 <br />
                                 {!this.state.isClicked ?
-                                    <Row className="home-content">
-                                        <Col span={12} >
+                                    <Row className="home-content" type="flex">
+                                        <Col span={14} >
                                             <img src={Home_image} alt="" width="100%" height="100%" />
                                         </Col>
-                                        <Col span={12} >
-                                            <div style={{ marginTop: 100, lineHeight: "38px", textAlign: "center", width: "90%" }}>
+                                        <Col span={10} >
+                                            <div style={{ marginTop: 200, lineHeight: "38px", textAlign: "center", width: "90%" }}>
                                                 <p style={{ fontSize: "46px", justifyContent: "right" }}><b>Happening Now</b></p>
                                                 <p style={{ fontSize: "20px", justifyContent: "right" }}><b>Join TheSkirr Today</b></p>
                                                 <br />
@@ -82,25 +82,11 @@ export default class Home extends React.PureComponent {
                                     </Row>
                                 }
                             </div>
+                            <Footer />
                         </Content>
+                        
                     </WrapperHome>
-                    <Footer style={{ textAlign: 'center' }}>
-                        <Space size={3}>
-                            <Button type="link">About</Button>
-                            <Button type="link">Help Center</Button>
-                            <Button type="link">Terms Of Service</Button>
-                            <Button type="link">Privacy Policy</Button>
-                            <Button type="link">Cookie Policy</Button>
-                            <Button type="link">Ads info</Button>
-                            <Button type="link">Blog</Button>
-                            <Button type="link">Status</Button>
-                            <Button type="link">Careers</Button>
-                            <Button type="link">Brand Resources</Button>
-                            <Button type="link">Advertising</Button>
-                            <Button type="link">Marketing</Button>
-                        </Space>
-                        <Typography>Covid Blog ©2021 Created by NSAII</Typography>
-                    </Footer>
+                    
                 </Layout>
             </>
         );
