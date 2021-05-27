@@ -23,7 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
+db.sqlite3
 node_modules/
 # local project items
 parse.py
