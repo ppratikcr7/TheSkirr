@@ -147,7 +147,6 @@ DEFAULT_RENDERER_CLASSES = [
 # DEFAULT_AUTHENTICATION_CLASSES = [
 #         'tweetme2.rest_api.dev.DevAuthentication'
 #     ]
-
 DEFAULT_AUTHENTICATION_CLASSES = [
     'rest_framework.authentication.SessionAuthentication'
 ]
