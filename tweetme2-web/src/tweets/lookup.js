@@ -30,5 +30,5 @@ export function apiTweetList(username, callback, nextUrl) {
     if (nextUrl !== null && nextUrl !== undefined) {
         endpoint = nextUrl.replace("http://localhost:8000/api", "")
     }
-    backendLookup("GET", endpoint, callback)
+    // backendLookup("GET", endpoint, callback)
 }
