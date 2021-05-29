@@ -37,6 +37,7 @@ def logout_view(request, *args, **kwargs):
 
 
 def register_view(request, *args, **kwargs):
+    print("reqest:",request.GET.get('user_type'))
     form = SignUpForm(request.POST or None)
     if form.is_valid():
         username = request.POST['username']
@@ -50,7 +51,6 @@ def register_view(request, *args, **kwargs):
         gender = request.POST['gender']
         ins = UserRegisterDetails(username=username,user_FirstName=user_FirstName,user_LasttName=user_LasttName,phone_number=phone_number, email_id=email_id,dob=dob,password1=password1, password2=password2,gender=gender)
         ins.save()
-        print("result:",ins)
         user = form.save(commit=True)
         user.set_password(form.cleaned_data.get("password1"))
         # send a confirmation email to verify their account
@@ -59,6 +59,7 @@ def register_view(request, *args, **kwargs):
     context = {
         "form": form,
         "btn_label": "Register",
-        "title": "Register"
+        "title": "Register",
+        "type":request.GET.get('user_type')
     }
     return render(request, "accounts/register.html", context)

@@ -74,17 +74,17 @@ export default class Home extends React.PureComponent {
                                     <Row className="home-content">
                                         <Col span={24}>
                                             <Row>
-                                                <a href="/register" style={{ textDecoration: "none" }}><EventCard image={card1} title="Governmental User" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.GOVERNMENT)} /></a>
+                                                <a href="/register?user_type=government" style={{ textDecoration: "none" }}><EventCard image={card1} title="Governmental User" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.GOVERNMENT)} /></a>
                                             </Row>
                                             {/* </Col> */}
                                             <Row>
-                                                <a href="/register" style={{ textDecoration: "none" }}><EventCard image={card2} title="Institutional User (Hospitals, Nursing homes or Pharmacies)" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.INSTITUTIONAL)} /></a>
+                                                <a href="/register?user_type=institutional" style={{ textDecoration: "none" }}><EventCard image={card2} title="Institutional User (Hospitals, Nursing homes or Pharmacies)" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.INSTITUTIONAL)} /></a>
                                             </Row>
                                             <Row>
-                                                <a href="/register" style={{ textDecoration: "none" }}><EventCard image={card3} title="Vaccine taken Covid Patient" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.VACCINE)} /></a>
+                                                <a href="/register?user_type=vaccine" style={{ textDecoration: "none" }}><EventCard image={card3} title="Vaccine taken Covid Patient" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.VACCINE)} /></a>
                                             </Row>
                                             <Row>
-                                                <a href="/register" style={{ textDecoration: "none" }}><EventCard image={card4} title="General User (Non-Covid and Non-Vaccinated)" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.GENERAL)} /></a>
+                                                <a href="/register?user_type=general" style={{ textDecoration: "none" }}><EventCard image={card4} title="General User (Non-Covid and Non-Vaccinated)" desc="good work" myOnClick={() => this.myClickHandler(USER_TYPES.GENERAL)} /></a>
                                             </Row>
                                         </Col>
                                     </Row>
@@ -92,9 +92,9 @@ export default class Home extends React.PureComponent {
                             </div>
                             <Footer />
                         </Content>
-                        
+
                     </WrapperHome>
-                    
+
                 </Layout>
             </>
         );
