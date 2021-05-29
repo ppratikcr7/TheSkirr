@@ -43,6 +43,7 @@ export default class Home extends React.PureComponent {
                             <div className="site-layout-background">
                                 <br />
                                 {!this.state.isClicked ?
+                                <>
                                     <Row className="home-content" type="flex">
                                         <Col span={14} >
                                             <img src={Home_image} alt="" width="100%" height="100%" />
@@ -62,6 +63,13 @@ export default class Home extends React.PureComponent {
                                         </Col>
 
                                     </Row>
+                                    <Row span={14} >
+                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>Submit Research</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI NGO</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI Healthcare Worker</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>Covid Research</Button>
+                                    </Row>  
+                                </>
                                     :
                                     <Row className="home-content">
                                         <Col span={24}>

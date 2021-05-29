@@ -48,9 +48,11 @@ export function Tweet(props) {
       <div class="flex justify-between">
         <div>
           <UserDisplay includeFullName user={tweet.user} />
-          <span class="text-grey-dark">&middot;</span>
+          {/* use the below for color encoding */}
+          {/* <span class="text-grey-dark">&middot;</span> */}
         </div>
         <div>
+          {/* use this to populate delete clack option */}
           <a href="#" class="text-grey-dark hover:text-teal"><i class="fa fa-chevron-down"></i></a>
         </div>
       </div>
@@ -68,7 +70,8 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
         </React.Fragment>
         }
-        {isDetail === true ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View</button>}
+        {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View Clack Thread</button>}
+        {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View Clack</button>}
         {/* <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-red"><i class="fa fa-thumbs-up"></i> 0</a></span>
         <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-thumbs-down"></i> 0</a></span>
         <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span> */}

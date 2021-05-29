@@ -64,7 +64,7 @@ export function TweetsList(props) {
         className='my-5 py-5 border bg-white text-dark' 
         key={`${index}-{item.id}`} />
     })}
-    {nextUrl !== null && <button onClick={handleLoadNext} className='btn btn-outline-primary'>Load next</button>}
+    {nextUrl !== null && <button onClick={handleLoadNext} className='btn btn-outline-primary'>More</button>}
     </React.Fragment>
   }
 
