@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<!-- {% block content %}
+  <p>Please confirm your email address to complete the registration. </p>
+{% endblock %} -->

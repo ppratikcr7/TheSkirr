@@ -32,6 +32,7 @@ LOGIN_URL = "/login"
 MAX_TWEET_LENGTH = 140
 TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 # Application definition
 
 INSTALLED_APPS = [
@@ -95,6 +96,13 @@ DATABASES = {
     }
 }
 
+# Mail verification
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'editor.aspire@gmail.com'
+EMAIL_HOST_PASSWORD = 'login&aspire'
+EMAIL_PORT = 587
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

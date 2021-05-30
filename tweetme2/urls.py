@@ -20,6 +20,7 @@ from django.urls import path, re_path, include # url()
 from django.views.generic import TemplateView
 
 from accounts.views import (
+    activate,
     login_view,
     logout_view,
     register_view,
@@ -42,6 +43,7 @@ urlpatterns = [
     re_path(r'profiles?/', include('profiles.urls')),
     path('api/tweets/', include('tweets.api.urls')),
     re_path(r'api/profiles?/', include('profiles.api.urls')),
+    path(r'', include('accounts.urls')),
 ]
 
 if settings.DEBUG:

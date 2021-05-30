@@ -68,7 +68,7 @@ export default class Home extends React.PureComponent {
                                         <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI NGO</Button>
                                         <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI Healthcare Worker</Button>
                                         <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>Covid Research</Button>
-                                    </Row>  
+                                    </Row>
                                 </>
                                     :
                                     <Row className="home-content">

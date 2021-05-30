@@ -73,7 +73,7 @@ export default function Dashboard(props) {
                     </div>
                 </div>
             </div>
-
+            
             <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                 <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
                     <h1><a href="#" className="text-black font-bold no-underline hover:underline">First name</a></h1>
@@ -83,7 +83,22 @@ export default function Dashboard(props) {
                     <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined 25 May 2021</a></div>
 
                     <div className="mb-4">
-                        <button className="bg-teal hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Tweet to Tailwind CSS</button>
+                        <button href="http://localhost:8000/profile/gp30" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Wall</button>
+                    </div>
+                    <div className="mb-4">
+                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Dashboard</button>
+                    </div>
+                    <div className="mb-4">
+                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Trending Exclamations!</button>
+                    </div>
+                    <div className="mb-4">
+                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Messages</button>
+                    </div>
+                    <div className="mb-4">
+                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Who to Follow</button>
+                    </div>
+                    <div className="mb-4">
+                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Clack Now</button>
                     </div>
                 </div>
 
