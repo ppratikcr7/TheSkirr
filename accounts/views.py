@@ -44,6 +44,7 @@ def logout_view(request, *args, **kwargs):
 
 
 def register_view(request, *args, **kwargs):
+    print("reqest:",request.GET.get('user_type'))
     form = SignUpForm(request.POST or None)
     if form.is_valid():
         username = request.POST['username']
@@ -83,7 +84,8 @@ def register_view(request, *args, **kwargs):
     context = {
         "form": form,
         "btn_label": "Register",
-        "title": "Register"
+        "title": "Register",
+        "type":request.GET.get('user_type')
     }
     return render(request, "accounts/register.html", context)
 
