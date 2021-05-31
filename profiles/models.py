@@ -11,6 +11,7 @@ class FollowerRelation(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_FirstName = models.CharField(User,max_length=220, null=True, blank=True)
     location = models.CharField(max_length=220, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -22,6 +23,7 @@ class Profile(models.Model):
     user.following.all() -> All user profiles I follow
     """
 def user_did_save(sender, instance, created, *args, **kwargs):
+    print("instance:",instance)
     if created:
         Profile.objects.get_or_create(user=instance)
 

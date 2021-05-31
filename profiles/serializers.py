@@ -5,6 +5,8 @@ from .models import Profile
 class PublicProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
+    email = serializers.SerializerMethodField(read_only=True)
+    date_joined = serializers.SerializerMethodField(read_only=True)
     is_following = serializers.SerializerMethodField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
     follower_count = serializers.SerializerMethodField(read_only=True)
@@ -14,6 +16,8 @@ class PublicProfileSerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "email",
+            "date_joined",
             "id",
             "bio",
             "location",

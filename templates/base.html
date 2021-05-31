@@ -26,5 +26,12 @@
     <!-- </div> -->
     {% include 'react/base_embed.html' %}
     {% include 'react/js.html' %}
+    <script>
+      var ele = document.getElementById('username').value;
+      console.log("ele:",ele);
+      if(ele) {
+        localStorage.setItem('UserName',ele);
+      }
+    </script>
   </body>
 </html>

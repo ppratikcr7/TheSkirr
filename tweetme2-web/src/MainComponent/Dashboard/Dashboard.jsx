@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Layout, Button, Row, Col, Card, Avatar, Typography, Space } from 'antd';
 import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
-// import { Tweet } from './detail'
-// import { apiTweetDetail } from './lookup'
-// import { FeedList } from './feed'
+import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
 import Footer from '../../Common/footer';
 import './Dashboard.css';
@@ -21,6 +19,7 @@ export default function Dashboard(props) {
             }
         }
     ])
+    let [newProfile, setNewProfile] = useState();
     // const { Content, Footer } = Layout;
     const { Meta } = Card;
     const navOption = {
@@ -35,6 +34,20 @@ export default function Dashboard(props) {
         tempNewTweets.unshift(newTweet)
         setNewTweets(tempNewTweets)
     }
+    const handleNewProfile = (newProfile) => {
+        let tempNewProfile = [...newTweets]
+        tempNewProfile.unshift(newProfile)
+        console.log("newProfile:", newProfile);
+        setNewProfile(tempNewProfile)
+    }
+    useEffect(() => {
+        try {
+            let endpoint = "/profiles/gagan"
+            backendLookup("GET", endpoint, handleNewProfile)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }, [])
     return (
         <>
             <div className="bg-white shadow">
@@ -86,11 +99,11 @@ export default function Dashboard(props) {
 
             <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                 <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-                    <h1><a href="#" className="text-black font-bold no-underline hover:underline">First name</a></h1>
-                    <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">@username</a></div>
+                    <h1><a href="#" className="text-black font-bold no-underline hover:underline">{newProfile ? newProfile.first_name : "First Name"}</a></h1>
+                    <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">{newProfile ? newProfile.username : "@test1"}</a></div>
 
-                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">email@gmail.com</a></div>
-                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined 25 May 2021</a></div>
+                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : "email@gmail.com"}</a></div>
+                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.createdAt : "Joined 25 May 2021"}</a></div>
 
                     <div className="mb-4">
                         <button className="bg-teal hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Tweet to Tailwind CSS</button>

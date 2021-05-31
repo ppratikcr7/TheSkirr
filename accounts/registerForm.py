@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import UserRegisterDetails
 
 
 GENDER_CHOICES = (
@@ -8,6 +9,7 @@ GENDER_CHOICES = (
         ('F', 'Female'),
         ('D', 'Decline to answer'),
     )
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 class SignUpForm(UserCreationForm):
@@ -37,9 +39,8 @@ class SignUpForm(UserCreationForm):
             'class': 'form-control',
             'placeholder': 'Confirm Password',
             'id': 'password2',
-        }))
-    
-
+        }
+        ))
 
     class Meta:
         model = User

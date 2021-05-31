@@ -22,7 +22,6 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['location', 'bio']
 
-
 class ProfileBasicForm(forms.Form):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
