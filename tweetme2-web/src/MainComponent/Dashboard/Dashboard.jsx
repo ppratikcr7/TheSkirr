@@ -10,17 +10,7 @@ import Footer from '../../Common/footer';
 import './Dashboard.css';
 
 export default function Dashboard(props) {
-    const [newTweets, setNewTweets] = useState([
-        {
-            id: 1,
-            content: "My first tweet",
-            user: {
-                first_name: "Gagan",
-                last_name: "Parmar",
-                username: "shanu123"
-            }
-        }
-    ])
+    const [newTweets, setNewTweets] = useState([])
     // const { Content, Footer } = Layout;
     const { Meta } = Card;
     const navOption = {
@@ -70,15 +60,25 @@ export default function Dashboard(props) {
                             </li>
                             <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
                                 <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                    <div className="text-sm font-bold tracking-tight mb-1">Moments</div>
+                                    <div className="text-sm font-bold tracking-tight mb-1">Moments       </div>
                                     <div className="text-lg tracking-tight font-bold hover:text-teal">0</div>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div className="w-full lg:w-1/4 flex my-4 lg:my-0 lg:justify-end items-center">
-                        <div className="mr-6">
-                            <button className="bg-teal hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full">Following</button>
+                    <div className="w-full lg:w-1/4 flex lg:my-0 lg:justify-end items-center">
+                        <svg version="1.1" class="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
+                                        <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
+                                        c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
+                                        C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
+                                        S32.459,40,21.983,40z"/></svg>
+                        <div className="searchbox">
+                        <div className="relative ml-2">
+                            <input type="search" className="bg-purple-white shadow rounded border-0 p-3" placeholder="Search"/>
+                                <div className="absolute pin-r pin-t text-purple-lighter">
+                                    
+                                </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -92,8 +92,8 @@ export default function Dashboard(props) {
                     <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">email@gmail.com</a></div>
                     <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined 25 May 2021</a></div>
 
-                    <div className="mb-4">
-                        <button href="http://localhost:8000/profile/gp30" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Wall</button>
+                    {/* <div className="mb-4">
+                        <button href="/profiles?username=gp33" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Wall</button>
                     </div>
                     <div className="mb-4">
                         <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Dashboard</button>
@@ -109,7 +109,24 @@ export default function Dashboard(props) {
                     </div>
                     <div className="mb-4">
                         <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Clack Now</button>
-                    </div>
+                    </div> */}
+                    <Col span={7} >
+                        <Button type={'primary'} style={{ width: 230, margin:5 }} onClick={() => { this.props.history.push("/profiles?username=gp33") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/profiles/gp33" style={{ textDecoration: "none" }}>My wall</a>
+                        </Button>
+                        <Button type={'primary'} style={{ width: 230, margin:5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/dashboard" style={{ textDecoration: "none" }}>My Dashboard</a>
+                        </Button>
+                        <Button type={'primary'} style={{ width: 230, margin:5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/dashboard" style={{ textDecoration: "none" }}>Trending Exclamations!</a>
+                        </Button>
+                        <Button type={'primary'} style={{ width: 230, margin:5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/dashboard" style={{ textDecoration: "none" }}>Who to Follow</a>
+                        </Button>
+                        <Button type={'primary'} style={{ width: 230, margin:5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/dashboard" style={{ textDecoration: "none" }}>Clack Now</a>
+                        </Button>
+                    </Col>
                 </div>
 
                 <div className="w-full lg:w-1/2 bg-white mb-4">
