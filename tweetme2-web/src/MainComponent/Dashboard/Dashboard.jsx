@@ -9,15 +9,6 @@ import './Dashboard.css';
 
 export default function Dashboard(props) {
     const [newTweets, setNewTweets] = useState([
-        {
-            id: 1,
-            content: "My first tweet",
-            user: {
-                first_name: "Gagan",
-                last_name: "Parmar",
-                username: "shanu123"
-            }
-        }
     ])
     let [newProfile, setNewProfile] = useState();
     // const { Content, Footer } = Layout;

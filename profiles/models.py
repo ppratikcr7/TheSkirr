@@ -5,13 +5,13 @@ from django.db.models.signals import post_save
 User = settings.AUTH_USER_MODEL
 
 class FollowerRelation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_FirstName = models.CharField(User,max_length=220, null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True, blank=True)
+    first_name = models.CharField(User,max_length=220, null=True, blank=True)
     location = models.CharField(max_length=220, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)

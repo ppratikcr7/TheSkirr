@@ -51,3 +51,9 @@ class PublicProfileSerializer(serializers.ModelSerializer):
     
     def get_follower_count(self, obj):
         return obj.followers.count()
+
+    def get_email(self, obj):
+        return obj.user.email
+
+    def get_date_joined(self, obj):
+        return obj.user.date_joined
