@@ -49,9 +49,9 @@ export default class Home extends React.PureComponent {
                                             <img src={Home_image} alt="" width="100%" height="100%" />
                                         </Col>
                                         <Col span={10} >
-                                            <div style={{ marginTop: 200, lineHeight: "38px", textAlign: "center", width: "90%" }}>
-                                                <p style={{ fontSize: "46px", justifyContent: "right" }}><b>Happening Now</b></p>
-                                                <p style={{ fontSize: "20px", justifyContent: "right" }}><b>Join TheSkirr Today</b></p>
+                                            <div style={{ marginTop: 130, lineHeight: "38px", textAlign: "center", width: "100%" }}>
+                                                <p style={{ fontSize: "30px", justifyContent: "right" }}><b>“When walking alone in a jungle of true darkness, there are three things that can show you the way: instinct to survive, the knowledge of navigation, creative imagination. Without them, you are lost.”</b></p>
+                                                <p style={{ fontSize: "18px", justifyContent: "right" }}><b>-Tobo Beta</b></p>
                                                 <br />
                                                 <Button style={{ marginBottom: 10, width: 400 }} onClick={() => this.setState({ isClicked: true })} shape="round" size={'large'} block type="primary" htmlType="submit" className="login-form-button button-container">
                                                     Sign Up
@@ -68,7 +68,7 @@ export default class Home extends React.PureComponent {
                                         <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI NGO</Button>
                                         <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI Healthcare Worker</Button>
                                         <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>Covid Research</Button>
-                                    </Row>  
+                                    </Row>
                                 </>
                                     :
                                     <Row className="home-content">

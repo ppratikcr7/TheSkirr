@@ -20,7 +20,7 @@ export default class Footer extends React.PureComponent {
                         <Button type="link">Advertising</Button>
                         <Button type="link">Feedback</Button>
                     </Space>
-                    <Typography>Covid Blog ©2021 Created by NSAII</Typography>
+                    {/* <Typography>Covid Blog ©2021 Created by NSAII</Typography> */}
                 </Footer>
             </>
         );

@@ -56,6 +56,8 @@ export default class Header extends React.PureComponent {
                     <button className="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" >
                         <span className="navbar-toggler-icon my-toggler"></span>
                     </button>
+                        {/* <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> */}
+                        {/* <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> */}
                     <CollapseDivStyled className="collapse navbar-collapse" id="navbarCollapse">
                         <ul className="navbar-nav ml-auto menu">
                             <li className="nav-item active">

@@ -1,9 +1,16 @@
+from django.core.mail.message import EmailMessage
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout
 from .registerForm import SignUpForm
 from .loginForm import UserLoginForm
 from .models import UserRegisterDetails
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 
@@ -53,11 +60,29 @@ def register_view(request, *args, **kwargs):
         gender = request.POST['gender']
         ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name,phone_number=phone_number, email_id=email_id,dob=dob,password1=password1, password2=password2,gender=gender)
         ins.save()
-        user = form.save(commit=True)
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
         user.set_password(form.cleaned_data.get("password1"))
+        current_site = get_current_site(request)
+        mail_subject = 'Activate your skirr account.'
+        message = render_to_string('acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+        })
+        to_email = form.cleaned_data.get('email_id')
+
+        email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+        )
+        email.send()
+        
         # send a confirmation email to verify their account
+        messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
         login(request, user)
-        return redirect("/")
+        return redirect("/register")
     context = {
         "form": form,
         "btn_label": "Register",
@@ -65,3 +90,20 @@ def register_view(request, *args, **kwargs):
         "type":request.GET.get('user_type')
     }
     return render(request, "accounts/register.html", context)
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        login(request, user)
+        return redirect('/login')
+    else:
+        messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+        login(request, user)
+        return redirect('/login')
