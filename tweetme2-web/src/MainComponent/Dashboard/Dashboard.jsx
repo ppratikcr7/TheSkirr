@@ -8,6 +8,8 @@ import { TweetCreate } from '../../tweets/create';
 import { TweetsList } from '../../tweets/list';
 import Footer from '../../Common/footer';
 import './Dashboard.css';
+import NSAII_logo from '../../Assets/nsaii_logo.png';
+import formatDate from './date';
 
 export default function Dashboard(props) {
     const [newTweets, setNewTweets] = useState([])
@@ -25,14 +27,20 @@ export default function Dashboard(props) {
         tempNewTweets.unshift(newTweet)
         setNewTweets(tempNewTweets)
     }
+
+    var date = new Date();
+    date.toISOString();
+    var cleanDate = formatDate(date)
+    console.log("clean date: ", cleanDate);
+
     return (
         <>
             <div className="bg-white shadow">
                 {/* style={{ marginTop: 104 }} */}
                 <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
-                    <div className="w-full lg:w-1/4">
+                    <div className="w-full lg:w-1/5">
                     </div>
-                    <div className="w-full lg:w-1/2">
+                    <div className="w-full lg:w-3/5">
                         <ul className="list-reset flex">
                             <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
                                 <a href="#" className="text-grey-darker no-underline hover:no-underline">
@@ -66,7 +74,7 @@ export default function Dashboard(props) {
                             </li>
                         </ul>
                     </div>
-                    <div className="w-full lg:w-1/4 flex lg:my-0 lg:justify-end items-center">
+                    <div className="w-full lg:w-1/5 flex lg:my-0 lg:justify-end items-center">
                         <svg version="1.1" class="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
                                         <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
                                         c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
@@ -85,31 +93,12 @@ export default function Dashboard(props) {
             </div>
             
             <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-                <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-                    <h1><a href="#" className="text-black font-bold no-underline hover:underline">First name</a></h1>
-                    <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">@username</a></div>
+                <div className="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
+                    <h1><a href="#" className="text-black font-bold no-underline hover:underline">Pratik Prajapati</a></h1>
+                    <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">@gp33</a></div>
 
-                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">email@gmail.com</a></div>
-                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined 25 May 2021</a></div>
-
-                    {/* <div className="mb-4">
-                        <button href="/profiles?username=gp33" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Wall</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Dashboard</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Trending Exclamations!</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Messages</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Who to Follow</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Clack Now</button>
-                    </div> */}
+                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
+                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined {cleanDate}</a></div>
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 230, margin:5 }} onClick={() => { this.props.history.push("/profiles?username=gp33") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href="/profiles/gp33" style={{ textDecoration: "none" }}>My wall</a>
@@ -129,7 +118,7 @@ export default function Dashboard(props) {
                     </Col>
                 </div>
 
-                <div className="w-full lg:w-1/2 bg-white mb-4">
+                <div className="w-full lg:w-3/5 bg-white mb-4">
                     <div className="flex justify-between mb-1">
                         <div>
                             <span className="text-lg font-bold">&emsp;&emsp;Home</span>
@@ -141,7 +130,7 @@ export default function Dashboard(props) {
                     <TweetsList newTweets={newTweets} {...props} />
                 </div>
 
-                <div className="w-full lg:w-1/4 pl-4">
+                <div className="w-full lg:w-1/5 pl-4">
                     <div className="bg-white p-3 mb-3">
                         <div>
                             <span className="text-lg font-bold">Who to follow</span>
@@ -189,7 +178,7 @@ export default function Dashboard(props) {
                             <div className="pl-2 py-2 w-full">
                                 <div className="flex justify-between mb-1">
                                     <div>
-                                        <a href="#" className="font-bold text-black">Pratik</a> <a href="#" className="text-grey-dark">@ppratikcr7</a>
+                                        <a href="#" className="font-bold text-black">Ketul</a> <a href="#" className="text-grey-dark">@ketulshah</a>
                                     </div>
                                 </div>
                                 <div>

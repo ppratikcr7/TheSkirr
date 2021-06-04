@@ -1,4 +1,7 @@
 static-root/
+/static/css/*
+/static/js/*
+/static/media/*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -156,3 +159,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 db.sqlite3
+db.sqlite3
+static/js/2.2f4dbe94.chunk.js

@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 LOGIN_URL = "/login"
 
 MAX_TWEET_LENGTH = 140
-TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
+TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet", "delete"]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 # Application definition
@@ -127,7 +127,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE =  'Asia/Kolkata'
 
 USE_I18N = True
 

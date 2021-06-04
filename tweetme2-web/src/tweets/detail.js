@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react'
-
+import formatDate from './date'
 import { ActionBtn } from './buttons'
 import BlankImage from '../Assets/blank.png';
+import DeleteBtn from '../Assets/delete.png';
 import {
   UserDisplay,
   UserPicture
@@ -21,6 +22,11 @@ export function Tweet(props) {
   const match = path.match(/(?<tweetid>\d+)/)
   const urlTweetId = match ? match.groups.tweetid : -1
   const isDetail = `${tweet.id}` === `${urlTweetId}`
+
+  const tweetTimestampRaw = `${tweet.timestamp}`;
+  const tweetTimestampClean = formatDate(tweetTimestampRaw);
+  console.log(tweetTimestampClean);
+
 
   const handleLink = (event) => {
     event.preventDefault()
@@ -68,13 +74,13 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
           <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
+          <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
+
         </React.Fragment>
         }
         {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View Clack Thread</button>}
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View Clack</button>}
-        {/* <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-red"><i class="fa fa-thumbs-up"></i> 0</a></span>
-        <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-thumbs-down"></i> 0</a></span>
-        <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span> */}
+        <time>&emsp;{tweetTimestampClean}</time>
       </div>
     </div>
   </div>
