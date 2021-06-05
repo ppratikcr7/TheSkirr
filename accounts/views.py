@@ -53,12 +53,12 @@ def register_view(request, *args, **kwargs):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         phone_number = request.POST['phone_number']
-        email_id = request.POST['email_id']
+        email = request.POST['email']
         dob = request.POST['dob']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         gender = request.POST['gender']
-        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name,phone_number=phone_number, email_id=email_id,dob=dob,password1=password1, password2=password2,gender=gender)
+        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name,phone_number=phone_number, email=email,dob=dob,password1=password1, password2=password2,gender=gender)
         ins.save()
         user = form.save(commit=False)
         user.is_active = False
@@ -72,7 +72,7 @@ def register_view(request, *args, **kwargs):
             'uid':urlsafe_base64_encode(force_bytes(user.pk)),
             'token':account_activation_token.make_token(user),
         })
-        to_email = form.cleaned_data.get('email_id')
+        to_email = form.cleaned_data.get('email')
 
         email = EmailMessage(
                     mail_subject, message, to=[to_email]

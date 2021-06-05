@@ -15,7 +15,7 @@ class UserRegisterDetails(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     dob = models.DateField(null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
-    email_id = models.EmailField(max_length=220, null=True, blank=True)
+    email = models.EmailField(max_length=220, null=True, blank=True)
     username = models.CharField(max_length=220, null=True, blank=True)
     password1 = models.CharField(max_length=220, null=True, blank=True)
     password2 = models.CharField(max_length=220, null=True, blank=True)

@@ -25,8 +25,6 @@ export function Tweet(props) {
 
   const tweetTimestampRaw = `${tweet.timestamp}`;
   const tweetTimestampClean = formatDate(tweetTimestampRaw);
-  console.log(tweetTimestampClean);
-
 
   const handleLink = (event) => {
     event.preventDefault()
@@ -74,7 +72,7 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
           <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
-          <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
+          <ActionBtn className={"fa fa-delete fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
 
         </React.Fragment>
         }

@@ -4,8 +4,6 @@ from django.shortcuts import render, redirect
 from .forms import ProfileForm
 from .models import Profile
 
-
-
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
         return redirect("/login?next=/profile/update")
@@ -36,7 +34,7 @@ def profile_update_view(request, *args, **kwargs):
 
 
 
-def profile_detail_view(request, username, *args, **kwargs):
+def profile_view(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = Profile.objects.filter(user__username=username)
     if not qs.exists():

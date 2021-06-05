@@ -19,7 +19,7 @@ class SignUpForm(UserCreationForm):
         attrs={'class': 'form-control', 'placeholder': 'Last Name', 'id': 'username'}))
     phone_number = forms.IntegerField(widget=forms.NumberInput(
         attrs={'class': 'form-control', 'placeholder': 'Phone', 'id': 'username'}))
-    email_id = forms.EmailField(max_length=100,widget=forms.TextInput(
+    email = forms.EmailField(max_length=100,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Email', 'id': 'username'}))
     username = forms.CharField(max_length=100,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'User Name', 'id': 'username'}))
@@ -44,6 +44,6 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username','first_name','last_name','phone_number', 'email_id','dob', 'password1', 'password2','gender' )
+        fields = ('username','first_name','last_name','phone_number', 'email','dob', 'password1', 'password2','gender' )
 
         
