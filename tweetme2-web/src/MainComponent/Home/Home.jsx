@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Button, Row, Col, Card, Avatar, Typography, Space } from 'antd';
 import 'antd/dist/antd.css';
-import Footer from '../../Common/footer';
 // Add component
 import Home_image from "../../Assets/banner.jpeg";
 import card1 from "../../Assets/card1.png";
@@ -90,7 +89,6 @@ export default class Home extends React.PureComponent {
                                     </Row>
                                 }
                             </div>
-                            <Footer />
                         </Content>
 
                     </WrapperHome>

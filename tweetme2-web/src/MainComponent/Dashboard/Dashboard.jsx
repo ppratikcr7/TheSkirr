@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
-import Footer from '../../Common/footer';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
@@ -125,7 +124,7 @@ export default function Dashboard(props) {
 
                     <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
                     <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined {cleanDate}</a></div> */}
-                <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
+                <div className="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
                     <h1><a href="#" className="text-black font-bold no-underline hover:underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>
                     <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">{newProfile ? newProfile.username : "@username"}</a></div>
 
@@ -170,7 +169,7 @@ export default function Dashboard(props) {
                     </Col>
                 </div>
 
-                <div className="w-full lg:w-3/5 bg-white mb-4">
+                <div className="w-full lg:w-3/5 bg-white mb-20">
                     <div className="flex justify-between mb-1">
                         <div>
                             <span className="text-lg font-bold">&emsp;&emsp;Home</span>
@@ -248,7 +247,6 @@ export default function Dashboard(props) {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }
