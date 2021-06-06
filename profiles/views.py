@@ -27,7 +27,7 @@ def profile_update_view(request, *args, **kwargs):
         profile_obj.save()
     context = {
         "form": form,
-        "btn_label": "Save",
+        "btn_label": "Update",
         "title": "Update Profile"
     }
     return render(request, "profiles/form.html", context)
