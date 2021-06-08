@@ -69,6 +69,11 @@ export default function Dashboard(props) {
     //     }
     // }, [])
 
+    function handleTweetList(value) {
+        console.log("sucees call", value);
+        window.location.reload();
+    }
+
     useEffect(() => {
         try {
             let endpoint1 = "/profiles/get_username/";
@@ -172,8 +177,8 @@ export default function Dashboard(props) {
                         <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Clack Now</button>
                     </div> */}
                     <Col span={7} >
-                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push("/profiles?username=test1") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href="/profiles/test1" style={{ textDecoration: "none" }}>My wall</a>
+                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push(`/profiles?username=${newUserName}`) }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href={"/profiles/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href="/dashboard" style={{ textDecoration: "none" }}>My Dashboard</a>
@@ -199,7 +204,7 @@ export default function Dashboard(props) {
                     <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
                     </div>
-                    <TweetsList newTweets={newTweets} {...props} />
+                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
                 </div>
 
                 <div className="w-full lg:w-1/5 pl-4">
