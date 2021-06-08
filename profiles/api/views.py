@@ -46,9 +46,10 @@ def profile_detail_api_view(request, username, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def profile_username(request, *args, **kwargs):
     # get the profile for the passed username
+    print("sajgdasgdh")
     me = request.user
     qs = Profile.objects.filter(user__username=me)
     print(" profile_username success")
@@ -56,7 +57,8 @@ def profile_username(request, *args, **kwargs):
         return Response({"detail": "User not found"}, status=404)
     profile_obj = qs.first()
     serializer = PublicProfileSerializer(profile_obj)
-    return Response( serializer.data.username, status=200)
+    print("serializer:",serializer.data["username"])
+    return Response( serializer.data, status=200)
 
 
 @api_view(['GET'])

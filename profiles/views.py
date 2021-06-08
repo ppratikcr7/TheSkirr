@@ -36,6 +36,7 @@ def profile_update_view(request, *args, **kwargs):
 
 def profile_view(request, username, *args, **kwargs):
     # get the profile for the passed username
+    print("succes:")
     qs = Profile.objects.filter(user__username=username)
     if not qs.exists():
         raise Http404

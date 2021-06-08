@@ -30,7 +30,18 @@ export default function Dashboard(props) {
     const handleNewUsername = (newUserName) => {
         console.log("new user:", newUserName)
         let tempNewUser = newUserName
-        setUserName(tempNewUser)
+        console.log("new user:", tempNewUser.username)
+        setUserName(tempNewUser ? tempNewUser.username : "")
+        getProfile(tempNewUser.username);
+    }
+
+    function getProfile(username) {
+        try {
+            let endpoint = `/profiles/user/${username}/`;
+            backendLookup("GET", endpoint, handleNewProfile)
+        } catch (error) {
+            console.log("error:", error);
+        }
     }
 
     const handleNewProfile = (newProfile) => {
@@ -41,7 +52,7 @@ export default function Dashboard(props) {
     }
 
     // join date update:
-    if(newProfile && newProfile.date_joined){
+    if (newProfile && newProfile.date_joined) {
         var date = newProfile.date_joined;
         var cleanDate = formatDate(date)
     }
@@ -49,15 +60,25 @@ export default function Dashboard(props) {
         var cleanDate = "1 Jan 2021, 12AM";
     }
 
+    // useEffect(() => {
+    //     try {
+    //         let endpoint = "/profiles/chinu123";
+    //         backendLookup("GET", endpoint, handleNewProfile)
+    //     } catch (error) {
+    //         console.log("error:", error);
+    //     }
+    // }, [])
+
     useEffect(() => {
         try {
-            let endpoint = "/profiles/test1"
-            console.log("endpoint: ", endpoint)
-            backendLookup("GET", endpoint, handleNewProfile)
+            let endpoint1 = "/profiles/get_username/";
+            backendLookup("GET", endpoint1, handleNewUsername)
+            console.log("profilename:", newUserName);
         } catch (error) {
             console.log("error:", error);
         }
     }, [])
+
     return (
         <>
             <div className="bg-white shadow">
@@ -129,7 +150,7 @@ export default function Dashboard(props) {
                     <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">{newProfile ? newProfile.username : "@username"}</a></div>
 
                     {/* <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : "email@gmail.com"}</a></div> */}
-                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
+                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : ""}</a></div>
                     <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? cleanDate : "Joined 25 May 2021"}</a></div>
 
                     {/* <div className="mb-4">
