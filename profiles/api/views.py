@@ -49,6 +49,7 @@ def profile_detail_api_view(request, username, *args, **kwargs):
 # @permission_classes([IsAuthenticated])
 def get_username(request, *args, **kwargs):
     # get the profile for the passed username
+    print("user: ", request.user )
     me = request.user
     qs = Profile.objects.filter(user__username=me)
     if not qs.exists():

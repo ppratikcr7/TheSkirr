@@ -223,7 +223,7 @@ export default function Dashboard(props) {
 
                 </div>
 
-                <div className="w-full lg:w-1/5 pl-4">
+                <div className="w-full lg:w-1/5 pl-0">
                     <div className="bg-white p-3 mb-3">
                         <div>
                             <span className="text-lg font-bold p-2">Who to follow</span>
