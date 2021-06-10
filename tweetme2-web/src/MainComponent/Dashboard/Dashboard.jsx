@@ -7,12 +7,18 @@ import { TweetsList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
+import {
+    UserWhoToFollowDisplay
+} from '../../profiles'
 
 export default function Dashboard(props) {
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
-    // const { Content, Footer } = Layout;
+    let [whotofollowProfile1, setProfile1] = useState();
+    let [whotofollowProfile2, setProfile2] = useState();
+    let [whotofollowProfile3, setProfile3] = useState();
+
     const { Meta } = Card;
     const navOption = {
         Home: "Home",
@@ -28,14 +34,36 @@ export default function Dashboard(props) {
         setNewTweets(tempNewTweets)
     }
     const handleNewUsername = (newUserName) => {
-        console.log("new user:", newUserName)
-        let tempNewUser = newUserName
-        console.log("new user:", tempNewUser.username)
-        setUserName(tempNewUser ? tempNewUser.username : "")
-        getProfile(tempNewUser.username);
+        setUserName(newUserName ? newUserName.username : "")
+        console.log("main user: ", newUserName.username)
+        getMainProfile(newUserName.username, handleNewProfile);
+        getProfile1("Gagan123", handleNewProfile1);
+        // console.log("FN1: ", whotofollowProfile1.first_name)
+        getProfile2("Pratik123", handleNewProfile2);
+        // console.log("FN2: ", whotofollowProfile2.first_name)
+        getProfile3("Ketul123", handleNewProfile3);
+        // console.log("FN3: ", whotofollowProfile3.first_name)
     }
 
-    function getProfile(username) {
+    const handleNewProfile = (newProfile) => {
+        setNewProfile(newProfile)
+    }
+
+    // who to follow:
+    const handleNewProfile1 = (whotofollowProfile1) => {
+        setProfile1(whotofollowProfile1)
+    }
+
+    const handleNewProfile2 = (whotofollowProfile2) => {
+        setProfile2(whotofollowProfile2)
+    }
+    const handleNewProfile3 = (whotofollowProfile3) => {
+        setProfile3(whotofollowProfile3)
+    }
+    
+
+    function getMainProfile(username) {
+        // console.log("user main: ", username)
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile)
@@ -44,11 +72,34 @@ export default function Dashboard(props) {
         }
     }
 
-    const handleNewProfile = (newProfile) => {
-        console.log("new profile:", newProfile)
-        let tempNewProfile = newProfile
-        // tempNewProfile.unshift(newProfile)
-        setNewProfile(tempNewProfile)
+    function getProfile1(username) {
+        // console.log("user1: ", username)
+        try {
+            let endpoint = `/profiles/user/${username}/`;
+            backendLookup("GET", endpoint, handleNewProfile1)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getProfile2(username) {
+        // console.log("user2: ", username)
+        try {
+            let endpoint = `/profiles/user/${username}/`;
+            backendLookup("GET", endpoint, handleNewProfile2)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getProfile3(username) {
+        // console.log("user3: ", username)
+        try {
+            let endpoint = `/profiles/user/${username}/`;
+            backendLookup("GET", endpoint, handleNewProfile3)
+        } catch (error) {
+            console.log("error:", error);
+        }
     }
 
     // join date update:
@@ -60,25 +111,15 @@ export default function Dashboard(props) {
         var cleanDate = "1 Jan 2021, 12AM";
     }
 
-    // useEffect(() => {
-    //     try {
-    //         let endpoint = "/profiles/chinu123";
-    //         backendLookup("GET", endpoint, handleNewProfile)
-    //     } catch (error) {
-    //         console.log("error:", error);
-    //     }
-    // }, [])
-
     function handleTweetList(value) {
-        console.log("sucees call", value);
+        console.log("sucess call", value);
         window.location.reload();
     }
 
     useEffect(() => {
         try {
-            let endpoint1 = "/profiles/get_username/";
+            let endpoint1 = "/profiles/get_user/username/";
             backendLookup("GET", endpoint1, handleNewUsername)
-            console.log("profilename:", newUserName);
         } catch (error) {
             console.log("error:", error);
         }
@@ -144,53 +185,26 @@ export default function Dashboard(props) {
             </div>
 
             <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-                {/* <div className="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-                    <h1><a href="#" className="text-black font-bold no-underline hover:underline">Pratik Prajapati</a></h1>
-                    <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">@gp33</a></div>
-
-                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
-                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">Joined {cleanDate}</a></div> */}
                 <div className="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
                     <h1><a href="#" className="text-black font-bold no-underline hover:underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>
                     <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">{newProfile ? newProfile.username : "@username"}</a></div>
-
-                    {/* <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : "email@gmail.com"}</a></div> */}
-                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : ""}</a></div>
-                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? cleanDate : "Joined 25 May 2021"}</a></div>
-
-                    {/* <div className="mb-4">
-                        <button href="/profiles?username=gp33" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Wall</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Dashboard</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Trending Exclamations!</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Messages</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Who to Follow</button>
-                    </div>
-                    <div className="mb-4">
-                        <button href="" className="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Clack Now</button>
-                    </div> */}
+                    <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : "EmailID"}</a></div>
+                    <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? "Joined: " + cleanDate : "Joined: 1 Jan 2021 12AM"}</a></div>
                     <Col span={7} >
-                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push(`/profiles?username=${newUserName}`) }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
+                        <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push(`/profiles/my_wall/?username=${newUserName}`) }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href= {"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
                         </Button>
-                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href="/dashboard" style={{ textDecoration: "none" }}>My Dashboard</a>
+                        <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/" style={{ textDecoration: "none" }}>My Dashboard</a>
                         </Button>
-                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href="/dashboard" style={{ textDecoration: "none" }}>Trending Exclamations!</a>
+                        <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/" style={{ textDecoration: "none" }}>Trending Exclamation</a>
                         </Button>
-                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href="/dashboard" style={{ textDecoration: "none" }}>Who to Follow</a>
+                        <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/" style={{ textDecoration: "none" }}>Who to Follow</a>
                         </Button>
-                        <Button type={'primary'} style={{ width: 230, margin: 5 }} onClick={() => { this.props.history.push("/dashboard") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href="/dashboard" style={{ textDecoration: "none" }}>Clack Now</a>
+                        <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <a href="/" style={{ textDecoration: "none" }}>Clack Now</a>
                         </Button>
                     </Col>
                 </div>
@@ -204,16 +218,32 @@ export default function Dashboard(props) {
                     <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
                     </div>
-                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                    {/* <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} /> */}
+                    <TweetsList newTweets={newTweets} {...props} />
+
                 </div>
 
                 <div className="w-full lg:w-1/5 pl-4">
                     <div className="bg-white p-3 mb-3">
                         <div>
-                            <span className="text-lg font-bold">Who to follow</span>
+                            <span className="text-lg font-bold p-2">Who to follow</span>
                         </div>
-
-                        <div className="flex border-b border-solid border-grey-light">
+                        <div className="p-2">
+                            {(whotofollowProfile1) ? <UserWhoToFollowDisplay includeFullName user={whotofollowProfile1} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <div className="p-2">
+                            {(whotofollowProfile2) ? <UserWhoToFollowDisplay includeFullName user={whotofollowProfile2} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <div className="p-2">
+                            {(whotofollowProfile3) ? <UserWhoToFollowDisplay includeFullName user={whotofollowProfile3} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        {/* <div className="flex border-b border-solid border-grey-light">
                             <div className="py-2">
                                 <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
                             </div>
@@ -226,7 +256,7 @@ export default function Dashboard(props) {
                                 <div>
                                     <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
                                         Follow
-                        </button>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +294,7 @@ export default function Dashboard(props) {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="flex justify-between mb-1">
                             <div>
                                 <a href="#" className="font-bold text-black">Show more</a>

@@ -17,12 +17,9 @@ from django.contrib import messages
 # Function based views to Class Based Views
 
 def login_view(request, *args, **kwargs):
-    print("request:",request.POST)
     form = UserLoginForm(request, data=request.POST or None)
-    print("user1:",form)
     if form.is_valid():
         user_ = form.get_user()
-        print("user2:",user_)
         login(request, user_)
         return redirect("/")
     context = {
@@ -77,12 +74,12 @@ def register_view(request, *args, **kwargs):
         email = EmailMessage(
                     mail_subject, message, to=[to_email]
         )
-        email.send()
-        
         # send a confirmation email to verify their account
         messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
+        email.send()
         login(request, user)
         return redirect("/register")
+    
     context = {
         "form": form,
         "btn_label": "Register",

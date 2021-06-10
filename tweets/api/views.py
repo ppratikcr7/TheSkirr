@@ -99,7 +99,7 @@ def tweet_action_view(request, *args, **kwargs):
             if not qs.exists():
                 return Response({"message": "You cannot delete this tweet"}, status=401)
             obj = qs.first()
-             #  to delete complete tweet
+            #  to delete complete tweet
             # obj.delete()
             # to update tweet text with deleted text
             obj.content = "Tweet Deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
