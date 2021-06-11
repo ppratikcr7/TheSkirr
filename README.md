@@ -1,2 +1,0 @@
-# TheSkirr
-Covig Microblogging website

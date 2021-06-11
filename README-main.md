@@ -1,5 +1,6 @@
 # The Skirr
 Covig Microblogging website
+
 Some helpful things written for the project implementation (Guide):
 
 Steps:
