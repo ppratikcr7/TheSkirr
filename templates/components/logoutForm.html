@@ -1,0 +1,6 @@
+<center>
+<form method='POST'> {% csrf_token %}
+    <button type='submit' class='btn btn-primary' style="margin: 10px; padding:10px">{% if btn_label %}
+        {{btn_label}} {% else %}Save{% endif %}</button>
+</form>
+</center>

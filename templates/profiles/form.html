@@ -4,11 +4,12 @@
 {% block content %}
 
 <div class='col-10 col-md-4 mx-auto'>
-    <h1>{{ title }}</h1>
+    <h1 style="text-align: center; padding: 10px">{{ title }}</h1>
+    <hr class="mt-0 mb-4">
     {% if description %}
-    <p>{{ description }} </p>
+    <p style="text-align: left; padding: 10px">{{ description }} </p>
     {% endif %}
-    {% include "components/form.html" with form=form btn_label=btn_label %}
+    {% include "components/updateProfileForm.html" with form=form btn_label=btn_label %}
 
 </div>
 

@@ -16,6 +16,7 @@ from ..serializers import (
     TweetActionSerializer,
     TweetCreateSerializer
 )
+import datetime
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
@@ -29,6 +30,7 @@ def tweet_create_view(request, *args, **kwargs):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
+
 
 @api_view(['GET'])
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
@@ -49,7 +51,11 @@ def tweet_delete_view(request, tweet_id, *args, **kwargs):
     if not qs.exists():
         return Response({"message": "You cannot delete this tweet"}, status=401)
     obj = qs.first()
-    obj.delete()
+    #  to delete complete tweet
+    # obj.delete()
+    # to update tweet text with deleted text
+    print("tweet deleted: ", obj)
+    obj.content = "Tweet Deleted on " + datetime.now()
     return Response({"message": "Tweet removed"}, status=200)
 
 @api_view(['POST'])
@@ -85,12 +91,27 @@ def tweet_action_view(request, *args, **kwargs):
                     )
             serializer = TweetSerializer(new_tweet)
             return Response(serializer.data, status=201)
+        elif action == "delete":
+            qs = Tweet.objects.filter(id=tweet_id)
+            if not qs.exists():
+                return Response({}, status=404)
+            qs = qs.filter(user=request.user)
+            if not qs.exists():
+                return Response({"message": "You cannot delete this tweet"}, status=401)
+            obj = qs.first()
+            #  to delete complete tweet
+            # obj.delete()
+            # to update tweet text with deleted text
+            obj.content = "Tweet Deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
+            obj.save()
+            return Response(serializer.data, status=200)
     return Response({}, status=200)
 
 
 def get_paginated_queryset_response(qs, request):
     paginator = PageNumberPagination()
-    paginator.page_size = 20
+    # view tweets par page
+    paginator.page_size = 10
     paginated_qs = paginator.paginate_queryset(qs, request)
     serializer = TweetSerializer(paginated_qs, many=True, context={"request": request})
     return paginator.get_paginated_response(serializer.data) # Response( serializer.data, status=200)
@@ -106,7 +127,7 @@ def tweet_feed_view(request, *args, **kwargs):
 @api_view(['GET'])
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    username = request.GET.get('username') # ?username=Justin
+    username = request.GET.get('username') # ?username=Pratik
     if username != None:
         qs = qs.by_username(username)
     return get_paginated_queryset_response(qs, request)

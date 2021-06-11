@@ -26,12 +26,13 @@ SECRET_KEY = '#)=h)_wc*k%f=wk+!$x0t%1wx7*_50$a1%*75s$og(8$27$ju1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'afe9c626fdb6.ngrok.io']
 LOGIN_URL = "/login"
 
 MAX_TWEET_LENGTH = 140
-TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
+TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet", "delete"]
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 # Application definition
 
 INSTALLED_APPS = [
@@ -95,6 +96,13 @@ DATABASES = {
     }
 }
 
+# Mail verification
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'editor.aspire@gmail.com'
+EMAIL_HOST_PASSWORD = 'login&aspire'
+EMAIL_PORT = 587
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -119,7 +127,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE =  'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -144,12 +153,12 @@ CORS_URLS_REGEX = r'^/api/.*$'
 DEFAULT_RENDERER_CLASSES = [
         'rest_framework.renderers.JSONRenderer',
     ]
-DEFAULT_AUTHENTICATION_CLASSES = [
-        'tweetme2.rest_api.dev.DevAuthentication'
-    ]
 # DEFAULT_AUTHENTICATION_CLASSES = [
-#     'rest_framework.authentication.SessionAuthentication'
-# ]
+#         'tweetme2.rest_api.dev.DevAuthentication'
+#     ]
+DEFAULT_AUTHENTICATION_CLASSES = [
+    'rest_framework.authentication.SessionAuthentication'
+]
 if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer',

@@ -1,3 +1,4 @@
+from accounts.models import UserRegisterDetails
 import random
 
 from django.conf import settings
@@ -44,6 +45,32 @@ def profile_detail_api_view(request, username, *args, **kwargs):
     serializer = PublicProfileSerializer(instance=profile_obj, context={"request": request})
     return Response(serializer.data, status=200)
 
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def get_username(request, *args, **kwargs):
+    # get the profile for the passed username
+    print("user: ", request.user )
+    me = request.user
+    qs = Profile.objects.filter(user__username=me)
+    if not qs.exists():
+        return Response({"detail": "User not found"}, status=404)
+    profile_obj = qs.first()
+    serializer = PublicProfileSerializer(profile_obj)
+    return Response( serializer.data, status=200)
+
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def profile_details(request, username, *args, **kwargs):
+    # get the profile for the passed username
+    qs = Profile.objects.filter(user__username=username)
+    if not qs.exists():
+        return Response({"detail": "User not found"}, status=404)
+    profile_obj = qs.first()
+    # data = request.data or {}
+    serializer = PublicProfileSerializer(profile_obj)
+    print("user data: ", serializer.data)
+    return Response( serializer.data, status=200)
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
