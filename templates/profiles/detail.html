@@ -1,41 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- for mobile zoom -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=0.9, minimum-scale=0.9, maximum-scale=0.9, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"> -->
+<!-- <script>
+    import React, { useEffect, useState } from 'react'
+    let [newUserName, setUserName] = useState();
 
+    const handleNewUsername = (newUserName) => {
+        setUserName(newUserName ? newUserName.username : "")
+        console.log("user: ", newUserName.username)
+    }
 
+    useEffect(() => {
+        try {
+            let endpoint1 = "/profiles/get_user/username/";
+            backendLookup("GET", endpoint1, handleNewUsername)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }, [])
+</script> -->
 <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
         <h1><a href="#" class="text-black font-bold no-underline hover:underline">Pratik Prajapati</a></h1>
-        <div class="mb-4"><a href="#" class="text-grey-darker no-underline hover:underline">@test1</a></div>
+        <div class="mb-4"><a href="#" class="text-grey-darker no-underline hover:underline">@test2</a></div>
 
         <div class="mb-2"><i class="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
-        <div class="mb-4"><i class="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">Joined </a></div>
+        <div class="mb-4"><i class="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">Joined: 1 Jan 2021 12AM</a></div>
         <div class="mb-4">
-            <button href="/profiles?username=test1" class="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Wall</button>
+            <!-- <a href="/profiles/my_wall/"+{{username}}> -->
+                <a href="/profiles/my_wall/Pratik123"></a>
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Wall</button>
+            </a>
         </div>
         <div class="mb-4">
-            <button href="" class="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">My Dashboard</button>
+            <a href="/">
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Dashboard</button>
+            </a>
         </div>
         <div class="mb-4">
-            <button href="" class="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Trending Exclamations!</button>
+            <a href="/">
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Trending Exclamation</button>
+        </div>
+        <!-- <div class="mb-4">
+            <a href="/">
+            <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Messages</button>
+            </a>
+        </div> -->
+        <div class="mb-4">
+            <a href="/">
+            <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Who to Follow</button>
+            </a>
         </div>
         <div class="mb-4">
-            <button href="" class="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Messages</button>
-        </div>
-        <div class="mb-4">
-            <button href="" class="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Who to Follow</button>
-        </div>
-        <div class="mb-4">
-            <button href="" class="bg-blue-500 hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Clack Now</button>
+            <a href="/">
+            <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Clack Now</button>
+            </a>
         </div>
     </div>
 
     <div class="w-full lg:w-3/5 bg-white mb-4">
-         <!-- profile -->
-         <div class="tweetme-2-profile-badge" data-username="{{ username }}" style="margin:20 auto;padding:20px 20px 20px 20px;"><br/></div>
+        <!-- profile -->
+        <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:20 auto;padding:20px 20px 20px 20px;"><br/></div>
         <div id='tweetme-2' style="margin:20 auto;padding:20px 20px 20px 20px;" 
-        data-username="{{ username }}"
-        data-can-tweet="false"></div>
+        data-username={{username}} data-can-tweet="false"></div>
     </div>
 
     <div class="w-full lg:w-1/5 pl-4">

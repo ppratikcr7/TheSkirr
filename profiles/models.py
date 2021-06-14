@@ -23,7 +23,7 @@ class Profile(models.Model):
     user.following.all() -> All user profiles I follow
     """
 def user_did_save(sender, instance, created, *args, **kwargs):
-    print("instance:",instance)
+    # print("instance:",instance)
     if created:
         Profile.objects.get_or_create(user=instance)
 

@@ -45,17 +45,17 @@ export default class Home extends React.PureComponent {
                                 <>
                                     <Row className="home-content" type="flex">
                                         <Col span={14} >
-                                            <img src={Home_image} alt="" width="100%" height="100%" />
+                                            <img src={Home_image} alt="" width="93%" height="75%" />
                                         </Col>
                                         <Col span={10} >
-                                            <div style={{ marginTop: 130, lineHeight: "38px", textAlign: "center", width: "100%" }}>
-                                                <p style={{ fontSize: "30px", justifyContent: "right" }}><b>“When walking alone in a jungle of true darkness, there are three things that can show you the way: instinct to survive, the knowledge of navigation, creative imagination. Without them, you are lost.”</b></p>
-                                                <p style={{ fontSize: "18px", justifyContent: "right" }}><b>-Tobo Beta</b></p>
+                                            <div style={{ marginTop: 80, lineHeight: "38px", textAlign: "center", width: "100%" }}>
+                                                <p style={{ fontSize: "25px", justifyContent: "right" }}><b>“When walking alone in a jungle of true darkness, there are three things that can show you the way: instinct to survive, the knowledge of navigation, creative imagination. Without them, you are lost.”</b></p>
+                                                <p style={{ fontSize: "15px", justifyContent: "right" }}><b>-Tobo Beta</b></p>
                                                 <br />
-                                                <Button style={{ marginBottom: 10, width: 400 }} onClick={() => this.setState({ isClicked: true })} shape="round" size={'large'} block type="primary" htmlType="submit" className="login-form-button button-container">
+                                                <Button style={{ marginBottom: 10, width: 300 }} onClick={() => this.setState({ isClicked: true })} shape="round" size={'large'} block type="primary" htmlType="submit" className="login-form-button button-container">
                                                     Sign Up
                                                 </Button>
-                                                <Button style={{ width: 400 }} onClick={() => { this.props.history.push("/login") }} shape="round" size={'large'} block htmlType="submit" className="login-form-button button-container">
+                                                <Button style={{ width: 300 }} onClick={() => { this.props.history.push("/login") }} shape="round" size={'large'} block htmlType="submit" className="login-form-button button-container">
                                                     <a href="/login" style={{ textDecoration: "none" }}>Login</a>
                                                 </Button>
                                             </div>
@@ -63,11 +63,14 @@ export default class Home extends React.PureComponent {
 
                                     </Row>
                                     <Row span={14} >
-                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>Submit Research</Button>
-                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI NGO</Button>
-                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>EOI Healthcare Worker</Button>
-                                        <Button type={'primary'} size={'large'} style={{margin:30}} onClick={(event)=>{console.log(event)}}>Covid Research</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:12}} onClick={(event)=>{console.log(event)}}>Submit Research</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:12}} onClick={(event)=>{console.log(event)}}>EOI NGO</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:12}} onClick={(event)=>{console.log(event)}}>EOI Healthcare Worker</Button>
+                                        <Button type={'primary'} size={'large'} style={{margin:12}} onClick={(event)=>{console.log(event)}}>Covid Research</Button>
                                     </Row>
+                                    <br/>
+                                    <br/>
+                                    <br/>
                                 </>
                                     :
                                     <Row className="home-content">
