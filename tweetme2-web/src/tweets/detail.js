@@ -33,6 +33,7 @@ export function Tweet(props) {
   const handlePerformAction = (newActionTweet, status) => {
     if (status === 200) {
       setActionTweet(newActionTweet)
+      props.tweetHandle("working");
     } else if (status === 201) {
       if (didRetweet) {
         didRetweet(newActionTweet)

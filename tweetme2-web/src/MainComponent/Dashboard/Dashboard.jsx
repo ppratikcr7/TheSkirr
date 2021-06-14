@@ -7,6 +7,7 @@ import { TweetsList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
+import { apiTweetList } from '../../tweets/lookup';
 
 export default function Dashboard(props) {
     const [newTweets, setNewTweets] = useState([]);
@@ -68,10 +69,18 @@ export default function Dashboard(props) {
     //         console.log("error:", error);
     //     }
     // }, [])
+    const handleListLookup = (response, status) => {
+        if (status === 200) {
+            setNewTweets(response.results)
+        } else {
+            alert("There was an error")
+        }
+    }
 
     function handleTweetList(value) {
         console.log("sucees call", value);
-        window.location.reload();
+        apiTweetList(null, handleListLookup);
+        // window.location.reload();
     }
 
     useEffect(() => {
