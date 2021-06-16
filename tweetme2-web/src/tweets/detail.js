@@ -42,15 +42,15 @@ export function Tweet(props) {
 
   }
 
-  return <div class="flex border-b border-solid border-grey-light">
+  return <div className="flex border-b border-solid border-grey-light">
     {isRetweet === true && <div className='mb-2'>
       <span className='small text-muted'>ReClack via <UserDisplay user={retweeter} /></span>
     </div>}
-    <div class="w-1/8 text-right pl-3 pt-3">
+    <div className="w-1/8 text-right pl-3 pt-3">
       <div><a href="#"><img src={BlankImage} /></a></div>
     </div>
-    <div class="w-7/8 p-3 pl-0">
-      <div class="flex justify-between">
+    <div className="w-7/8 p-3 pl-0">
+      <div className="flex justify-between">
         <div>
           <UserDisplay includeFullName user={tweet.user} />
           {/* use the below for color encoding */}
@@ -58,17 +58,17 @@ export function Tweet(props) {
         </div>
         <div>
           {/* use this to populate delete clack option */}
-          <a href="#" class="text-grey-dark hover:text-teal"><i class="fa fa-chevron-down"></i></a>
+          <a href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></a>
         </div>
       </div>
 
       <div>
-        <div class="mb-4">
-          <p class="mt-6">{tweet.content}</p>
+        <div className="mb-4">
+          <p className="mt-6">{tweet.content}</p>
           <ParentTweet tweet={tweet} retweeter={tweet.user} />
         </div>
       </div>
-      <div class="pb-2">
+      <div className="pb-2">
         {(actionTweet && hideActions !== true) && <React.Fragment>
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />

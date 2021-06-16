@@ -49,3 +49,10 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, 
                 document_root=settings.STATIC_ROOT)
+
+react_routes = getattr(settings, 'REACT_ROUTES', [])
+
+for route in react_routes:
+    urlpatterns += [
+        path('{}'.format(route), TemplateView.as_view(template_name='index.html'))
+    ]
