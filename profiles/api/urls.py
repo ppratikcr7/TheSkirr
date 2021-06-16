@@ -1,6 +1,8 @@
 from django.urls import path
 
 from .views import (
+    get_total_clacks,
+    get_total_likes,
     profile_detail_api_view,
     profile_details,
     get_username
@@ -18,4 +20,8 @@ urlpatterns = [
     path('get_user/username/', get_username),
     # to trigger follow view
     path('<str:username>/follow', profile_detail_api_view),
+    # to get total likes of current user:
+    path('current_user/likes/', get_total_likes),
+    # to get total clacks of current user:
+    path('current_user/clacks/', get_total_clacks),
 ]

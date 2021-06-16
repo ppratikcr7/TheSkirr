@@ -18,14 +18,9 @@ export default function Dashboard(props) {
     let [whotofollowProfile1, setProfile1] = useState();
     let [whotofollowProfile2, setProfile2] = useState();
     let [whotofollowProfile3, setProfile3] = useState();
+    let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
+    let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
-    const { Meta } = Card;
-    const navOption = {
-        Home: "Home",
-        Moments: "Moments",
-        Notifications: "Notifications",
-        Messages: "Messages"
-    }
     const canTweet = props.canTweet === "false" ? false : true
 
     const handleNewTweet = (newTweet) => {
@@ -36,13 +31,22 @@ export default function Dashboard(props) {
     const handleNewUsername = (newUserName) => {
         setUserName(newUserName ? newUserName.username : "")
         console.log("main user: ", newUserName.username)
+        // function call for getting current user profile
         getMainProfile(newUserName.username, handleNewProfile);
+        // function call for getting gagan user profile
         getProfile1("Gagan123", handleNewProfile1);
         // console.log("FN1: ", whotofollowProfile1.first_name)
+        // function call for getting pratik user profile
         getProfile2("Pratik123", handleNewProfile2);
         // console.log("FN2: ", whotofollowProfile2.first_name)
+        // function call for getting ketul user profile
         getProfile3("Ketul123", handleNewProfile3);
         // console.log("FN3: ", whotofollowProfile3.first_name)
+        // function call for getting total likes for current user
+        getCurrentUserTotalLikes();
+        // function call for getting total clacks for current user
+        getCurrentUserTotalClacks();
+
     }
 
     const handleNewProfile = (newProfile) => {
@@ -60,7 +64,32 @@ export default function Dashboard(props) {
     const handleNewProfile3 = (whotofollowProfile3) => {
         setProfile3(whotofollowProfile3)
     }
+
+    const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
+        setCurrentUserTotalLikes(currentUserTotalLikes)
+    }
+
+    const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
+        setCurrentUserTotalClacks(currentUserTotalClacks)
+    }
     
+    function getCurrentUserTotalLikes() {
+        try {
+            let endpoint = `/profiles/current_user/likes/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalLikes)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getCurrentUserTotalClacks() {
+        try {
+            let endpoint = `/profiles/current_user/clacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
 
     function getMainProfile(username) {
         // console.log("user main: ", username)
@@ -137,7 +166,7 @@ export default function Dashboard(props) {
                             <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
                                 <a href="#" className="text-grey-darker no-underline hover:no-underline">
                                     <div className="text-sm font-bold tracking-tight mb-1">Clacks</div>
-                                    <div className="text-lg tracking-tight font-bold text-teal">1</div>
+                                    <div className="text-lg tracking-tight font-bold text-teal">{currentUserTotalClacks ? currentUserTotalClacks : "0"}</div>
                                 </a>
                             </li>
                             <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
