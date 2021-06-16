@@ -72,11 +72,14 @@ def tweet_action_view(request, *args, **kwargs):
         action = data.get("action")
         content = data.get("content")
         qs = Tweet.objects.filter(id=tweet_id)
+        print("qs:", qs.values())
         if not qs.exists():
             return Response({}, status=404)
         obj = qs.first()
+        # print("first obj:", obj.likes)
         if action == "like":
             obj.likes.add(request.user)
+            # print("like obj:", obj)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
         elif action == "unlike":
