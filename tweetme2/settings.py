@@ -123,16 +123,16 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # react routes:
-REACT_ROUTES = [
-    'login',
-    'logout',
-    'register',
-    'profiles',
-    # 'api/tweets',
-    'api/profiles/get_user/username',
-    'api/profiles/user/clacks',
-    'api/profiles/user/likes',
-]
+# REACT_ROUTES = [
+#     'login',
+#     'logout',
+#     'register',
+#     'profiles',
+#     'api/tweets',
+#     'api/profiles/get_user/username',
+#     'api/profiles/user/clacks',
+#     'api/profiles/user/likes',
+# ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

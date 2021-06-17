@@ -38,10 +38,10 @@ export default function Dashboard(props) {
         getProfile1(newUserName.username, handleNewProfile1);
         // function call for getting pratik user profile
         // getProfile2("Pratik123", handleNewProfile2);
-        getProfile1(newUserName.username, handleNewProfile1);
+        getProfile2(newUserName.username, handleNewProfile1);
         // function call for getting ketul user profile
         // getProfile3("Ketul123", handleNewProfile3);
-        getProfile1(newUserName.username, handleNewProfile1);
+        getProfile3(newUserName.username, handleNewProfile1);
         // function call for getting total likes for current user
         getCurrentUserTotalLikes();
         // function call for getting total clacks for current user
@@ -92,7 +92,6 @@ export default function Dashboard(props) {
     }
 
     function getMainProfile(username) {
-        // console.log("user main: ", username)
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile)
@@ -102,7 +101,6 @@ export default function Dashboard(props) {
     }
 
     function getProfile1(username) {
-        // console.log("user1: ", username)
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile1)
@@ -112,7 +110,6 @@ export default function Dashboard(props) {
     }
 
     function getProfile2(username) {
-        // console.log("user2: ", username)
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile2)
@@ -122,7 +119,6 @@ export default function Dashboard(props) {
     }
 
     function getProfile3(username) {
-        // console.log("user3: ", username)
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile3)
@@ -171,12 +167,6 @@ export default function Dashboard(props) {
                         </div>
                         <div className="w-full lg:w-3/5">
                             <ul className="list-reset flex">
-                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
-                                    <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">       </div>
-                                        <div className="text-lg tracking-tight font-bold hover:text-teal"> </div>
-                                    </a>
-                                </li>
                                 <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
                                     <a href="#" className="text-grey-darker no-underline hover:no-underline">
                                         <div className="text-sm font-bold tracking-tight mb-1">Clacks</div>
@@ -201,12 +191,12 @@ export default function Dashboard(props) {
                                         <div className="text-lg tracking-tight font-bold hover:text-teal">{currentUserTotalLikes ? currentUserTotalLikes : "0"}</div>
                                     </a>
                                 </li>
-                                {/* <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
+                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
                                     <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">Moments       </div>
+                                        <div className="text-sm font-bold tracking-tight mb-1">Moments</div>
                                         <div className="text-lg tracking-tight font-bold hover:text-teal">0</div>
                                     </a>
-                                </li> */}
+                                </li>
                             </ul>
                         </div>
                         <div className="w-full lg:w-1/5 flex lg:my-0 lg:justify-end items-center">
@@ -240,8 +230,8 @@ export default function Dashboard(props) {
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>My Dashboard</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href="/" style={{ textDecoration: "none" }}>Trending Exclamation</a>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/trending_exclamation") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>Who to Follow</a>

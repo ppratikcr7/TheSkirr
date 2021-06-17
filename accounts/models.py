@@ -36,3 +36,6 @@ class UserRegisterDetails(models.Model):
 #     password1 = models.CharField(max_length=220, null=True, blank=True)
 #     password2 = models.CharField(max_length=220, null=True, blank=True)
 
+class TrendsExclamation(models.Model):
+    topic = models.TextField(blank=True, null=True)
+    url = models.URLField(blank=True, null=True)

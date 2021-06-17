@@ -41,23 +41,6 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
     serializer = TweetSerializer(obj)
     return Response(serializer.data, status=200)
 
-@api_view(['DELETE', 'POST'])
-@permission_classes([IsAuthenticated])
-def tweet_delete_view(request, tweet_id, *args, **kwargs):
-    qs = Tweet.objects.filter(id=tweet_id)
-    if not qs.exists():
-        return Response({}, status=404)
-    qs = qs.filter(user=request.user)
-    if not qs.exists():
-        return Response({"message": "You cannot delete this tweet"}, status=401)
-    obj = qs.first()
-    #  to delete complete tweet
-    # obj.delete()
-    # to update tweet text with deleted text
-    print("tweet deleted: ", obj)
-    obj.content = "Tweet Deleted on " + datetime.now()
-    return Response({"message": "Tweet removed"}, status=200)
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def tweet_action_view(request, *args, **kwargs):
@@ -105,7 +88,7 @@ def tweet_action_view(request, *args, **kwargs):
             #  to delete complete tweet
             # obj.delete()
             # to update tweet text with deleted text
-            obj.content = "Tweet Deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
+            obj.content = "This Clack is deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
             obj.save()
             return Response(serializer.data, status=200)
     return Response({}, status=200)
