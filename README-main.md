@@ -1,4 +1,4 @@
-# The Skirr
+# TheSkirr
 Covig Microblogging website
 
 Some helpful things written for the project implementation (Guide):

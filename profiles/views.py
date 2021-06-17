@@ -1,8 +1,10 @@
+from accounts.models import TrendsExclamation
 from django.http import Http404
 from django.shortcuts import render, redirect
 
 from .forms import ProfileForm
 from .models import Profile
+
 
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
@@ -31,8 +33,6 @@ def profile_update_view(request, *args, **kwargs):
         "title": "Update Profile"
     }
     return render(request, "profiles/form.html", context)
-
-
 
 def my_wall_view(request, username, *args, **kwargs):
     # get the profile for the passed username
@@ -69,3 +69,10 @@ def user_wall_view(request, username, *args, **kwargs):
         "is_following": is_following
     }
     return render(request, "profiles/detail.html", context)
+
+def trends_view(request, *args, **kwargs):
+    trends_list = TrendsExclamation.objects.all()
+    context = {
+        "trends_list": trends_list
+    }
+    return render(request, "profiles/trends.html", context)

@@ -1,4 +1,4 @@
-from tweets.models import Tweet
+from tweets.models import Tweet, TweetLike
 from accounts.models import UserRegisterDetails
 import random
 
@@ -50,7 +50,6 @@ def profile_detail_api_view(request, username, *args, **kwargs):
 # @permission_classes([IsAuthenticated])
 def get_username(request, *args, **kwargs):
     # get the profile for the passed username
-    print("user: ", request.user )
     me = request.user
     qs = Profile.objects.filter(user__username=me)
     if not qs.exists():
@@ -63,28 +62,24 @@ def get_username(request, *args, **kwargs):
 # @permission_classes([IsAuthenticated])
 def get_total_likes(request, *args, **kwargs):
     # get the profile for the passed username
-    print("total likes user: ", request.user )
     me = request.user
     qs = Profile.objects.filter(user__username=me)
     if not qs.exists():
         return Response({"detail": "User not found"}, status=404)
-    profile_obj = qs.first()
-    serializer = PublicProfileSerializer(profile_obj)
-    return Response( serializer.data, status=200)
+    total_tweets_by_current_user = Tweet.objects.filter(user__username=me)
+    qs_lis = total_tweets_by_current_user.values_list('pk', flat=True)
+    total_likes = TweetLike.objects.filter(tweet_id__in=qs_lis).count()
+    return Response( total_likes, status=200)
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def get_total_clacks(request, *args, **kwargs):
     # get the profile for the passed username
-    print("total clack user: ", request.user )
     me = request.user
     qs = Profile.objects.filter(user__username=me)
     if not qs.exists():
         return Response({"detail": "User not found"}, status=404)
-    profile_obj = qs.first()
     total_clacks = Tweet.objects.filter(user__username=me).count()
-    # serializer = PublicProfileSerializer(profile_obj)
-    print("total clacks: ", total_clacks)
     return Response( total_clacks, status=200)
 
 @api_view(['GET'])
@@ -97,7 +92,6 @@ def profile_details(request, username, *args, **kwargs):
     profile_obj = qs.first()
     # data = request.data or {}
     serializer = PublicProfileSerializer(profile_obj)
-    print("user data: ", serializer.data)
     return Response( serializer.data, status=200)
 
 @api_view(['GET', 'POST'])
