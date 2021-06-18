@@ -33,7 +33,13 @@ python3 manage.py runserver
 or
 python manage.py runserver
 
-Open: http://localhost:8000/
+Open: http://localhost:8000/ and not http://127.0.0.1:8000/ as you would get forbidden error.
+
+Now, login once with the SMTP gmail account in your browser google accounts inorder to not get STMPAuth error on verification mail on user registration.
+
+Credentials:
+EMAIL = 'editor.aspire@gmail.com'
+PASSWORD = 'login&aspire'
 
 Click signup. Register your user and open link received on email and login with your credentials.
 
@@ -49,9 +55,13 @@ or http://localhost:3000/dashboard
 # After any change in reactjs side you need to build new changes of react and reflect into django:
 
 cd tweetme2-web
+
 npm run build
-copy static files from tweetme2-web/build/static to /static folder in root directory
-change name of linked files in templates/react/js.html (you can copy the script tags from “tweetme2-web/build/static/index.html” end lines )
+
+Next, copy static files from tweetme2-web/build/static to /static folder in root directory
+
+Then, change name of linked files in templates/react/js.html (you can copy the script tags from “tweetme2-web/build/static/index.html” end lines )
+
 Note: if any change in css then you need to change names of files in templates/react/css.html as well.
 
 # To flush all data rows in all tables of db:
