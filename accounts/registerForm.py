@@ -19,12 +19,16 @@ class SignUpForm(UserCreationForm):
         attrs={'class': 'form-control', 'placeholder': 'Last Name', 'id': 'username'}))
     phone_number = forms.IntegerField(widget=forms.NumberInput(
         attrs={'class': 'form-control', 'placeholder': 'Phone', 'id': 'username'}))
+    # phone_number_public = forms.RadioSelect()
     email = forms.EmailField(max_length=100,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Email', 'id': 'username'}))
+    
+    city = forms.CharField(max_length=100,widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'City', 'id': 'city'}))
     username = forms.CharField(max_length=100,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'User Name', 'id': 'username'}))
     # dob = forms.DateField(widget=forms.TextInput(
-    #     attrs={'class': 'datepicker', 'placeholder': 'DOB', 'id': 'username'}))
+    #     attrs={'class': 'datepicker', 'placeholder': 'DOB', 'id'Register: 'username'}))
     dob = forms.DateField(widget=DateInput(attrs={'class': 'datepicker', 'placeholder': 'DOB', 'id': 'username'}))
     gender = forms.TypedChoiceField(choices=GENDER_CHOICES,widget=forms.Select(
         attrs={'class': 'form-control', 'placeholder': 'Select Gender', 'id': 'username'}))
@@ -44,6 +48,6 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username','first_name','last_name','phone_number', 'email','dob', 'password1', 'password2','gender' )
+        fields = ('username','first_name','last_name','phone_number', 'email', 'city', 'dob', 'password1', 'password2','gender' )
 
         
