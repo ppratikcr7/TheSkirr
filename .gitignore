@@ -1,9 +1,9 @@
 static-root/
-/static/css/*
-/static/js/*
-/static/media/*
+# /static/css/*
+# /static/js/*
+# /static/media/*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+# db.sqlite3
 # dependencies
 /node_modules
 /.pnp
