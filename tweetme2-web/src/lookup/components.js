@@ -20,7 +20,7 @@ export function backendLookup(method, endpoint, callback, data) {
     jsonData = JSON.stringify(data)
   }
   const xhr = new XMLHttpRequest()
-  const url = `http://localhost:8000/api${endpoint}`
+  const url = `https://www.theskirr.com/api${endpoint}`
   console.log("url", url)
   xhr.responseType = "json"
   const csrftoken = getCookie('csrftoken');
@@ -28,7 +28,6 @@ export function backendLookup(method, endpoint, callback, data) {
   xhr.setRequestHeader("Content-Type", "application/json")
 
   if (csrftoken) {
-    // xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.setRequestHeader("X-CSRFToken", csrftoken)
   }

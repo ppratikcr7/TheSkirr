@@ -27,7 +27,6 @@ export function TweetsList(props) {
           alert("There was an error")
         }
       }
-      console.log("worked1");
       apiTweetList(props.username, handleTweetListLookup)
     }
   }, [tweetsInit, tweetsDidSet, setTweetsDidSet, props.username])
