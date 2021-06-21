@@ -1,10 +1,14 @@
-from accounts.models import TrendsExclamation
+from accounts.models import TrendsExclamation, UserRegisterDetails
 from django.http import Http404
 from django.shortcuts import render, redirect
 
 from .forms import ProfileForm
 from .models import Profile
 
+from django.contrib.auth.models import User
+from tweets.models import Tweet, TweetLike
+from collections import defaultdict
+import random
 
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
@@ -76,3 +80,55 @@ def trends_view(request, *args, **kwargs):
         "trends_list": trends_list
     }
     return render(request, "profiles/trends.html", context)
+
+def show_more_view(request, *args, **kwargs):
+    
+    rand = User.objects.order_by('?')[:3]
+    rec = User.objects.order_by('-date_joined')[:3]
+    all = User.objects.all()
+    
+    un = request.user.username
+
+    uname = UserRegisterDetails.objects.values_list('city', flat=True).filter(username = un)
+    city = uname[0]
+    
+    loc_uname_obj = UserRegisterDetails.objects.values_list('username', flat=True).filter(city = city)
+    more_user = []
+    for unamee in loc_uname_obj:
+        more_user.append(unamee)
+    # print(more_user)
+    more_users = random.sample(more_user, 3)
+    
+    new_dict = defaultdict(list)
+    for user in all:
+        me = user
+        total_tweets_by_current_user = Tweet.objects.filter(user__username=me)
+        qs_lis = total_tweets_by_current_user.values('pk')
+        total_likes = TweetLike.objects.filter(tweet_id__in=qs_lis).count()
+        new_dict[me].append(total_likes)
+    sort_dict = sorted(new_dict.items(), key=lambda x: x[1], reverse=True)
+    # for i in sort_orders:
+	#     print(i[0], i[1])
+    for rand_user in rand:
+        more_users.append(rand_user.username)
+    for recent in rec:
+        more_users.append(recent.username)
+    count = 0
+    for i in sort_dict:
+        if count==3:
+            break
+        else:
+            count+=1
+            more_users.append(i[0].username)
+    # print(arr)
+    temp_list = []
+
+    for i in more_users:
+        if i not in temp_list:
+            temp_list.append(i)
+
+    final = random.sample(temp_list, len(temp_list))
+    # context = {
+    # "username":arr
+    #  }
+    return render(request, "profiles/show_more.html", {"username":final})

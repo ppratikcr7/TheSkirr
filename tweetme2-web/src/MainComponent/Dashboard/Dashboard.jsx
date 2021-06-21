@@ -233,8 +233,8 @@ export default function Dashboard(props) {
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/trending_exclamation") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href="/" style={{ textDecoration: "none" }}>Who to Follow</a>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/more_accounts") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="/profiles/more_accounts" style={{ textDecoration: "none" }}>Who to Follow</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>Clack Now</a>
