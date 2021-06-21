@@ -16,4 +16,4 @@ jobs:
           host: ${{ secrets.HOST_IP }}
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.HOST_KEY }}
-          script: cd /home/ubuntu/repo/TheSkirr && git pull origin master
+          script: cd /home/ubuntu/repo/TheSkirr && git checkout db.sqlite3 && git pull origin master
