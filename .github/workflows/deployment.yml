@@ -16,4 +16,4 @@ jobs:
           host: ${{ secrets.HOST_IP }}
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.HOST_KEY }}
-          script: cd /home/ubuntu/repo/TheSkirr && git pull
+          script: cd /home/ubuntu/repo/TheSkirr && git pull origin master
