@@ -1,0 +1,19 @@
+name: DeployTheSkirr.com
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pull from GitHub
+      uses: appleboy/ssh-action@master
+      with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USERNAME }}
+          key: ${{ secrets.HOST_KEY }}
+          script: cd /home/ubuntu/repo/TheSkirr && git pull
