@@ -47,7 +47,7 @@ def profile_detail_api_view(request, username, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def get_username(request, *args, **kwargs):
     # get the profile for the passed username
     me = request.user
@@ -68,7 +68,7 @@ def who_to_follow_users(request, *args, **kwargs):
     return Response( serializer.data, status=200)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def get_total_likes(request, *args, **kwargs):
     # get the profile for the passed username
     me = request.user
@@ -81,7 +81,7 @@ def get_total_likes(request, *args, **kwargs):
     return Response( total_likes, status=200)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def get_total_clacks(request, *args, **kwargs):
     # get the profile for the passed username
     me = request.user
@@ -92,7 +92,7 @@ def get_total_clacks(request, *args, **kwargs):
     return Response( total_clacks, status=200)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def profile_details(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = Profile.objects.filter(user__username=username)
