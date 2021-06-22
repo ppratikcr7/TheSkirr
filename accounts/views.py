@@ -51,12 +51,14 @@ def register_view(request, *args, **kwargs):
         last_name = request.POST['last_name']
         phone_number = request.POST['phone_number']
         email = request.POST['email']
+        email2 = request.POST['email2']
         city = request.POST['city']
         dob = request.POST['dob']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         gender = request.POST['gender']
-        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name,phone_number=phone_number, email=email, city=city, dob=dob,password1=password1, password2=password2,gender=gender)
+        areaOfInterest = request.POST['areaOfInterest']
+        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, city=city, dob=dob, areaOfInterest=areaOfInterest, password1=password1, password2=password2,gender=gender)
         ins.save()
         user = form.save(commit=False)
         user.is_active = False

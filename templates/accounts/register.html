@@ -1,18 +1,27 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+<script>
+  webshims.setOptions('waitReady', false);
+  webshims.setOptions('forms-ext', {type: 'date'});
+  webshims.setOptions('forms-ext', {type: 'time'});
+  webshims.polyfill('forms forms-ext');
+</script>
 {% extends "base.html" %}
-
 {% block content %}
 <div class='col-12 col-md-4 mx-auto mb-10'>
-        <h1 class="mt-2" style="text-align: center;">{{ title }}</h1>
+        <h1 class="mt-2 mb-2" style="text-align: center; font-size: 22px;">{{ title }}</h1>
     <hr class="mt-0 mb-4">
     {% if description %}
     <p>{{ description }} </p>
     {% endif %}
-    {% include "components/RegisterForm.html" with form=form btn_label=btn_label %}
     {% if messages %}
         {% for message in messages %}
             <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
         {% endfor %}
     {% endif %}
+    {% include "components/RegisterForm.html" with form=form btn_label=btn_label %}
+    
 </br>
 </br>
 </br>

@@ -22,6 +22,8 @@ class UserRegisterDetails(models.Model):
     phone_number = models.IntegerField(null=True, blank=True)
     # phone_number_public = models.CharField(max_length=10,choices=TYPE_SELECT)
     email = models.EmailField(max_length=220, null=True, blank=True)
+    email2 = models.EmailField(max_length=220, null=True, blank=True)
+    areaOfInterest = models.CharField(max_length=2000, null=True, blank=True)
     city = models.CharField(max_length=220, null=True, blank=True)
     username = models.CharField(max_length=220, null=True, blank=True)
     password1 = models.CharField(max_length=220, null=True, blank=True)
