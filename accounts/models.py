@@ -29,6 +29,9 @@ class UserRegisterDetails(models.Model):
     password1 = models.CharField(max_length=220, null=True, blank=True)
     password2 = models.CharField(max_length=220, null=True, blank=True)
 
+    # def __str__(self):
+    #     return self.city
+
 # class InstitutionalUserRegisterDetails(models.Model):
 #     GENDER_CHOICES = (
 #         ('M', 'Male'),
