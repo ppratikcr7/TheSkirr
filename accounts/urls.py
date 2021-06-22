@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from . import views
+from django.urls import path, include
 
 urlpatterns = [
     # url(r'^$', views.home, name='home'),
@@ -8,4 +9,5 @@ urlpatterns = [
     url(r'^register/$', views.register_view, name='register_view'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
+    path('login/forgot_uname', views.forgot_uname, name="forgot_uname"),
 ]
