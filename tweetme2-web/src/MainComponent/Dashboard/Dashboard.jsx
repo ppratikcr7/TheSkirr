@@ -19,7 +19,7 @@ export default function Dashboard(props) {
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
-    let [whotofollowProfile1, setProfile1] = useState();
+    // let [whotofollowProfile1, setProfile1] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
@@ -53,9 +53,9 @@ export default function Dashboard(props) {
     }
 
     // who to follow:
-    const handleNewProfile1 = (whotofollowProfile1) => {
-        setProfile1(whotofollowProfile1)
-    }
+    // const handleNewProfile1 = (whotofollowProfile1) => {
+    //     setProfile1(whotofollowProfile1)
+    // }
 
     const handleWhoToFollowUser1 = (whoToFollowUser1) => {
         setwhoToFollowUser1(whoToFollowUser1)
@@ -73,15 +73,6 @@ export default function Dashboard(props) {
 
     const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
         setCurrentUserTotalClacks(currentUserTotalClacks)
-    }
-    
-    function getWhoToFollowUser1() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/users/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser1)
-        } catch (error) {
-            console.log("error:", error);
-        }
     }
 
     function getWhoToFollowUser1() {
@@ -138,14 +129,14 @@ export default function Dashboard(props) {
         }
     }
 
-    function getProfile1(username) {
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile1)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
+    // function getProfile1(username) {
+    //     try {
+    //         let endpoint = `/profiles/user/${username}/`;
+    //         backendLookup("GET", endpoint, handleNewProfile1)
+    //     } catch (error) {
+    //         console.log("error:", error);
+    //     }
+    // }
 
     // join date update:
     if (newProfile && newProfile.date_joined) {

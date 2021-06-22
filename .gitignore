@@ -26,7 +26,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-db.sqlite3
 node_modules/
 # local project items
 parse.py
@@ -158,6 +157,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-db.sqlite3
-db.sqlite3
-static/js/2.2f4dbe94.chunk.js
