@@ -41,17 +41,17 @@
     </div>
 
     <div class="w-full lg:w-3/5 bg-white mb-4">
-        <!-- trends -->
+        <!-- who to follow -->
         <div class="flex items-center justify-center h-full bg-gray-100">
             <div class="container">
                 <div class="flex justify-center p-4 mb-2">
-                    <h1 class="text-xl text-blue-500">More Users</h1>
+                    <h1 class="text-xl text-blue-500">Who to Follow: </h1>
                 </div>
                 <div class="flex justify-center">
                     <div class="bg-white shadow-xl rounded-lg w-1/2">
                         <ul class="divide-y divide-gray-300">
                             {% for uname in username %}
-                            <li class="p-4 hover:bg-gray-50 cursor-pointer">{{uname}}</li>
+                            <li class="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/user_wall/{{uname}}'>{{uname}}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -62,66 +62,6 @@
 
     <div class="w-full lg:w-1/5 pl-4">
         <div class="bg-white p-3 mb-3">
-            <div>
-                <span class="text-lg font-bold">Who to follow</span>
-            </div>
-            <div class="flex border-b border-solid border-grey-light">
-                <div class="py-2">
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg" alt="follow1" class="rounded-full h-12 w-12" /></a>
-                </div>
-                <div class="pl-2 py-2 w-full">
-                    <div class="flex justify-between mb-1">
-                        <div>
-                            <a href="#" class="font-bold text-black">Vidhi</a> <a href="#" class="text-grey-dark">@vidhi123</a>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                            Follow
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex border-b border-solid border-grey-light">
-                <div class="py-2">
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow2.jpg" alt="follow1" class="rounded-full h-12 w-12" /></a>
-                </div>
-                <div class="pl-2 py-2 w-full">
-                    <div class="flex justify-between mb-1">
-                        <div>
-                            <a href="#" class="font-bold text-black">Gagan</a> <a href="#" class="text-grey-dark">@gagan123</a>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                            Follow
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex border-b border-solid border-grey-light">
-                <div class="py-2">
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow3.jpg" alt="follow1" class="rounded-full h-12 w-12" /></a>
-                </div>
-                <div class="pl-2 py-2 w-full">
-                    <div class="flex justify-between mb-1">
-                        <div>
-                            <a href="#" class="font-bold text-black">Ketul</a> <a href="#" class="text-grey-dark">@ketulshah</a>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                            Follow
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-between mb-1">
-                <div>
-                    <a href="#" class="font-bold text-black">Show more</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>

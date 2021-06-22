@@ -1,7 +1,7 @@
 from tweets.models import Tweet, TweetLike
 from accounts.models import UserRegisterDetails
 import random
-
+from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, Http404, JsonResponse
@@ -59,6 +59,15 @@ def get_username(request, *args, **kwargs):
     return Response( serializer.data, status=200)
 
 @api_view(['GET'])
+def who_to_follow_users(request, *args, **kwargs):
+    random_user = Profile.objects.order_by('?')[:1]
+    if not random_user.exists():
+        return Response({"detail": "User not found"}, status=404)
+    profile_obj = random_user.first()
+    serializer = PublicProfileSerializer(profile_obj)
+    return Response( serializer.data, status=200)
+
+@api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def get_total_likes(request, *args, **kwargs):
     # get the profile for the passed username
@@ -67,8 +76,8 @@ def get_total_likes(request, *args, **kwargs):
     if not qs.exists():
         return Response({"detail": "User not found"}, status=404)
     total_tweets_by_current_user = Tweet.objects.filter(user__username=me)
-    qs_lis = total_tweets_by_current_user.values_list('pk', flat=True)
-    total_likes = TweetLike.objects.filter(tweet_id__in=qs_lis).count()
+    qs_list = total_tweets_by_current_user.values_list('pk', flat=True)
+    total_likes = TweetLike.objects.filter(tweet_id__in=qs_list).count()
     return Response( total_likes, status=200)
 
 @api_view(['GET'])
