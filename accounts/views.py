@@ -11,7 +11,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from django.conf import settings 
+from django.core.mail import send_mail 
 # Create your views here.
 
 # Function based views to Class Based Views
@@ -51,12 +52,14 @@ def register_view(request, *args, **kwargs):
         last_name = request.POST['last_name']
         phone_number = request.POST['phone_number']
         email = request.POST['email']
+        email2 = request.POST['email2']
         city = request.POST['city']
         dob = request.POST['dob']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         gender = request.POST['gender']
-        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name,phone_number=phone_number, email=email, city=city, dob=dob,password1=password1, password2=password2,gender=gender)
+        areaOfInterest = request.POST['areaOfInterest']
+        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, city=city, dob=dob, areaOfInterest=areaOfInterest, password1=password1, password2=password2,gender=gender)
         ins.save()
         user = form.save(commit=False)
         user.is_active = False
@@ -105,3 +108,20 @@ def activate(request, uidb64, token):
         messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
         login(request, user)
         return redirect('/login')
+
+def forgot_uname(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        if User.objects.filter(email=email).exists():
+            p = User.objects.filter(email =email)
+            subject = 'Request for username'
+            message = f'Hi Your Username is: {p[0].username}'
+            email_from = settings.EMAIL_HOST_USER 
+            recipient_list = [email, ] 
+            send_mail( subject, message, email_from, recipient_list ) 
+            return redirect('/login')
+        else:
+            messages.warning(request, 'Email not registered')
+            return redirect('forgot_uname')
+    else:
+        return render(request, 'accounts/forgot_uname.html')

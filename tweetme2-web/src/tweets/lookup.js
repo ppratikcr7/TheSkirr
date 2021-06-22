@@ -17,6 +17,7 @@ export function apiTweetFeed(callback, nextUrl) {
     let endpoint = "/tweets/feed/"
     if (nextUrl !== null && nextUrl !== undefined) {
         endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
+        // endpoint = nextUrl.replace("http://localhost:8000/api", "")
     }
     backendLookup("GET", endpoint, callback)
 }
@@ -30,6 +31,7 @@ export function apiTweetList(username, callback, nextUrl) {
     if (nextUrl !== null && nextUrl !== undefined) {
         console.log("nextUrl:", nextUrl);
         endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
+        // endpoint = nextUrl.replace("http://localhost:8000/api", "")
     }
     backendLookup("GET", endpoint, callback)
 }

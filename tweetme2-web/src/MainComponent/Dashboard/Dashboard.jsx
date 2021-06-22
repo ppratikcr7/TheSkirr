@@ -16,9 +16,10 @@ export default function Dashboard(props) {
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
+    let [whoToFollowUser1, setwhoToFollowUser1] = useState();
+    let [whoToFollowUser2, setwhoToFollowUser2] = useState();
+    let [whoToFollowUser3, setwhoToFollowUser3] = useState();
     let [whotofollowProfile1, setProfile1] = useState();
-    let [whotofollowProfile2, setProfile2] = useState();
-    let [whotofollowProfile3, setProfile3] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
@@ -30,18 +31,16 @@ export default function Dashboard(props) {
         setNewTweets(tempNewTweets)
     }
     const handleNewUsername = (newUserName) => {
+
         setUserName(newUserName ? newUserName.username : "")
+        //get random 3 users to follow:
+        getWhoToFollowUser1();
+        getWhoToFollowUser2();
+        getWhoToFollowUser3();
         // function call for getting current user profile
         getMainProfile(newUserName.username, handleNewProfile);
         // function call for getting gagan user profile
         // getProfile1("Gagan123", handleNewProfile1);
-        getProfile1(newUserName.username, handleNewProfile1);
-        // function call for getting pratik user profile
-        // getProfile2("Pratik123", handleNewProfile2);
-        getProfile2(newUserName.username, handleNewProfile1);
-        // function call for getting ketul user profile
-        // getProfile3("Ketul123", handleNewProfile3);
-        getProfile3(newUserName.username, handleNewProfile1);
         // function call for getting total likes for current user
         getCurrentUserTotalLikes();
         // function call for getting total clacks for current user
@@ -58,11 +57,14 @@ export default function Dashboard(props) {
         setProfile1(whotofollowProfile1)
     }
 
-    const handleNewProfile2 = (whotofollowProfile2) => {
-        setProfile2(whotofollowProfile2)
+    const handleWhoToFollowUser1 = (whoToFollowUser1) => {
+        setwhoToFollowUser1(whoToFollowUser1)
     }
-    const handleNewProfile3 = (whotofollowProfile3) => {
-        setProfile3(whotofollowProfile3)
+    const handleWhoToFollowUser2 = (whoToFollowUser2) => {
+        setwhoToFollowUser2(whoToFollowUser2)
+    }
+    const handleWhoToFollowUser3 = (whoToFollowUser3) => {
+        setwhoToFollowUser3(whoToFollowUser3)
     }
 
     const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
@@ -73,6 +75,42 @@ export default function Dashboard(props) {
         setCurrentUserTotalClacks(currentUserTotalClacks)
     }
     
+    function getWhoToFollowUser1() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser1)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser1() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser1)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser2() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser2)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser3() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser3)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
     function getCurrentUserTotalLikes() {
         try {
             let endpoint = `/profiles/current_user/likes/`;
@@ -109,24 +147,6 @@ export default function Dashboard(props) {
         }
     }
 
-    function getProfile2(username) {
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile2)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getProfile3(username) {
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile3)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
     // join date update:
     if (newProfile && newProfile.date_joined) {
         var date = newProfile.date_joined;
@@ -145,7 +165,6 @@ export default function Dashboard(props) {
     }
 
     function handleTweetList(value) {
-    console.log("sucees call", value);
     apiTweetList(null, handleListLookup);
     }
 
@@ -233,8 +252,8 @@ export default function Dashboard(props) {
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/trending_exclamation") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href="/" style={{ textDecoration: "none" }}>Who to Follow</a>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/more_accounts") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="/profiles/more_accounts" style={{ textDecoration: "none" }}>Who to Follow</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>Clack Now</a>
@@ -262,17 +281,18 @@ export default function Dashboard(props) {
                                 <span className="text-lg font-bold p-2">Who to follow</span>
                             </div>
                             <div className="p-2">
-                                {(whotofollowProfile1) ? <UserWhoToFollowDisplay includeFullName user={whotofollowProfile1} /> : <div></div>}
+                            
+                                {(whoToFollowUser1) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser1} /> : <div></div>}
                                 {/* use the below for color encoding */}
                                 {/* <span class="text-grey-dark">&middot;</span> */}
                             </div>
                             <div className="p-2">
-                                {(whotofollowProfile2) ? <UserWhoToFollowDisplay includeFullName user={whotofollowProfile2} /> : <div></div>}
+                                {(whoToFollowUser2) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser2} /> : <div></div>}
                                 {/* use the below for color encoding */}
                                 {/* <span class="text-grey-dark">&middot;</span> */}
                             </div>
                             <div className="p-2">
-                                {(whotofollowProfile3) ? <UserWhoToFollowDisplay includeFullName user={whotofollowProfile3} /> : <div></div>}
+                                {(whoToFollowUser3) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser3} /> : <div></div>}
                                 {/* use the below for color encoding */}
                                 {/* <span class="text-grey-dark">&middot;</span> */}
                             </div>
@@ -328,9 +348,10 @@ export default function Dashboard(props) {
                                 </div>
                             </div>
                         </div> */}
+                            <hr className="mt-2 mb-2"></hr>
                             <div className="flex justify-between mb-1">
-                                <div>
-                                    <a href="#" className="font-bold text-black">Show more</a>
+                                <div>  
+                                    <a href="/profiles/more_accounts" className="font-bold text-black">Show more</a>
                                 </div>
                             </div>
                         </div>

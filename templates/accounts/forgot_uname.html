@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class='col-12 col-md-4 mx-auto mb-10'>
+    <h1 class="mt-2" style="text-align: center;">Forgot Username</h1>
+    <hr class="mt-0 mb-4">
+
+    <body>
+
+        <p>Please enter your new password twice so we can verify you typed it in correctly.</p>
+        <br>
+        <label for="email">Enter Registered Email</label>
+        <br>
+        <form action='forgot_uname' method="post">
+
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <div class="input-group mb-3">
+
+                <input type="text" class="form-control" aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default" name="email" required>
+            </div>
+            {% comment %} <input type="text" placeholder="Enter Email" name="email" required> {% endcomment %}
+            <div class="text-center">
+                <button type='submit' class='btn btn-primary'>Submit</button>
+            </div>
+
+            <br>
+            <div class="text-center">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+            </div>
+</div>
+
+</form>
+
+
+</body>
+</br>
+</br>
+</br>
+</br>
+</div>
+{% endblock content %}

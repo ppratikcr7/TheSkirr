@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_field %}
 
 {% block content %}
 
 <div class='col-10 col-md-4 mx-auto'>
-    <h1 style="text-align: center; padding: 10px">{{ title }}</h1>
+    <h1 style="text-align: center; padding: 10px; font-size: 22px;">{{ title }}</h1>
     <hr class="mt-0 mb-4">
     {% if description %}
     <p style="text-align: left; padding: 10px">{{ description }} </p>
@@ -12,5 +13,8 @@
     {% include "components/updateProfileForm.html" with form=form btn_label=btn_label %}
 
 </div>
-
+</br>
+</br>
+</br>
+</br>
 {% endblock content %}

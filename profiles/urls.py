@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import my_wall_view, profile_update_view, trends_view , user_wall_view
+from .views import my_wall_view, profile_update_view, trends_view , user_wall_view, show_more_view
+
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # api call for edit profile view
@@ -10,4 +12,7 @@ urlpatterns = [
     path('user_wall/<str:username>', user_wall_view),
     # api call for trending exclamation page
     path('trending_exclamation', trends_view),
+    # view function call for show more users
+    path('more_accounts', show_more_view),
+        
 ]

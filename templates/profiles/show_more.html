@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
+    <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
+        <h1><a href="#" class="text-black font-bold no-underline hover:underline">Pratik Prajapati</a></h1>
+        <div class="mb-4"><a href="#" class="text-grey-darker no-underline hover:underline">@test2</a></div>
+
+        <div class="mb-2"><i class="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
+        <div class="mb-4"><i class="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">Joined: 1 Jan 2021 12AM</a></div>
+        <div class="mb-4">
+            <!-- <a href="/profiles/my_wall/"+{{username}}> -->
+                <a href="/"></a>
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Wall</button>
+            </a>
+        </div>
+        <div class="mb-4">
+            <a href="/">
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Dashboard</button>
+            </a>
+        </div>
+        <div class="mb-4">
+            <a href="/profiles/trending_exclamation">
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Trending Exclamation</button>
+        </div>
+        <div class="mb-4">
+            <a href="/profiles/more_accounts">
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Who to Follow</button>
+            </a>
+        </div>
+        <div class="mb-4">
+            <a href="/">
+            <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Clack Now</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-3/5 bg-white mb-4">
+        <!-- who to follow -->
+        <div class="flex items-center justify-center h-screen bg-gray-100">
+            <div class="container">
+                <div class="flex justify-center p-4 mb-2">
+                    <h1 class="text-xl text-blue-500">Who to Follow: </h1>
+                </div>
+                <div class="flex justify-center">
+                    <div class="bg-white shadow-xl rounded-lg w-1/2">
+                        <ul class="divide-y divide-gray-300">
+                            {% for uname in username %}
+                            <li class="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/user_wall/{{uname}}'>{{uname}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/5 pl-4">
+        <div class="bg-white p-3 mb-3">
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+{% endblock content %}
