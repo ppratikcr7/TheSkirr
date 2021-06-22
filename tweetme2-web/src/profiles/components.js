@@ -35,7 +35,7 @@ export  function UserWhoToFollowDisplay(props){
 export  function UserPicture (props) {
   const {user, hideLink} = props
   const userIdSpan = <span className='mx-1 px-3 py-2 rounded-circle bg-dark text-white'>
-  {user.username[0]}
+  {"U"}
 </span>
   return  hideLink === true ? userIdSpan : <UserLink username={user.username}>{userIdSpan}</UserLink>
 }
