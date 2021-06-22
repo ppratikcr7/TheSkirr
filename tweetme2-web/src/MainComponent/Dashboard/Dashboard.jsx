@@ -84,6 +84,33 @@ export default function Dashboard(props) {
         }
     }
 
+    function getWhoToFollowUser1() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser1)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser2() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser2)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser3() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/users/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser3)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
     function getCurrentUserTotalLikes() {
         try {
             let endpoint = `/profiles/current_user/likes/`;
@@ -115,24 +142,6 @@ export default function Dashboard(props) {
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile1)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getProfile2(username) {
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile2)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getProfile3(username) {
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile3)
         } catch (error) {
             console.log("error:", error);
         }

@@ -11,7 +11,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from django.conf import settings 
+from django.core.mail import send_mail 
 # Create your views here.
 
 # Function based views to Class Based Views
@@ -107,3 +108,20 @@ def activate(request, uidb64, token):
         messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
         login(request, user)
         return redirect('/login')
+
+def forgot_uname(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        if User.objects.filter(email=email).exists():
+            p = User.objects.filter(email =email)
+            subject = 'Request for username'
+            message = f'Hi Your Username is: {p[0].username}'
+            email_from = settings.EMAIL_HOST_USER 
+            recipient_list = [email, ] 
+            send_mail( subject, message, email_from, recipient_list ) 
+            return redirect('/login')
+        else:
+            messages.warning(request, 'Email not registered')
+            return redirect('forgot_uname')
+    else:
+        return render(request, 'accounts/forgot_uname.html')
