@@ -1,5 +1,6 @@
 import random
 from django.conf import settings
+# from django.contrib import messages
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
@@ -29,6 +30,8 @@ def tweet_create_view(request, *args, **kwargs):
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
+        
+    # messages.warning(request, 'Your clack is more than 140 characters. Please restrict to 140 character clack!')
     return Response({}, status=400)
 
 

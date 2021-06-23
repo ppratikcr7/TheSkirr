@@ -40,36 +40,50 @@ def profile_update_view(request, *args, **kwargs):
 
 def my_wall_view(request, username, *args, **kwargs):
     # get the profile for the passed username
-    qs = Profile.objects.filter(user__username=username)
+    qs = UserRegisterDetails.objects.filter(username=username)
+    qs2 = Profile.objects.filter(user__username=username)
     if not qs.exists():
         raise Http404
     profile_obj = qs.first()
+    profile_obj2 = qs2.first()
     is_following = False
     if request.user.is_authenticated:
         user = request.user
-        is_following = user in profile_obj.followers.all()
-        # is_following = profile_obj in user.following.all()
+        is_following = user in profile_obj2.followers.all()
+        is_following = profile_obj2 in user.following.all()
+    
     context = {
         "username": username,
+        "name": profile_obj.first_name + profile_obj.last_name,
         "profile": profile_obj,
+        "fans": profile_obj2.followers.count(),
+        "companions": user.following.count(),
+        "gender": profile_obj.gender,
         "is_following": is_following
     }
     return render(request, "profiles/detail.html", context)
 
 def user_wall_view(request, username, *args, **kwargs):
     # get the profile for the passed username
-    qs = Profile.objects.filter(user__username=username)
+    qs = UserRegisterDetails.objects.filter(username=username)
+    qs2 = Profile.objects.filter(user__username=username)
     if not qs.exists():
         raise Http404
     profile_obj = qs.first()
+    profile_obj2 = qs2.first()
     is_following = False
     if request.user.is_authenticated:
         user = request.user
-        is_following = user in profile_obj.followers.all()
-        # is_following = profile_obj in user.following.all()
+        is_following = user in profile_obj2.followers.all()
+        is_following = profile_obj2 in user.following.all()
+    
     context = {
         "username": username,
+        "name": profile_obj.first_name + profile_obj.last_name,
         "profile": profile_obj,
+        "fans": profile_obj2.followers.count(),
+        "companions": user.following.count(),
+        "gender": profile_obj.gender,
         "is_following": is_following
     }
     return render(request, "profiles/detail.html", context)

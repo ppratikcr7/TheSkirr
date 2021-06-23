@@ -24,11 +24,6 @@
 </script> -->
 <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-        <h1><a href="#" class="text-black font-bold no-underline hover:underline">Pratik Prajapati</a></h1>
-        <div class="mb-4"><a href="#" class="text-grey-darker no-underline hover:underline">@test2</a></div>
-
-        <div class="mb-2"><i class="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">ppratik.cr7@gmail.com</a></div>
-        <div class="mb-4"><i class="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" class="text-teal no-underline hover:underline">Joined: 1 Jan 2021 12AM</a></div>
         <div class="mb-4">
             <!-- <a href="/profiles/my_wall/"+{{username}}> -->
                 <a href="/"></a>
@@ -61,15 +56,42 @@
         </div>
     </div>
 
-    <div class="w-full lg:w-3/5 bg-white mb-4">
-        <!-- profile -->
-        <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:20 auto;padding:20px 20px 20px 20px;"><br/></div>
-        <div id='tweetme-2' style="margin:20 auto;padding:20px 20px 20px 20px;" 
-        data-username={{username}} data-can-tweet="false"></div>
-    </div>
+    <div class="flex justify-center w-full lg:w-3/5 bg-white mb-4">
+        <!-- profile new -->
+        <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-blue-500">
+            <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
+          <div class="flex justify-center -mt-8">
+            <!-- <img src="https://i.imgur.com/8Km9tLL.jpg" class="rounded-full border-solid border-white border-2 -mt-3">		 -->
+            {% if gender == 'M' %}
+            <img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="150px" height="150px"/>
+            {% endif %}
+            {% if gender == 'F' %}
+            <img src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="150px" height="150px"/>
+            {% endif %}
+            </div>
+          <div class="text-center px-3 pb-6 pt-2">
+              <h3 class="text-white text-sm bold font-sans">{{name}}</h3>
+              <p class="mt-2 font-sans font-light text-white">{{username}}</p>
+          </div>
+            <div class="flex justify-center pb-3 text-white">
+            <div class="text-center mr-3 border-r pr-3">
+              <h2>{{fans}}</h2>
+              <span>Fans</span>
+            </div>
+            <div class="text-center">
+              <h2>{{companions}}</h2>
+              <span>Companions</span>
+            </div>
+        </div>
+        <!-- </div>
+             profile 
+            <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:20 auto;padding:20px 20px 20px 20px;"><br/></div>
+            <div id='tweetme-2' style="margin:20 auto;padding:20px 20px 20px 20px;" 
+            data-username={{username}} data-can-tweet="false"></div>
+        </div> -->
 
-    <div class="w-full lg:w-1/5 pl-4">
-        <div class="bg-white p-3 mb-3">
+    <!-- <div class="w-full lg:w-1/5 pl-4">
+        <div class="bg-white p-3 mb-3"> -->
             <!-- <div>
                 <span class="text-lg font-bold">Who to follow</span>
             </div>
@@ -130,7 +152,7 @@
                     <a href="#" class="font-bold text-black">Show more</a>
                 </div>
             </div> -->
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 </div>
 {% endblock content %}

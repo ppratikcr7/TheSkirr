@@ -1,7 +1,6 @@
 import React from 'react'
 import {apiTweetCreate} from './lookup'
 
-
 export function TweetCreate(props){
   const textAreaRef = React.createRef()
   const {didTweet} = props
@@ -24,9 +23,7 @@ export function TweetCreate(props){
     }
     return <div className={props.className}>
           <form onSubmit={handleSubmit}>
-            <textarea ref={textAreaRef} required={true} className='form-control' name='tweet' placeholder='Enter Your Clack...'>
-
-            </textarea>
+            <textarea ref={textAreaRef} required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 140 characters...' maxlength="140"></textarea>
             <button type='submit' className='btn btn-primary my-3'>Clack</button>
         </form>
   </div>

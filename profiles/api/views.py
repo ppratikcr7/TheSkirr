@@ -62,9 +62,10 @@ def get_username(request, *args, **kwargs):
 def who_to_follow_user1(request, *args, **kwargs):
     # grab the max id in the database
     max_id = Profile.objects.order_by('-id')[0].id
+    # print("max:", max_id)
     # grab a random possible id. we don't know if this id does exist in the database, though
     random_id = random.randint(1, max_id + 1)
-    print("random_id: ", random_id)
+    # print("user:", random_id)
     random_user = Profile.objects.filter(id__gte=random_id)
     profile_obj = random_user.first()
     serializer = PublicProfileSerializer(profile_obj)
@@ -74,9 +75,10 @@ def who_to_follow_user1(request, *args, **kwargs):
 def who_to_follow_user2(request, *args, **kwargs):
     # grab the max id in the database
     max_id = Profile.objects.order_by('-id')[0].id
+    # print("max:", max_id)
     # grab a random possible id. we don't know if this id does exist in the database, though
     random_id = random.randint(1, max_id + 1)
-    print("random_id: ", random_id)
+    # print("user:", random_id)
     random_user = Profile.objects.filter(id__gte=random_id)
     profile_obj = random_user.first()
     serializer = PublicProfileSerializer(profile_obj)
@@ -86,9 +88,10 @@ def who_to_follow_user2(request, *args, **kwargs):
 def who_to_follow_user3(request, *args, **kwargs):
     # grab the max id in the database
     max_id = Profile.objects.order_by('-id')[0].id
+    # print("max:", max_id)
     # grab a random possible id. we don't know if this id does exist in the database, though
     random_id = random.randint(1, max_id + 1)
-    print("random_id: ", random_id)
+    # print("user:", random_id)
     random_user = Profile.objects.filter(id__gte=random_id)
     profile_obj = random_user.first()
     serializer = PublicProfileSerializer(profile_obj)
