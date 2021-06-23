@@ -60,7 +60,8 @@ def get_username(request, *args, **kwargs):
 
 @api_view(['GET'])
 def who_to_follow_users(request, *args, **kwargs):
-    random_user = Profile.objects.order_by('?')[:1]
+    all_users = list(Profile.objects.all())
+    random_user = random.choice(all_users)
     if not random_user.exists():
         return Response({"detail": "User not found"}, status=404)
     profile_obj = random_user.first()
