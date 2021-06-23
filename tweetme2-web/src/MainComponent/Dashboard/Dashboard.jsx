@@ -77,7 +77,7 @@ export default function Dashboard(props) {
 
     function getWhoToFollowUser1() {
         try {
-            let endpoint = `/profiles/who_to_follow_users/users/`;
+            let endpoint = `/profiles/who_to_follow_users/user1/`;
             backendLookup("GET", endpoint, handleWhoToFollowUser1)
         } catch (error) {
             console.log("error:", error);
@@ -86,7 +86,7 @@ export default function Dashboard(props) {
 
     function getWhoToFollowUser2() {
         try {
-            let endpoint = `/profiles/who_to_follow_users/users/`;
+            let endpoint = `/profiles/who_to_follow_users/user2/`;
             backendLookup("GET", endpoint, handleWhoToFollowUser2)
         } catch (error) {
             console.log("error:", error);
@@ -95,7 +95,7 @@ export default function Dashboard(props) {
 
     function getWhoToFollowUser3() {
         try {
-            let endpoint = `/profiles/who_to_follow_users/users/`;
+            let endpoint = `/profiles/who_to_follow_users/user3/`;
             backendLookup("GET", endpoint, handleWhoToFollowUser3)
         } catch (error) {
             console.log("error:", error);

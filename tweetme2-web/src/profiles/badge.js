@@ -22,6 +22,7 @@ function ProfileBadge(props) {
         <p style={{ paddingTop: 20, paddingBottom: 0, paddingRight: 10, paddingLeft: 0,  margin: 5 }}><DisplayCount>{user.following_count}</DisplayCount> following</p>
         {/* <p style={{ paddingTop: 20, paddingBottom: 20, paddingRight: 20, paddingLeft: 20,  margin: 5 }}>{user.location}</p>
         <p style={{ paddingTop: 20, paddingBottom: 20, paddingRight: 20, paddingLeft: 20,  margin: 5 }}>{user.bio}</p> */}
+        <br/>
         <button className='btn btn-primary' onClick={handleFollowToggle}>{currentVerb}</button>
     </div> : null
 }

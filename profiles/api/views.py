@@ -59,11 +59,37 @@ def get_username(request, *args, **kwargs):
     return Response( serializer.data, status=200)
 
 @api_view(['GET'])
-def who_to_follow_users(request, *args, **kwargs):
-    all_users = list(Profile.objects.all())
-    random_user = random.choice(all_users)
-    if not random_user.exists():
-        return Response({"detail": "User not found"}, status=404)
+def who_to_follow_user1(request, *args, **kwargs):
+    # grab the max id in the database
+    max_id = Profile.objects.order_by('-id')[0].id
+    # grab a random possible id. we don't know if this id does exist in the database, though
+    random_id = random.randint(1, max_id + 1)
+    print("random_id: ", random_id)
+    random_user = Profile.objects.filter(id__gte=random_id)
+    profile_obj = random_user.first()
+    serializer = PublicProfileSerializer(profile_obj)
+    return Response( serializer.data, status=200)
+
+@api_view(['GET'])
+def who_to_follow_user2(request, *args, **kwargs):
+    # grab the max id in the database
+    max_id = Profile.objects.order_by('-id')[0].id
+    # grab a random possible id. we don't know if this id does exist in the database, though
+    random_id = random.randint(1, max_id + 1)
+    print("random_id: ", random_id)
+    random_user = Profile.objects.filter(id__gte=random_id)
+    profile_obj = random_user.first()
+    serializer = PublicProfileSerializer(profile_obj)
+    return Response( serializer.data, status=200)
+
+@api_view(['GET'])
+def who_to_follow_user3(request, *args, **kwargs):
+    # grab the max id in the database
+    max_id = Profile.objects.order_by('-id')[0].id
+    # grab a random possible id. we don't know if this id does exist in the database, though
+    random_id = random.randint(1, max_id + 1)
+    print("random_id: ", random_id)
+    random_user = Profile.objects.filter(id__gte=random_id)
     profile_obj = random_user.first()
     serializer = PublicProfileSerializer(profile_obj)
     return Response( serializer.data, status=200)
