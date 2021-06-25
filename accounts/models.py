@@ -28,7 +28,13 @@ class UserRegisterDetails(models.Model):
     username = models.CharField(max_length=220, null=True, blank=True)
     password1 = models.CharField(max_length=220, null=True, blank=True)
     password2 = models.CharField(max_length=220, null=True, blank=True)
-
+    first_name_public_access = models.CharField(max_length=220, null=True, blank=True)
+    last_name_public_access = models.CharField(max_length=220, null=True, blank=True)
+    gender_public_access = models.CharField(max_length=220, null=True, blank=True)
+    dob_public_access = models.CharField(max_length=220, null=True, blank=True)
+    phone_number_public_access = models.CharField(max_length=220, null=True, blank=True)
+    email_public_access = models.CharField(max_length=220, null=True, blank=True)
+    email2_public_access = models.CharField(max_length=220, null=True, blank=True)
     # def __str__(self):
     #     return self.city
 

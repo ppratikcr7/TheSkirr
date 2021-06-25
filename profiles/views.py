@@ -66,6 +66,7 @@ def my_wall_view(request, username, *args, **kwargs):
 def user_wall_view(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = UserRegisterDetails.objects.filter(username=username)
+    print(qs)
     qs2 = Profile.objects.filter(user__username=username)
     if not qs.exists():
         raise Http404
@@ -76,15 +77,36 @@ def user_wall_view(request, username, *args, **kwargs):
         user = request.user
         is_following = user in profile_obj2.followers.all()
         is_following = profile_obj2 in user.following.all()
-    
+
+        fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = "Yes", username=username)
+        ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = "Yes", username=username)
+        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = "Yes", username=username)
+        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = "Yes", username=username)
+        dob_pa = UserRegisterDetails.objects.filter(dob_public_access = "Yes", username=username)
+        pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = "Yes", username=username)
+        em_pa = UserRegisterDetails.objects.filter(email_public_access = "Yes", username=username)
+        em2_pa = UserRegisterDetails.objects.filter(email2_public_access = "Yes", username=username)
+        fn = profile_obj.first_name
+        ln = profile_obj.last_name
+        gen = profile_obj.gender
+        dob = profile_obj.dob
+        pn = profile_obj.phone_number
+        em = profile_obj.email
+        em2 = profile_obj.email2
+
     context = {
-        "username": username,
-        "name": profile_obj.first_name + profile_obj.last_name,
+        "username": username,        
         "profile": profile_obj,
         "fans": profile_obj2.followers.count(),
         "companions": user.following.count(),
-        "gender": profile_obj.gender,
-        "is_following": is_following
+        "is_following": is_following,
+        "gender":profile_obj.gender,
+        "fn_pa": fn_pa, 
+        "ln_pa": ln_pa, "gen_pa": gen_pa, "dob_pa" : dob_pa, 
+        "pn_pa" : pn_pa, "em_pa" : em_pa,"em2_pa" : em2_pa,
+        "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
+        "pn_show" : pn, "em_show" : em, "em2_show" : em2
+
     }
     return render(request, "profiles/detail.html", context)
 

@@ -70,8 +70,29 @@
             {% endif %}
             </div>
           <div class="text-center px-3 pb-6 pt-2">
-              <h3 class="text-white text-sm bold font-sans">{{name}}</h3>
-              <p class="mt-2 font-sans font-light text-white">{{username}}</p>
+              <h3 class="text-white text-sm bold font-sans">{{username}}</h3>
+              {%if fn_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{fn_show}}</p>
+              {% endif %}
+              {% if ln_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{ln_show}}</p>
+              {% endif %}
+              {%if gen_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{gen_show}}</p>
+              {% endif %}
+              {%if dob_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{dob_show}}</p>
+              {% endif %}
+              {% if pn_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{pn_show}}</p>
+              {% endif %}
+              {% if em_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{em_show}}</p>
+              {% endif %}
+              {% if em2_pa %}
+              <p class="mt-2 font-sans font-light text-white">{{em2_show}}</p>
+              {% endif %}
+              
           </div>
             <div class="flex justify-center pb-3 text-white">
             <div class="text-center mr-3 border-r pr-3">
