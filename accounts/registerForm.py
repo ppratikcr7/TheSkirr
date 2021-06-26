@@ -48,7 +48,7 @@ class SignUpForm(UserCreationForm):
         attrs={'class': 'form-control', 'placeholder': 'Phone', 'id': 'username'})) # validators should be a list
 
     # phone_number_public = forms.RadioSelect()
-    email = forms.EmailField(alidators = [validate_email], max_length=100, widget=forms.TextInput(
+    email = forms.EmailField(validators = [validate_email], max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Email ID', 'id': 'username'}))
     email2 = forms.EmailField(validators = [validate_email], required=False, max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Secondary Email ID', 'id': 'username'}))
