@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('first_name', models.CharField(blank=True, max_length=220, null=True)),
                 ('last_name', models.CharField(blank=True, max_length=220, null=True)),
-                ('gender', models.CharField(choices=[('M', 'Male'), ('F', 'Female'), ('D', 'Decline to answer')], max_length=1)),
+                ('gender', models.CharField(choices=[('Male', 'Male'), ('Female', 'Female'), ('Decline to answer', 'Decline to answer')], max_length=1)),
                 ('dob', models.DateField(blank=True, null=True)),
                 ('phone_number', models.IntegerField(blank=True, null=True)),
                 ('email', models.EmailField(blank=True, max_length=220, null=True)),

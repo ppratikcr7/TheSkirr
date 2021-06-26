@@ -6,9 +6,10 @@ User = settings.AUTH_USER_MODEL
 # Create your models here.
 class UserRegisterDetails(models.Model):
     GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('D', 'Decline to answer'),
+        ('Select', 'Select'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Decline to answer', 'Decline to answer'),
     )
     # TYPE_SELECT = (
     #     ('0', 'Yes'),

@@ -56,61 +56,66 @@
         </div>
     </div>
 
-    <div class="flex justify-center w-full lg:w-3/5 bg-white mb-4">
+    <div class="flex justify-center w-full lg:w-3/5 bg-white mb-2">
         <!-- profile new -->
-        <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-blue-500">
+        <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
             <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
-          <div class="flex justify-center -mt-8">
-            <!-- <img src="https://i.imgur.com/8Km9tLL.jpg" class="rounded-full border-solid border-white border-2 -mt-3">		 -->
-            {% if gender == 'M' %}
-            <img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="150px" height="150px"/>
-            {% endif %}
-            {% if gender == 'F' %}
-            <img src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="150px" height="150px"/>
-            {% endif %}
+            <div class="flex justify-center -mt-4">
+                <!-- <img src="https://i.imgur.com/8Km9tLL.jpg" class="rounded-full border-solid border-white border-2 -mt-3">		 -->
+                {% if gender == 'Male' %}
+                <img class="h-full" src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="80px" height= "80px"/>
+                {% endif %}
+                {% if gender == 'Female' %}
+                <img class="h-full" src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="80px" height="80px"/>
+                {% endif %}
+                {% if gender == 'Decline to answer' %}
+                <img class="h-full" src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShaggyMullet&accessoriesType=Round&hairColor=BrownDark&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray01&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="80px" height="80px"/>
+                {% endif %}
             </div>
-          <div class="text-center px-3 pb-6 pt-2">
-              <h3 class="text-white text-sm bold font-sans">{{username}}</h3>
-              {%if fn_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{fn_show}}</p>
-              {% endif %}
-              {% if ln_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{ln_show}}</p>
-              {% endif %}
-              {%if gen_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{gen_show}}</p>
-              {% endif %}
-              {%if dob_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{dob_show}}</p>
-              {% endif %}
-              {% if pn_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{pn_show}}</p>
-              {% endif %}
-              {% if em_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{em_show}}</p>
-              {% endif %}
-              {% if em2_pa %}
-              <p class="mt-2 font-sans font-light text-white">{{em2_show}}</p>
-              {% endif %}
-              
-          </div>
-            <div class="flex justify-center pb-3 text-white">
-            <div class="text-center mr-3 border-r pr-3">
-              <h2>{{fans}}</h2>
-              <span>Fans</span>
+            <div class="text-center px-3 pb-2 pt-2">
+                <h3 class="text-white text-sm bold font-sans">Username: {{username}}</h3>
+                {%if fn_pa %}
+                <p class="mt-2 font-sans font-light text-white">First Name: {{fn_show}}</p>
+                {% endif %}
+                {% if ln_pa %}
+                <p class="mt-2 font-sans font-light text-white">Last Name: {{ln_show}}</p>
+                {% endif %}
+                {%if gen_pa %}
+                <p class="mt-2 font-sans font-light text-white">Gender: {{gen_show}}</p>
+                {% endif %}
+                {%if dob_pa %}
+                <p class="mt-2 font-sans font-light text-white">DOB: {{dob_show}}</p>
+                {% endif %}
+                {% if pn_pa %}
+                <p class="mt-2 font-sans font-light text-white">Contact: {{pn_show}}</p>
+                {% endif %}
+                {% if em_pa %}
+                <p class="mt-2 font-sans font-light text-white">Email: {{em_show}}</p>
+                {% endif %}
+                {% if em2_pa %}
+                <p class="mt-2 font-sans font-light text-white">Secondary Email: {{em2_show}}</p>
+                {% endif %}
             </div>
-            <div class="text-center">
-              <h2>{{companions}}</h2>
-              <span>Companions</span>
+            <hr class="mt-2 mb-2">
+            <div class="flex justify-center pb-1 text-white">
+                <div class="text-center mr-4 border-r pr-3">
+                    <h2>{{fans}}</h2>
+                    <span>Fans</span>
+                </div>
+                <div class="text-center">
+                    <h2>{{companions}}</h2>
+                    <span>Companions</span>
+                </div>
+            </div>
+            <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:2 auto;padding:2px 2px 2px 2px;"><br/></div>
+                <div id='tweetme-2' style="margin:20 auto;padding:2px 2px 2px 2px;" 
+                data-username={{username}} data-can-tweet="false"></div>
             </div>
         </div>
-        <!-- </div>
-             profile 
-            <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:20 auto;padding:20px 20px 20px 20px;"><br/></div>
-            <div id='tweetme-2' style="margin:20 auto;padding:20px 20px 20px 20px;" 
-            data-username={{username}} data-can-tweet="false"></div>
-        </div> -->
-
+        <br />
+        <br />
+        <br />
+    </div>
     <!-- <div class="w-full lg:w-1/5 pl-4">
         <div class="bg-white p-3 mb-3"> -->
             <!-- <div>

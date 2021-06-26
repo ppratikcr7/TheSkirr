@@ -1,3 +1,10 @@
+<style>
+    .errorlist
+        {
+            color: red;
+        }
+</style>
+
 <form method='POST' class="mb-3"> {% csrf_token %}
     {{ form.non_field_errors }}
 

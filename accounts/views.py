@@ -115,7 +115,9 @@ def activate(request, uidb64, token):
         login(request, user)
         return redirect('/login')
     else:
-        messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+        # messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+        messages.warning(request, 'Email Verification link is already validated once, please login now!')
+
         login(request, user)
         return redirect('/login')
 
