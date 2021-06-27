@@ -1,10 +1,10 @@
 from django.db import models
 from django.conf import settings
-
-User = settings.AUTH_USER_MODEL
+from django.contrib.auth.models import AbstractUser
+# User = settings.AUTH_USER_MODEL
 
 # Create your models here.
-class UserRegisterDetails(models.Model):
+class UserRegisterDetails(AbstractUser):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -25,7 +25,7 @@ class UserRegisterDetails(models.Model):
     email2 = models.EmailField(max_length=220, null=True, blank=True)
     areaOfInterest = models.CharField(max_length=2000, null=True, blank=True)
     city = models.CharField(max_length=220, null=True, blank=True)
-    username = models.CharField(max_length=220, null=True, blank=True)
+    # username = models.CharField(max_length=220, null=True, blank=True)
     password1 = models.CharField(max_length=220, null=True, blank=True)
     password2 = models.CharField(max_length=220, null=True, blank=True)
     first_name_public_access = models.CharField(max_length=220, null=True, blank=True)

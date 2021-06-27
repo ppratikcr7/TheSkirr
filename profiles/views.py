@@ -5,10 +5,12 @@ from django.shortcuts import render, redirect
 from .forms import ProfileForm
 from .models import Profile
 
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from tweets.models import Tweet, TweetLike
 from collections import defaultdict
 import random
+from django.contrib import messages
+
 
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
@@ -17,7 +19,14 @@ def profile_update_view(request, *args, **kwargs):
     user_data = {
         "first_name": user.first_name,
         "last_name": user.last_name,
-        "email": user.email
+        "username": user.username,
+        "phone_number":user.phone_number,
+        "email": user.email,
+        "email2":user.email2,
+        "city":user.city,
+        "dob":user.dob,
+        "gender":user.gender,
+        "aoi":user.areaOfInterest
     }
     my_profile = user.profile
     form = ProfileForm(request.POST or None, instance=my_profile, initial=user_data)
@@ -25,12 +34,36 @@ def profile_update_view(request, *args, **kwargs):
         profile_obj = form.save(commit=False)
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
+        username = form.cleaned_data.get('username')
+        phone_number = form.cleaned_data.get('phone_number')
         email = form.cleaned_data.get('email')
+        email2 = form.cleaned_data.get('email2')
+        city = form.cleaned_data.get('city')
+        dob = form.cleaned_data.get('dob')
+        gender = form.cleaned_data.get('gender')
+        areaOfInterest = form.cleaned_data.get('areaOfInterest')
+
         user.first_name = first_name
         user.last_name = last_name
+        user.username = username
+        user.phonephone_number =phone_number   
         user.email = email
+        user.email2 = email2
+        user.city = city
+        user.dob = dob
+        user.gender = gender
+        user.areaOfInterest = areaOfInterest
+        
         user.save()
         profile_obj.save()
+        # print(user.save())
+        if user.save()==None:
+            messages.success(request, 'You Profile has been successfully updated :)')
+        else:
+            messages.warning(request, 'Update Failed:(')
+           
+
+        
     context = {
         "form": form,
         "btn_label": "Update",
@@ -119,9 +152,9 @@ def trends_view(request, *args, **kwargs):
 
 def show_more_view(request, *args, **kwargs):
     
-    rand = User.objects.order_by('?')[:3]
-    rec = User.objects.order_by('-date_joined')[:3]
-    all = User.objects.all()
+    rand = UserRegisterDetails.objects.order_by('?')[:3]
+    rec = UserRegisterDetails.objects.order_by('-date_joined')[:3]
+    all = UserRegisterDetails.objects.all()
     
     un = request.user.username
 

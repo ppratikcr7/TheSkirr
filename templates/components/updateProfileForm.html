@@ -2,63 +2,66 @@
 <center>
     <form method='POST'> {% csrf_token %}
         {{ form.non_field_errors }}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>    
+        {% endfor %}
         <div class="form-group" style="text-align: left;">
     
-            <!-- <label for="{{ form.first_name.id_for_label }}">First Name: </label> -->
+            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label>  {% endcomment %}
             {{ form.first_name |as_crispy_field }}
             {{ form.first_name.errors }}
     
         </div>
         <div class="form-group" style="text-align: left;">
     
-            <!-- <label for="{{ form.last_name.id_for_label }}">Last Name: </label> -->
+            {% comment %} <label for="{{ form.last_name.id_for_label }}">Last Name: </label>  {% endcomment %}
             {{ form.last_name |as_crispy_field }}
             {{ form.last_Name.errors }}
     
         </div>
         <div class="form-group" style="text-align: left;">
     
-            <label for="{{ form.username.id_for_label }}">User Name: </label>
-            {{ form.username }}
+            {% comment %} <label for="{{ form.username.id_for_label }}">User Name: </label> {% endcomment %}
+            {{ form.username |as_crispy_field}}
             {{ form.username.errors }}
     
         </div>
         <div class="form-group" style="text-align: left;">
-            <label for="{{ form.phone_number.id_for_label }}">Phone Number: </label>
-            {{ form.phone_number }}
+            {% comment %} <label for="{{ form.phone_number.id_for_label }}">Phone Number: </label> {% endcomment %}
+            {{ form.phone_number |as_crispy_field}}
             {{ form.phone_number.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            <!-- <label for="{{ form.email.id_for_label }}">Email: </label> -->
+            {% comment %} <label for="{{ form.email.id_for_label }}">Email: </label> {% endcomment %}
             {{ form.email |as_crispy_field}}
             {{ form.email.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label>
-            {{ form.email2 }}
+            {% comment %} <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label> {% endcomment %}
+            {{ form.email2 |as_crispy_field}}
             {{ form.email2.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            <label for="{{ form.city.id_for_label }}">City: </label>
-            {{ form.city }}
+            {% comment %} <label for="{{ form.city.id_for_label }}">City: </label> {% endcomment %}
+            {{ form.city |as_crispy_field}}
             {{ form.city.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            <label for="{{ form.dob.id_for_label }}">DOB: </label>
-            {{ form.dob }}
+            {% comment %} <label for="{{ form.dob.id_for_label }}">DOB: </label> {% endcomment %}
+            {{ form.dob |as_crispy_field}}
             {{ form.dob.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            <label for="{{ form.gender.id_for_label }}">Gender: </label>
-            {{ form.gender }}
+            {% comment %} <label for="{{ form.gender.id_for_label }}">Gender: </label> {% endcomment %}
+            {{ form.gender |as_crispy_field}}
             {{ form.gender.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest: </label>
-            {{ form.areaOfInterest }}
+            {% comment %} <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest: </label> {% endcomment %}
+            {{ form.areaOfInterest |as_crispy_field}}
             {{ form.areaOfInterest.errors }}
         </div>
-        <div class="form-group" style="text-align: left;">
+        {% comment %} <div class="form-group" style="text-align: left;">
     
             <label for="{{ form.password1.id_for_label }}">Password: </label>
             {{ form.password1 }}
@@ -70,7 +73,8 @@
             <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
             {{ form.password2 }}
             {{ form.password2.errors }}
-        </div>
+        </div> {% endcomment %}
+        
         <button type='submit' class='btn btn-primary'>{% if btn_label %}
             {{btn_label}} {% else %}Update{% endif %}</button>
     </form>

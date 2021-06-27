@@ -16,7 +16,7 @@ GENDER_CHOICES = (
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 def validate_email(value):
-    if User.objects.filter(email = value).exists():
+    if UserRegisterDetails.objects.filter(email = value).exists():
         raise ValidationError((f"The email id: {value} is already taken. Please use another email id."),params = {'value':value})
 
 def validate_phoneNumber(value):
@@ -80,7 +80,7 @@ class SignUpForm(UserCreationForm):
         ))
 
     class Meta:
-        model = User
+        model = UserRegisterDetails
         fields = ('username','first_name','last_name','phone_number', 'email', 'email2', 'city', 'dob', 'areaOfInterest', 'password1', 'password2','gender' )
 
         
