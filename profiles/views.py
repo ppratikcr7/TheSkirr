@@ -83,12 +83,12 @@ def my_wall_view(request, username, *args, **kwargs):
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
     }
+    print("gender",profile_obj.gender);
     return render(request, "profiles/detail.html", context)
 
 def user_wall_view(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = UserRegisterDetails.objects.filter(username=username)
-    print(qs)
     qs2 = Profile.objects.filter(user__username=username)
     if not qs.exists():
         raise Http404
@@ -134,7 +134,10 @@ def user_wall_view(request, username, *args, **kwargs):
 
 def trends_view(request, *args, **kwargs):
     trends_list = TrendsExclamation.objects.all()
+    username = request.user.username;
+    
     context = {
+        "username": username,
         "trends_list": trends_list
     }
     return render(request, "profiles/trends.html", context)
@@ -193,7 +196,8 @@ def show_more_view(request, *args, **kwargs):
             temp_list.append(i)
 
     final = random.sample(temp_list, len(temp_list))
-    # context = {
-    # "username":arr
-    #  }
-    return render(request, "profiles/show_more.html", {"username":final})
+    context = {
+        "username": un,
+        "usernames":final,
+     }
+    return render(request, "profiles/show_more.html", context)

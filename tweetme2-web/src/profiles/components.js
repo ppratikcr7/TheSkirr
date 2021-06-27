@@ -25,7 +25,7 @@ export  function UserWhoToFollowDisplay(props){
   // console.log("gender disp1: ", user.gender )
   return <React.Fragment>
     <div className='badge'>
-      <UserPicture user={user}></UserPicture>
+    <UserLink username={user.username}><UserPicture user={user}></UserPicture></UserLink>
       {/* <span style="font-weight: bold;">&emsp;{nameDisplay}&emsp;</span> */}
       <p>&emsp;</p>{nameDisplay}
       {hideLink === true ? `@${user.username}` : <UserLink username={user.username}>@{user.username}</UserLink>}

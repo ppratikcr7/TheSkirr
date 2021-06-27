@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Layout, Button, Row, Col, Card, Avatar, Typography, Space } from 'antd';
+import { Button,Col, Input } from 'antd';
 import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
@@ -11,8 +11,13 @@ import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
+import $ from 'jquery';
+
+const { Search } = Input;
 
 export default function Dashboard(props) {
+    const onSearch = value => console.log(value);
+
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
@@ -129,15 +134,6 @@ export default function Dashboard(props) {
         }
     }
 
-    // function getProfile1(username) {
-    //     try {
-    //         let endpoint = `/profiles/user/${username}/`;
-    //         backendLookup("GET", endpoint, handleNewProfile1)
-    //     } catch (error) {
-    //         console.log("error:", error);
-    //     }
-    // }
-
     // join date update:
     if (newProfile && newProfile.date_joined) {
         var date = newProfile.date_joined;
@@ -167,6 +163,33 @@ export default function Dashboard(props) {
             console.log("error:", error);
         }
     }, [])
+
+    const MAX_TWEET_LENGTH = 200;
+
+    $("#clackText").keyup(function(){
+        $("#info").text(($(this).val().length) + " / " + MAX_TWEET_LENGTH)
+    });
+
+    $('#clackText').keypress(function () {
+        var charLength = $(this).val().length;
+        if (charLength >= MAX_TWEET_LENGTH) {
+            $("#error").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            return false;
+        }
+        var textareaLength = document.getElementById("clackText").length;
+        if (textareaLength < MAX_TWEET_LENGTH) {
+            $("#error").text((''));
+            return false;
+        }
+    });
+
+    // $('#clackText').trigger(function () {
+    //     var maxLength = $(this).val().length;
+    //     if (maxLength < MAX_TWEET_LENGTH) {
+    //         $("#error").text((''));
+    //         return false;
+    //     }
+    // });
 
         return (
             <>
@@ -210,7 +233,16 @@ export default function Dashboard(props) {
                             </ul>
                         </div>
                         <div className="w-full lg:w-1/5 flex lg:my-0 lg:justify-end items-center">
-                            <svg version="1.1" className="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
+                            {/* search box */}
+                            <Search
+                                placeholder="input search text"
+                                allowClear
+                                enterButton="Search"
+                                size="large"
+                                onSearch={onSearch} style={{ width: 400, color: "#3b82f6"}}
+                                />
+
+                            {/* <svg version="1.1" className="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
                                 <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
                                         c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
                                         C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
@@ -222,17 +254,21 @@ export default function Dashboard(props) {
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-                    <div className="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-                        <h1><a href="#" className="text-black font-bold no-underline hover:underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>
-                        <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">{newProfile ? newProfile.username : "@username"}</a></div>
-                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? newProfile.email : "EmailID"}</a></div>
-                        <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline hover:underline">{newProfile ? "Joined: " + cleanDate : "Joined: 1 Jan 2021 12AM"}</a></div>
+                    <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
+                        <div>
+                            <span className="text-lg font-bold">User Bio</span>
+                            <br />
+                        </div>
+                        <h1><a href="#" className="text-black font-bold no-underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>
+                        <div className="mb-4"><a href="#" className="text-grey-darker no-underline">{newProfile ? newProfile.username : "@username"}</a></div>
+                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? newProfile.email : "EmailID"}</a></div>
+                        <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? "Joined: " + cleanDate : "Joined: 1 Jan 2021 12AM"}</a></div>
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push(`/profiles/my_wall/?username=${newUserName}`) }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>

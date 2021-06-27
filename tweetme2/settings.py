@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'localhost:8000', 'theskirr.com', 'www.theskirr.com']
 LOGIN_URL = "/login"
 
-MAX_TWEET_LENGTH = 140
+MAX_TWEET_LENGTH = 200
 TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet", "delete"]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
