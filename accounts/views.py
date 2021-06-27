@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib import messages
 from django.conf import settings 
 from django.core.mail import send_mail 
@@ -20,9 +20,13 @@ from django.core.mail import send_mail
 def login_view(request, *args, **kwargs):
     form = UserLoginForm(request, data=request.POST or None)
     if form.is_valid():
-        user_ = form.get_user()
-        login(request, user_)
-        return redirect("/")
+        if request.user.is_active==True:
+            user_ = form.get_user()
+            login(request, user_)
+            return redirect("/")
+        else:
+            messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+
     context = {
         "form": form,
         "btn_label": "Login",
@@ -46,7 +50,7 @@ def logout_view(request, *args, **kwargs):
 def register_view(request, *args, **kwargs):
     print("reqest:",request.GET.get('user_type'))
     form = SignUpForm(request.POST or None)
-    if form.is_valid():
+    if request.method == 'POST':
         username = request.POST['username']
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -66,15 +70,16 @@ def register_view(request, *args, **kwargs):
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
         email2_public_access = request.POST.get('email2_public_access', False)
-        ins = UserRegisterDetails(username=username,first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
-        city=city, dob=dob, areaOfInterest=areaOfInterest, password1=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
+        user = UserRegisterDetails.objects.create_user(username=username,first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+        city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
         last_name_public_access=last_name_public_access, gender_public_access=gender_public_access, dob_public_access=dob_public_access,
         phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, email2_public_access=email2_public_access)
-        ins.save()
-        user = form.save(commit=False)
-        user.is_active = False
         user.save()
-        user.set_password(form.cleaned_data.get("password1"))
+        # user = form.save(commit=False)
+        user.is_active = False
+        # user.save()
+        # user.set_password(form.cleaned_data.get(password1))
+        user.set_password(request.POST.get('password1'))
         current_site = get_current_site(request)
         mail_subject = 'Activate your skirr account.'
         message = render_to_string('acc_active_email.html', {
@@ -83,12 +88,13 @@ def register_view(request, *args, **kwargs):
             'uid':urlsafe_base64_encode(force_bytes(user.pk)),
             'token':account_activation_token.make_token(user),
         })
-        to_email = form.cleaned_data.get('email')
+        to_email = request.POST.get('email')
 
         email = EmailMessage(
                     mail_subject, message, to=[to_email]
         )
-        # send a confirmation email to verify their account
+        print("hey")
+            # send a confirmation email to verify their account
         messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
         email.send()
         login(request, user)
@@ -105,27 +111,30 @@ def register_view(request, *args, **kwargs):
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = UserRegisterDetails.objects.get(pk=uid)
+        print(uid)
+    except(TypeError, ValueError, OverflowError, UserRegisterDetails.DoesNotExist):
         user = None
+    print(user)
+    print(token)
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         login(request, user)
+        print("yes")
         return redirect('/login')
     else:
-        # messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
-        messages.warning(request, 'Email Verification link is already validated once, please login now!')
-
+        messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+        print("no")
         login(request, user)
         return redirect('/login')
 
 def forgot_uname(request):
     if request.method == 'POST':
         email = request.POST['email']
-        if User.objects.filter(email=email).exists():
-            p = User.objects.filter(email =email)
+        if UserRegisterDetails.objects.filter(email=email).exists():
+            p = UserRegisterDetails.objects.filter(email =email)
             subject = 'Request for username'
             message = f'Hi Your Username is: {p[0].username}'
             email_from = settings.EMAIL_HOST_USER 

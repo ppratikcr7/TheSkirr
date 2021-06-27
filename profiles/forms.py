@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UsernameField
 from accounts.models import UserRegisterDetails
 from django import forms
 from django.contrib.auth import get_user_model
@@ -18,10 +19,19 @@ class UserProfileForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=False)
+    username = forms.CharField(required=True, disabled=True)
+    phone_number = forms.CharField(required=True)
     email = forms.CharField(required=True)
+    email2 = forms.CharField(required=False)
+    city = forms.CharField(required=True)
+    dob = forms.CharField(required=True, disabled=True)
+    gender = forms.CharField(required=True, disabled=True)
+    areaOfInterest = forms.CharField(required=False)
+    
     class Meta:
         model = UserRegisterDetails
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'username', 'phone_number', 'email',
+        'email2', 'city', 'dob', 'gender', 'areaOfInterest']
 
 class SignUpForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
