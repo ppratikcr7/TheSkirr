@@ -99,8 +99,8 @@ def tweet_action_view(request, *args, **kwargs):
 
 def get_paginated_queryset_response(qs, request):
     paginator = PageNumberPagination()
-    # view tweets par page
-    paginator.page_size = 10
+    # view tweets per page
+    paginator.page_size = 1000
     paginated_qs = paginator.paginate_queryset(qs, request)
     serializer = TweetSerializer(paginated_qs, many=True, context={"request": request})
     return paginator.get_paginated_response(serializer.data) # Response( serializer.data, status=200)
