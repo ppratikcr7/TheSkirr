@@ -262,7 +262,7 @@ export default function Dashboard(props) {
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
                         <div>
-                            <span className="text-lg font-bold">User Bio</span>
+                            <span className="text-lg font-bold mb-4">User Bio</span>
                             <br />
                         </div>
                         <h1><a href="#" className="text-black font-bold no-underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>

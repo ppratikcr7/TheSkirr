@@ -232,5 +232,5 @@ def show_more_view(request, *args, **kwargs):
     context = {
         "username": un,
         "usernames":final,
-     }
+    }
     return render(request, "profiles/show_more.html", context)

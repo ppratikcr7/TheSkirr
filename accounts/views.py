@@ -95,10 +95,11 @@ def register_view(request, *args, **kwargs):
         )
         print("hey")
             # send a confirmation email to verify their account
-        messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
+        # messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
+        messages.success(request, 'Congratulations! You have successfully created an account. Just one more thing...Confirmation email has been sent to your registered email-id. Please check your mail inbox/spam and click on the link within the body of the email to confirm your account.')
         email.send()
         login(request, user)
-        return redirect("/register")
+        return render(request, "accounts/registration_complete_message.html")
     
     context = {
         "form": form,
@@ -115,8 +116,7 @@ def activate(request, uidb64, token):
         print(uid)
     except(TypeError, ValueError, OverflowError, UserRegisterDetails.DoesNotExist):
         user = None
-    print(user)
-    print(token)
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
