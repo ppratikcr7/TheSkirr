@@ -2,29 +2,48 @@
 <center>
     <form method='POST'> {% csrf_token %}
         {{ form.non_field_errors }}
+
+        <div class="form-group" style="text-align: left;">
+            <label class="block text-sm font-medium text-gray-700">
+                Photo
+            </label>
+            <div class="mt-1 flex items-center">
+                <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                    <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </span>
+                <button type="button"
+                    class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Change
+                </button>
+            </div>
+        </div>
+
         {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>    
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
         {% endfor %}
         <div class="form-group" style="text-align: left;">
-    
-            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label>  {% endcomment %}
+
+            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
             {{ form.first_name |as_crispy_field }}
             {{ form.first_name.errors }}
-    
+
         </div>
         <div class="form-group" style="text-align: left;">
-    
-            {% comment %} <label for="{{ form.last_name.id_for_label }}">Last Name: </label>  {% endcomment %}
+
+            {% comment %} <label for="{{ form.last_name.id_for_label }}">Last Name: </label> {% endcomment %}
             {{ form.last_name |as_crispy_field }}
             {{ form.last_Name.errors }}
-    
+
         </div>
         <div class="form-group" style="text-align: left;">
-    
+
             {% comment %} <label for="{{ form.username.id_for_label }}">User Name: </label> {% endcomment %}
             {{ form.username |as_crispy_field}}
             {{ form.username.errors }}
-    
+
         </div>
         <div class="form-group" style="text-align: left;">
             {% comment %} <label for="{{ form.phone_number.id_for_label }}">Phone Number: </label> {% endcomment %}
@@ -37,7 +56,8 @@
             {{ form.email.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            {% comment %} <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label> {% endcomment %}
+            {% comment %} <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label>
+            {% endcomment %}
             {{ form.email2 |as_crispy_field}}
             {{ form.email2.errors }}
         </div>
@@ -57,24 +77,25 @@
             {{ form.gender.errors }}
         </div>
         <div class="form-group" style="text-align: left;">
-            {% comment %} <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest: </label> {% endcomment %}
+            {% comment %} <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest: </label>
+            {% endcomment %}
             {{ form.areaOfInterest |as_crispy_field}}
             {{ form.areaOfInterest.errors }}
         </div>
         {% comment %} <div class="form-group" style="text-align: left;">
-    
+
             <label for="{{ form.password1.id_for_label }}">Password: </label>
             {{ form.password1 }}
             {{ form.password1.errors }}
         </div>
-        
+
         <div class="form-group" style="text-align: left;">
-    
+
             <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
             {{ form.password2 }}
             {{ form.password2.errors }}
         </div> {% endcomment %}
-        
+
         <button type='submit' class='btn btn-primary'>{% if btn_label %}
             {{btn_label}} {% else %}Update{% endif %}</button>
     </form>

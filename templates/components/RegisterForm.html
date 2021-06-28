@@ -10,10 +10,16 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
+        {% comment %} <label for="public">Public</label>
         <input type="radio" id="public" name="first_name_public_access" value="Yes">
         <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="first_name_public_access" value="No">
+        <input type="radio" id="nonpublic" name="first_name_public_access" value="No"> {% endcomment %}
+        {% comment %} <label for="{{ form.first_name_public_access.id_for_label }}">Public<span style="color:red"> *</span></label> {% endcomment %}
+        {% comment %} {{ form.first_name_public_access }} {% endcomment %}
+        
+            {% for choice in form.first_name_public_access %}
+                {{ choice }}
+            {% endfor %}
     </div>
 
     <div class="form-group">
@@ -24,10 +30,9 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
-        <input type="radio" id="public" name="last_name_public_access" value="Yes">
-        <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="last_name_public_access" value="No">
+        {% for choice in form.last_name_public_access %}
+                {{ choice }}
+        {% endfor %}
     </div>
 
     <div class="form-group">
@@ -44,10 +49,9 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
-        <input type="radio" id="public" name="phone_number_public_access" value="Yes">
-        <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="phone_number_public_access" value="No">
+        {% for choice in form.phone_number_public_access %}
+                {{ choice }}
+        {% endfor %}
     </div>
 
     <div class="form-group">
@@ -58,10 +62,9 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
-        <input type="radio" id="public" name="email_public_access" value="Yes">
-        <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="email_public_access" value="No">
+        {% for choice in form.email_public_access %}
+                {{ choice }}
+        {% endfor %}
     </div>
 
     <div class="form-group">
@@ -72,10 +75,9 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
-        <input type="radio" id="public" name="email2_public_access" value="Yes">
-        <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="email2_public_access" value="No">
+        {% for choice in form.email2_public_access %}
+                {{ choice }}
+        {% endfor %}
     </div>
 
     <div class="form-group">
@@ -92,10 +94,9 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
-        <input type="radio" id="public" name="dob_public_access" value="Yes">
-        <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="dob_public_access" value="No">
+        {% for choice in form.dob_public_access %}
+                {{ choice }}
+        {% endfor %}
     </div>
 
     <div class="form-group">
@@ -106,10 +107,9 @@
 
     <div class="form-group">
         Would you like to make it public?
-        <label for="public">Public</label>
-        <input type="radio" id="public" name="gender_public_access" value="Yes">
-        <label for="nonpublic">Non Public</label>
-        <input type="radio" id="nonpublic" name="gender_public_access" value="No">
+                {% for choice in form.gender_public_access %}
+                {{ choice }}
+        {% endfor %}
     </div>
 
     <div class="form-group">
