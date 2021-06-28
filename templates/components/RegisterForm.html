@@ -5,7 +5,7 @@
         }
 </style>
 
-<form method='POST' class="mb-3"> {% csrf_token %}
+<form method='POST' class="mb-3" autocomplete="off"> {% csrf_token %}
     {{ form.non_field_errors }}
 
     <div class="form-group">
