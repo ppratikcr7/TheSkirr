@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
-import './Dashboard.css';
+import './MyWall.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
@@ -253,24 +253,24 @@ export default function MyWall(props) {
                                 {% endif %} */}
                             </div>
                             <div class="text-center px-3 pb-2 pt-2">
-                                <h3 class="text-white text-sm bold font-sans">Username: {{username}}</h3>
+                                {/* <h3 class="text-white text-sm bold font-sans">Username: {{username}}</h3>
                                 {fn_pa}
-                                <p class="mt-2 font-sans font-light text-white">First Name: {{fn_show}}</p>
-                                {ln_pa}
-                                <p class="mt-2 font-sans font-light text-white">Last Name: {{ln_show}}</p>
-                                {gen_pa}
+                                <p class="mt-2 font-sans font-light text-white">First Name: {{fn_show}}</p> */}
+                                {/* {ln_pa}
+                                <p class="mt-2 font-sans font-light text-white">Last Name: {{ln_show}}</p> */}
+                                {/* {gen_pa}
                                 <p class="mt-2 font-sans font-light text-white">Gender: {{gen_show}}</p>
                                 {dob_pa}
                                 <p class="mt-2 font-sans font-light text-white">DOB: {{dob_show}}</p>
                                 {pn_pa}
                                 <p class="mt-2 font-sans font-light text-white">Contact: {{pn_show}}</p>
                                 {em_pa}
-                                <p class="mt-2 font-sans font-light text-white">Email: {{em_show}}</p>
-                                {em2_pa}
-                                <p class="mt-2 font-sans font-light text-white">Secondary Email: {{em2_show}}</p>
+                                <p class="mt-2 font-sans font-light text-white">Email: {{em_show}}</p> */}
+                                {/* {em2_pa}
+                                <p class="mt-2 font-sans font-light text-white">Secondary Email: {{em2_show}}</p> */}
                             </div>
                             <hr class="mt-2 mb-2"></hr>
-                            <div class="flex justify-center pb-1 text-white">
+                            {/* <div class="flex justify-center pb-1 text-white">
                                 <div class="text-center mr-4 border-r pr-3">
                                     <h2>{{fans}}</h2>
                                     <span>Fans</span>
@@ -279,16 +279,17 @@ export default function MyWall(props) {
                                     <h2>{{companions}}</h2>
                                     <span>Companions</span>
                                 </div>
-                            </div>
-                            <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:2 auto;padding:2px 2px 2px 2px;"><br/></div>
+                            </div> */}
+                            {/* <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:2 auto;padding:2px 2px 2px 2px;"><br/></div>
                                 <div id='tweetme-2' style="margin:20 auto;padding:2px 2px 2px 2px;" 
                                 data-username={{username}} data-can-tweet="false"></div>
-                            </div>
+                            </div> */}
                         </div>
                         <br />
                         <br />
                         <br />
                     </div>
+                </div>   
             </>
         )
     }

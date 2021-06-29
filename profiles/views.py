@@ -95,14 +95,14 @@ def my_wall_view(request, username, *args, **kwargs):
         is_following = user in profile_obj2.followers.all()
         is_following = profile_obj2 in user.following.all()
 
-        fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = "Yes", username=username)
-        ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = "Yes", username=username)
-        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = "Yes", username=username)
-        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = "Yes", username=username)
-        dob_pa = UserRegisterDetails.objects.filter(dob_public_access = "Yes", username=username)
-        pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = "Yes", username=username)
-        em_pa = UserRegisterDetails.objects.filter(email_public_access = "Yes", username=username)
-        em2_pa = UserRegisterDetails.objects.filter(email2_public_access = "Yes", username=username)
+        fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = 1, username=username)
+        # ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
+        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
+        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
+        dob_pa = UserRegisterDetails.objects.filter(dob_public_access = 1, username=username)
+        pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = 1, username=username)
+        em_pa = UserRegisterDetails.objects.filter(email_public_access = 1, username=username)
+        # em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
         fn = profile_obj.first_name
         ln = profile_obj.last_name
         gen = profile_obj.gender
@@ -119,8 +119,8 @@ def my_wall_view(request, username, *args, **kwargs):
         "is_following": is_following,
         "gender":profile_obj.gender,
         "fn_pa": fn_pa, 
-        "ln_pa": ln_pa, "gen_pa": gen_pa, "dob_pa" : dob_pa, 
-        "pn_pa" : pn_pa, "em_pa" : em_pa,"em2_pa" : em2_pa,
+        "gen_pa": gen_pa, "dob_pa" : dob_pa, 
+        "pn_pa" : pn_pa, "em_pa" : em_pa,
         "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
@@ -143,13 +143,13 @@ def user_wall_view(request, username, *args, **kwargs):
         is_following = profile_obj2 in user.following.all()
 
         fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = 1, username=username)
-        ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
+        # ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
         gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
         gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
         dob_pa = UserRegisterDetails.objects.filter(dob_public_access = 1, username=username)
         pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = 1, username=username)
         em_pa = UserRegisterDetails.objects.filter(email_public_access = 1, username=username)
-        em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
+        # em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
         fn = profile_obj.first_name
         ln = profile_obj.last_name
         gen = profile_obj.gender
@@ -166,8 +166,8 @@ def user_wall_view(request, username, *args, **kwargs):
         "is_following": is_following,
         "gender":profile_obj.gender,
         "fn_pa": fn_pa, 
-        "ln_pa": ln_pa, "gen_pa": gen_pa, "dob_pa" : dob_pa, 
-        "pn_pa" : pn_pa, "em_pa" : em_pa,"em2_pa" : em2_pa,
+        "gen_pa": gen_pa, "dob_pa" : dob_pa, 
+        "pn_pa" : pn_pa, "em_pa" : em_pa,
         "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 

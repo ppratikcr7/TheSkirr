@@ -64,21 +64,21 @@ def register_view(request, *args, **kwargs):
         gender = request.POST['gender']
         areaOfInterest = request.POST['areaOfInterest']
         first_name_public_access = request.POST['first_name_public_access']
-        last_name_public_access = request.POST['last_name_public_access']
+        # last_name_public_access = request.POST['last_name_public_access']
         gender_public_access = request.POST['gender_public_access']
         dob_public_access = request.POST['dob_public_access']
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
-        email2_public_access = request.POST.get('email2_public_access', False)
+        # email2_public_access = request.POST.get('email2_public_access', False)
         photo = request.POST.get('photo')
-        # if not last_name and (last_name_public_access == "Yes" or last_name_public_access == "No"):
+        # if not last_name and (last_name_public_access == "True" or last_name_public_access == "False"):
         #     print("yeah")
         # else:
         #     print("abcd")
         user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
         city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
-        last_name_public_access=last_name_public_access, gender_public_access=gender_public_access, dob_public_access=dob_public_access,
-        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, email2_public_access=email2_public_access, photo=photo)
+        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
+        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo=photo)
         user.save()
         # user = form.save(commit=False)
         user.is_active = False

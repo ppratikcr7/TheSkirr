@@ -13,7 +13,7 @@ class UserRegisterDetails(AbstractUser):
     )
     first_name = models.CharField(max_length=220, null=True, blank=True)
     last_name = models.CharField(max_length=220, null=True, blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
     dob = models.DateField(null=True, blank=True)
     phone_number = models.BigIntegerField(null=True, blank=True)
     # phone_number_public = models.CharField(max_length=10,choices=TYPE_SELECT)
@@ -26,12 +26,12 @@ class UserRegisterDetails(AbstractUser):
     password2 = models.CharField(max_length=220, null=True, blank=True)
 
     first_name_public_access = models.BooleanField(null=True)
-    last_name_public_access = models.BooleanField(null=True, blank=True)
+    # last_name_public_access = models.BooleanField(default = 'False', null=True, blank=True)
     gender_public_access = models.BooleanField(null=True, blank=True)
     dob_public_access = models.BooleanField(null=True, blank=True)
     phone_number_public_access = models.BooleanField(null=True, blank=True)
     email_public_access = models.BooleanField(null=True, blank=True)
-    email2_public_access = models.BooleanField(null=True, blank=True)
+    # email2_public_access = models.BooleanField(default = 'False',null=True, blank=True)
 
     photo = models.ImageField(null=True, blank=True, upload_to = "images/")
     # def __str__(self):
