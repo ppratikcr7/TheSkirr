@@ -8,6 +8,21 @@
   webshims.polyfill('forms forms-ext');
 </script>
 {% extends "base.html" %}
+ {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+        $('input[type="text"]').bind('blur', function (e) {
+
+            if ($('#last_name').val().length > 0) {
+
+                $('input[type="radio"]').prop('disabled', false);
+
+            } else {
+                $('input[type="radio"]').prop('disabled', true);
+            }
+
+        });
+    </script> {% endcomment %}
+
 {% block content %}
 <div class='col-12 col-md-4 mx-auto mb-10'>
         <h1 class="mt-2 mb-2" style="text-align: center; font-size: 22px;">{{ title }}</h1>

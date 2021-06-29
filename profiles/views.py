@@ -16,6 +16,7 @@ def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
         return redirect("/login?next=/profile/update")
     user = request.user
+   
     user_data = {
         "first_name": user.first_name,
         "last_name": user.last_name,
@@ -26,12 +27,14 @@ def profile_update_view(request, *args, **kwargs):
         "city":user.city,
         "dob":user.dob,
         "gender":user.gender,
-        "areaOfInterest":user.areaOfInterest
+        "areaOfInterest":user.areaOfInterest,
+        "photo":"user.photo"
     }
     # matcha = user_data.get('last_name')
     # print(matcha)
     my_profile = user.profile
-    form = ProfileForm(request.POST or None, instance=my_profile, initial=user_data)
+    # form = ProfileForm(request.POST or None, instance=my_profile, initial=user_data)
+    form = ProfileForm(request.POST or None,  instance=my_profile, initial=user_data)
     if form.is_valid():
         profile_obj = form.save(commit=False)
         first_name = form.cleaned_data.get('first_name')
@@ -44,6 +47,9 @@ def profile_update_view(request, *args, **kwargs):
         dob = form.cleaned_data.get('dob')
         gender = form.cleaned_data.get('gender')
         areaOfInterest = form.cleaned_data.get('areaOfInterest')
+        photo =  request.POST.get('photo')
+
+
 
         user.first_name = first_name
         user.last_name = last_name
@@ -55,6 +61,7 @@ def profile_update_view(request, *args, **kwargs):
         user.dob = dob
         user.gender = gender
         user.areaOfInterest = areaOfInterest
+        user.photo = photo
         
         user.save()
         profile_obj.save()

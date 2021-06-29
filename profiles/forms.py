@@ -27,11 +27,12 @@ class ProfileForm(forms.ModelForm):
     dob = forms.CharField(required=True, disabled=True)
     gender = forms.CharField(required=True, disabled=True)
     areaOfInterest = forms.CharField(required=False)
+    photo = forms.ImageField(required=False)
     
     class Meta:
         model = UserRegisterDetails
         fields = ['first_name', 'last_name', 'username', 'phone_number', 'email',
-        'email2', 'city', 'dob', 'gender', 'areaOfInterest']
+        'email2', 'city', 'dob', 'gender', 'areaOfInterest', 'photo']
 
 class SignUpForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
@@ -57,7 +58,7 @@ class SignUpForm(forms.ModelForm):
         model = UserRegisterDetails
         fields = ['first_name', 'last_name', 'email', 'phone_number', 'email2', 'city', 'username', 
         'dob',  'gender', 'areaOfInterest', 'password1', 'password2', 'first_name_public_access', 'last_name_public_access',
-        'gender_public_access','dob_public_access', 'phone_number_public_access', 'email_public_access', 'email2_public_access']
+        'gender_public_access','dob_public_access', 'phone_number_public_access', 'email_public_access', 'email2_public_access', 'photo']
 class ProfileBasicForm(forms.Form):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
