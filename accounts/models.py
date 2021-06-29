@@ -33,7 +33,7 @@ class UserRegisterDetails(AbstractUser):
     email_public_access = models.BooleanField(null=True, blank=True)
     email2_public_access = models.BooleanField(null=True, blank=True)
 
-    # photo = models.ImageField(null=True, blank=True, upload_to = "images/")
+    photo = models.ImageField(null=True, blank=True, upload_to = "images/")
     # def __str__(self):
     #     return self.city
 
