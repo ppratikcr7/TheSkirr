@@ -49,7 +49,7 @@ def logout_view(request, *args, **kwargs):
 
 def register_view(request, *args, **kwargs):
     print("reqest:",request.GET.get('user_type'))
-    form = SignUpForm(request.POST or None, request.FILES)
+    form = SignUpForm(request.POST or None or request.FILES)
     if form.is_valid():
         username = request.POST['username']
         first_name = request.POST['first_name']
@@ -70,7 +70,7 @@ def register_view(request, *args, **kwargs):
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
         email2_public_access = request.POST.get('email2_public_access', False)
-        photo = request.POST.get('photo')
+        photo = request.FILES['photo']
         # if not last_name and (last_name_public_access == "Yes" or last_name_public_access == "No"):
         #     print("yeah")
         # else:
@@ -78,7 +78,7 @@ def register_view(request, *args, **kwargs):
         user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
         city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
         last_name_public_access=last_name_public_access, gender_public_access=gender_public_access, dob_public_access=dob_public_access,
-        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, email2_public_access=email2_public_access, photo=photo)
+        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, email2_public_access=email2_public_access, photo = photo)
         user.save()
         # user = form.save(commit=False)
         user.is_active = False
