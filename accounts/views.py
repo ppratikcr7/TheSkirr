@@ -98,12 +98,11 @@ def register_view(request, *args, **kwargs):
         email = EmailMessage(
                     mail_subject, message, to=[to_email]
         )
-        print("hey")
-            # send a confirmation email to verify their account
+        # send a confirmation email to verify their account
         # messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
         messages.success(request, 'Congratulations! You have successfully created an account. Just one more thing...Confirmation email has been sent to your registered email-id. Please check your mail inbox/spam and click on the link within the body of the email to confirm your account.')
         email.send()
-        login(request, user)
+        # login(request, user)
         return render(request, "accounts/registration_complete_message.html")
     
     context = {
