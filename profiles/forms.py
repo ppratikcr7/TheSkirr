@@ -27,11 +27,12 @@ class ProfileForm(forms.ModelForm):
     dob = forms.CharField(required=True, disabled=True)
     gender = forms.CharField(required=True, disabled=True)
     areaOfInterest = forms.CharField(required=False)
+    photo = forms.ImageField(required=False)
     
     class Meta:
         model = UserRegisterDetails
         fields = ['first_name', 'last_name', 'username', 'phone_number', 'email',
-        'email2', 'city', 'dob', 'gender', 'areaOfInterest']
+        'email2', 'city', 'dob', 'gender', 'areaOfInterest', 'photo']
 
 class SignUpForm(forms.ModelForm):
     first_name = forms.CharField(required=True)

@@ -1,9 +1,9 @@
 {% load crispy_forms_tags %}
 <center>
-    <form method='POST'> {% csrf_token %}
+    <form method='POST' enctype = "multipart/form-data"> {% csrf_token %}
         {{ form.non_field_errors }}
 
-        <div class="form-group" style="text-align: left;">
+        {% comment %} <div class="form-group" style="text-align: left;">
             <label class="block text-sm font-medium text-gray-700">
                 Photo
             </label>
@@ -19,11 +19,21 @@
                     Change
                 </button>
             </div>
-        </div>
+        </div> {% endcomment %}
 
         {% for message in messages %}
         <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
         {% endfor %}
+
+
+        <div class="form-group" style="text-align: left;">
+
+            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
+            {{ form.photo |as_crispy_field }}
+            {{ form.photo.errors }}
+
+        </div>
+
         <div class="form-group" style="text-align: left;">
 
             {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}

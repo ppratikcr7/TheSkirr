@@ -26,12 +26,14 @@ def profile_update_view(request, *args, **kwargs):
         "city":user.city,
         "dob":user.dob,
         "gender":user.gender,
-        "areaOfInterest":user.areaOfInterest
+        "areaOfInterest":user.areaOfInterest,
+        "photo":user.photo
     }
     # matcha = user_data.get('last_name')
     # print(matcha)
     my_profile = user.profile
     form = ProfileForm(request.POST or None, instance=my_profile, initial=user_data)
+    # print(form)
     if form.is_valid():
         profile_obj = form.save(commit=False)
         first_name = form.cleaned_data.get('first_name')
@@ -44,6 +46,7 @@ def profile_update_view(request, *args, **kwargs):
         dob = form.cleaned_data.get('dob')
         gender = form.cleaned_data.get('gender')
         areaOfInterest = form.cleaned_data.get('areaOfInterest')
+        # photo = form.cleaned_data.get('photo')
 
         user.first_name = first_name
         user.last_name = last_name
@@ -55,6 +58,15 @@ def profile_update_view(request, *args, **kwargs):
         user.dob = dob
         user.gender = gender
         user.areaOfInterest = areaOfInterest
+        # user.photo = photo
+
+        if 'photo' in request.FILES:
+            print("yes")
+            user.photo = request.FILES['photo']
+
+            user.save()
+        else:
+            user.photo = 'images/default.jpeg'
         
         user.save()
         profile_obj.save()
