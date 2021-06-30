@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import formatDate from './date'
 import { ActionBtn } from './buttons'
 import BlankImage from '../Assets/blank.png';
@@ -9,13 +9,16 @@ import {
   UserPicture
 } from '../profiles'
 
+
 export function ParentTweet(props) {
   const { tweet } = props
   return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} /> : null
 }
 export function Tweet(props) {
+  const clackContent = React.createRef()
   const { tweet, didRetweet, hideActions, isRetweet, retweeter } = props
   const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
+  const [newTweetContent, setNewTweetContent] = useState();
   let className = props.className ? props.className : 'col-10 mx-auto col-md-6'
   className = isRetweet === true ? `${className} p-2 border rounded` : className
   const path = window.location.pathname
@@ -39,15 +42,58 @@ export function Tweet(props) {
         didRetweet(newActionTweet)
       }
     }
-
   }
 
+  const convertLinks = ( input ) => {
+    console.log("i m in convert links function", input)
+    let text = input;
+    const linksFound = text.match( /(?:www|https?)[^\s]+/g );
+    const aLink = [];
+  
+    if ( linksFound != null ) {
+  
+      for ( let i=0; i<linksFound.length; i++ ) {
+        let replace = linksFound[i];
+        if ( !( linksFound[i].match( /(http(s?)):\/\// ) ) ) { replace = 'http://' + linksFound[i] }
+        let linkText = replace.split( '/' )[2];
+        if ( linkText.substring( 0, 3 ) == 'www' ) { linkText = linkText.replace( 'www.', '' ) }
+        if ( linkText.match( /youtu/ ) ) {
+  
+          let youtubeID = replace.split( '/' ).slice(-1)[0];
+          aLink.push( '<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + youtubeID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>' )
+        }
+        else if ( linkText.match( /vimeo/ ) ) {
+          let vimeoID = replace.split( '/' ).slice(-1)[0];
+          aLink.push( '<div class="video-wrapper"><iframe src="https://player.vimeo.com/video/' + vimeoID + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>' )
+        }
+        else {
+          aLink.push( '<a href="' + replace + '" target="_blank">' + linkText + '</a>' );
+        }
+        text = text.split( linksFound[i] ).map(item => { return aLink[i].includes('iframe') ? item.trim() : item } ).join( aLink[i] );
+      }
+      return text;
+  
+    }
+    else {
+      return input;
+    }
+  }
+
+  useEffect(()=>{
+    console.log("i m here", tweet.content)
+    // setNewTweetContent(convertLinks(tweet.content))
+    //tweet.content = convertLinks(tweet.content)
+    // const text = refs[clackContent].innerHTML;
+    // refs[clackContent].innerHTML = convertLinks( text );
+  },[tweet.content])
+
   return <div className="flex border-b border-solid border-grey-light">
+
     {isRetweet === true && <div className='mb-2'>
       <span className='small text-muted'>ReClack via <UserDisplay user={retweeter} /></span>
     </div>}
     <div className="w-1/8 text-right pl-3 pt-3">
-      <div><a href="#"><img src={BlankImage} /></a></div>
+      <div><a href="#"><img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="45px" height="45px"/></a></div>
     </div>
     <div className="w-7/8 p-3 pl-0">
       <div className="flex justify-between">
@@ -64,7 +110,10 @@ export function Tweet(props) {
 
       <div>
         <div className="mb-4">
-          <p className="mt-6">{tweet.content}</p>
+          <p className="mt-6" id="clack_content">{tweet.content}</p>
+          {/* <p className="mt-6" id="clack_content">{newTweetContent}</p> */}
+          {/* <div dangerouslySetInnerHTML={{__html: '<p className="mt-6" id="clack_content">{newTweetContent}</p>'}}></div> */}
+
           <ParentTweet tweet={tweet} retweeter={tweet.user} />
         </div>
       </div>
@@ -82,5 +131,11 @@ export function Tweet(props) {
         <time>&emsp;{tweetTimestampClean}</time>
       </div>
     </div>
+    <script>
+        {/* if(document.getElementById("clack_content").innerHTML) { */}
+        const text = document.getElementById("clack_content").innerHTML
+        document.getElementById('clack_content').innerHTML = convertLinks( text )
+      {/* } */}
+  </script>
   </div>
 }

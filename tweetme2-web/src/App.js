@@ -7,6 +7,7 @@ import Home from './MainComponent/Home/Home';
 import SubmitResearch from './MainComponent/SubmitResearch/SubmitResearch';
 import Header from "./Common/Header/Header"
 import Dashboard from './MainComponent/Dashboard/Dashboard';
+import MyWall from './MainComponent/MyWall/MyWall';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route path="/register" component={Home}></Route>
           <Route path="/login" component={Home}></Route>
+          <Route path="/my_wall" component={MyWall}></Route>
           <Route path="/submit" component={SubmitResearch}></Route>
           <Route path="/dashboard" component={Dashboard}></Route>
         </Switch>

@@ -4,27 +4,20 @@ import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
-import './Dashboard.css';
+import './MyWall.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
-import {
-    UserWhoToFollowDisplay
-} from '../../profiles'
 import $ from 'jquery';
 
 const { Search } = Input;
 
-export default function Dashboard(props) {
+export default function MyWall(props) {
     const onSearch = value => console.log(value);
 
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
-    let [whoToFollowUser1, setwhoToFollowUser1] = useState();
-    let [whoToFollowUser2, setwhoToFollowUser2] = useState();
-    let [whoToFollowUser3, setwhoToFollowUser3] = useState();
-    // let [whotofollowProfile1, setProfile1] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
@@ -38,38 +31,16 @@ export default function Dashboard(props) {
     const handleNewUsername = (newUserName) => {
 
         setUserName(newUserName ? newUserName.username : "")
-        //get random 3 users to follow:
-        getWhoToFollowUser1();
-        getWhoToFollowUser2();
-        getWhoToFollowUser3();
         // function call for getting current user profile
         getMainProfile(newUserName.username, handleNewProfile);
-        // function call for getting gagan user profile
-        // getProfile1("Gagan123", handleNewProfile1);
         // function call for getting total likes for current user
         getCurrentUserTotalLikes();
         // function call for getting total clacks for current user
         getCurrentUserTotalClacks();
-
     }
 
     const handleNewProfile = (newProfile) => {
         setNewProfile(newProfile)
-    }
-
-    // who to follow:
-    // const handleNewProfile1 = (whotofollowProfile1) => {
-    //     setProfile1(whotofollowProfile1)
-    // }
-
-    const handleWhoToFollowUser1 = (whoToFollowUser1) => {
-        setwhoToFollowUser1(whoToFollowUser1)
-    }
-    const handleWhoToFollowUser2 = (whoToFollowUser2) => {
-        setwhoToFollowUser2(whoToFollowUser2)
-    }
-    const handleWhoToFollowUser3 = (whoToFollowUser3) => {
-        setwhoToFollowUser3(whoToFollowUser3)
     }
 
     const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
@@ -78,33 +49,6 @@ export default function Dashboard(props) {
 
     const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
         setCurrentUserTotalClacks(currentUserTotalClacks)
-    }
-
-    function getWhoToFollowUser1() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/user1/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser1)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getWhoToFollowUser2() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/user2/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser2)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getWhoToFollowUser3() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/user3/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser3)
-        } catch (error) {
-            console.log("error:", error);
-        }
     }
 
     function getCurrentUserTotalLikes() {
@@ -192,7 +136,7 @@ export default function Dashboard(props) {
     // });
 
         return (
-            <>
+            <>  const 
                 <div className="bg-white shadow">
                     {/* style={{ marginTop: 104 }} */}
                     <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
@@ -261,13 +205,6 @@ export default function Dashboard(props) {
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
-                        <div>
-                            <span className="text-lg font-bold mb-4">User Bio</span>
-                            <br />
-                        </div>
-                        <h1><a href="#" className="text-black font-bold no-underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>
-                        <div className="mb-4"><a href="#" className="text-grey-darker no-underline">{newProfile ? newProfile.username : "@username"}</a></div>
-                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? newProfile.email : "EmailID"}</a></div>
                         <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? "Joined: " + cleanDate : "Joined: 1 Jan 2021 12AM"}</a></div>
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push(`/profiles/my_wall/?username=${newUserName}`) }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
@@ -298,92 +235,61 @@ export default function Dashboard(props) {
                             {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
                         </div>
                         <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
-                        {/* <TweetsList newTweets={newTweets} {...props} /> */}
-
                     </div>
 
                     <div className="w-full lg:w-1/5 pl-0">
-                        <div className="bg-white p-3 mb-3">
-                            <div>
-                                <span className="text-lg font-bold p-2">Who to follow</span>
+                        {/* profile new */}
+                        <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
+                            <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
+                            <div class="flex justify-center -mt-4">
+                                {/* {% if gender == 'Male' %} */}
+                                <img class="h-full" src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="80px" height= "80px"/>
+                                {/* {% endif %}
+                                {% if gender == 'Female' %}
+                                <img class="h-full" src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="80px" height="80px"/>
+                                {% endif %}
+                                {% if gender == 'Decline to answer' %}
+                                <img class="h-full" src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShaggyMullet&accessoriesType=Round&hairColor=BrownDark&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray01&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="80px" height="80px"/>
+                                {% endif %} */}
                             </div>
-                            <div className="p-2">
-                            
-                                {(whoToFollowUser1) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser1} /> : <div></div>}
-                                {/* use the below for color encoding */}
-                                {/* <span class="text-grey-dark">&middot;</span> */}
+                            <div class="text-center px-3 pb-2 pt-2">
+                                {/* <h3 class="text-white text-sm bold font-sans">Username: {{username}}</h3>
+                                {fn_pa}
+                                <p class="mt-2 font-sans font-light text-white">First Name: {{fn_show}}</p> */}
+                                {/* {ln_pa}
+                                <p class="mt-2 font-sans font-light text-white">Last Name: {{ln_show}}</p> */}
+                                {/* {gen_pa}
+                                <p class="mt-2 font-sans font-light text-white">Gender: {{gen_show}}</p>
+                                {dob_pa}
+                                <p class="mt-2 font-sans font-light text-white">DOB: {{dob_show}}</p>
+                                {pn_pa}
+                                <p class="mt-2 font-sans font-light text-white">Contact: {{pn_show}}</p>
+                                {em_pa}
+                                <p class="mt-2 font-sans font-light text-white">Email: {{em_show}}</p> */}
+                                {/* {em2_pa}
+                                <p class="mt-2 font-sans font-light text-white">Secondary Email: {{em2_show}}</p> */}
                             </div>
-                            <div className="p-2">
-                                {(whoToFollowUser2) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser2} /> : <div></div>}
-                                {/* use the below for color encoding */}
-                                {/* <span class="text-grey-dark">&middot;</span> */}
-                            </div>
-                            <div className="p-2">
-                                {(whoToFollowUser3) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser3} /> : <div></div>}
-                                {/* use the below for color encoding */}
-                                {/* <span class="text-grey-dark">&middot;</span> */}
-                            </div>
-                            {/* <div className="flex border-b border-solid border-grey-light">
-                            <div className="py-2">
-                                <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
-                            </div>
-                            <div className="pl-2 py-2 w-full">
-                                <div className="flex justify-between mb-1">
-                                    <div>
-                                        <a href="#" className="font-bold text-black">Vidhi</a> <a href="#" className="text-grey-dark">@vidhi123</a>
-                                    </div>
+                            <hr class="mt-2 mb-2"></hr>
+                            {/* <div class="flex justify-center pb-1 text-white">
+                                <div class="text-center mr-4 border-r pr-3">
+                                    <h2>{{fans}}</h2>
+                                    <span>Fans</span>
                                 </div>
-                                <div>
-                                    <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                        Follow
-                                    </button>
+                                <div class="text-center">
+                                    <h2>{{companions}}</h2>
+                                    <span>Companions</span>
                                 </div>
-                            </div>
+                            </div> */}
+                            {/* <div class="tweetme-2-profile-badge" data-username={{username}} style="margin:2 auto;padding:2px 2px 2px 2px;"><br/></div>
+                                <div id='tweetme-2' style="margin:20 auto;padding:2px 2px 2px 2px;" 
+                                data-username={{username}} data-can-tweet="false"></div>
+                            </div> */}
                         </div>
-                        <div className="flex border-b border-solid border-grey-light">
-                            <div className="py-2">
-                                <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow2.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
-                            </div>
-                            <div className="pl-2 py-2 w-full">
-                                <div className="flex justify-between mb-1">
-                                    <div>
-                                        <a href="#" className="font-bold text-black">Gagan</a> <a href="#" className="text-grey-dark">@gagan123</a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                        Follow
-                            </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex border-b border-solid border-grey-light">
-                            <div className="py-2">
-                                <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow3.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
-                            </div>
-                            <div className="pl-2 py-2 w-full">
-                                <div className="flex justify-between mb-1">
-                                    <div>
-                                        <a href="#" className="font-bold text-black">Ketul</a> <a href="#" className="text-grey-dark">@ketulshah</a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                        Follow
-                                    </button>
-                                </div>
-                            </div>
-                        </div> */}
-                            <hr className="mt-2 mb-2"></hr>
-                            <div className="flex justify-between mb-1">
-                                <div>  
-                                    <a href="/profiles/more_accounts" className="font-bold text-black">Show more</a>
-                                </div>
-                            </div>
-                        </div>
+                        <br />
+                        <br />
+                        <br />
                     </div>
-                </div>
+                </div>   
             </>
         )
     }

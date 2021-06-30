@@ -8,10 +8,10 @@ import datetime
 from django.core.validators import RegexValidator
 
 GENDER_CHOICES = (
-        ('S', 'Select'),
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('D', 'Decline to answer'),
+        ('Select', 'Select'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Decline to answer', 'Decline to answer'),
     )
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
@@ -37,7 +37,7 @@ def validate_future_dob(value):
         raise ValidationError("Incorrect date. DOB can't be a future date.")
 
 def validate_gender(value):
-    if value == 'S':
+    if value == 'Select':
         raise ValidationError("Please select a Gender.")
 
 # def last_name(value):
@@ -64,22 +64,22 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(error_messages={'required':''}, max_length=100, required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Last Name', 'id': 'username'}))
 
-    last_name_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
-        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
+    # last_name_public_access = forms.ChoiceField(initial='False', required=False, widget=forms.RadioSelect(
+        # attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
 
-    username = forms.CharField(error_messages={'required':''}, max_length=100, widget=forms.TextInput(
+    username = forms.CharField(error_messages={'required': ''}, max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'User Name', 'id': 'username'}))
 
     phone_regex = RegexValidator(regex=r'^\d{6,10}$', message="Phone number must be entered in the format: '9999999999'. Up to 10 digits allowed.")
-    phone_number = forms.CharField(error_messages={'required':''}, validators=[phone_regex, validate_phoneNumber ], max_length=10, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Phone', 'id': 'username'})) # validators should be a list
+    phone_number = forms.CharField(error_messages={'required': ''}, validators=[phone_regex, validate_phoneNumber ], max_length=10, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Phone', 'id': 'phone_num'})) # validators should be a list
 
     phone_number_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
         attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
 
     # phone_number_public = forms.RadioSelect()
-    email = forms.EmailField(error_messages={'required':''},  max_length=100, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Email ID', 'id': 'username'}))
+    email = forms.EmailField(error_messages={'required': ''}, validators = [validate_email], max_length=100, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Email ID', 'id': 'email'}))
 
     email_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
         attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
@@ -87,8 +87,8 @@ class SignUpForm(UserCreationForm):
     email2 = forms.EmailField(validators = [validate_email], required=False, max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Secondary Email ID', 'id': 'email2'}))
 
-    email2_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
-        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
+    # email2_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
+    #     attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
     
     city = forms.CharField(error_messages={'required':''}, max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'City', 'id': 'city'}))
@@ -109,13 +109,13 @@ class SignUpForm(UserCreationForm):
     
     areaOfInterest = forms.CharField(error_messages={'required':''},required=False, widget=forms.Textarea(attrs={'cols':50, 'rows': 3 , 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder':' Write your area of interest here!'}))
     
-    password1 = forms.CharField(error_messages={'required':''},widget=forms.PasswordInput(
+    password1 = forms.CharField(error_messages={'required': ''}, widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Password',
                 'id': 'password1',
             }))
-    password2 = forms.CharField(error_messages={'required':''},widget=forms.PasswordInput(
+    password2 = forms.CharField(error_messages={'required': ''}, widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Confirm Password',

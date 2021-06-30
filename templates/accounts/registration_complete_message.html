@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<div class='col-12 col-md-4 mx-auto mb-10'>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+</br>
+</br>
+</br>
+</br>
+</div>
+{% endblock content %}

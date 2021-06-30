@@ -57,8 +57,8 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = UserRegisterDetails
         fields = ['first_name', 'last_name', 'email', 'phone_number', 'email2', 'city', 'username', 
-        'dob',  'gender', 'areaOfInterest', 'password1', 'password2', 'first_name_public_access', 'last_name_public_access',
-        'gender_public_access','dob_public_access', 'phone_number_public_access', 'email_public_access', 'email2_public_access', 'photo']
+        'dob',  'gender', 'areaOfInterest', 'password1', 'password2', 'first_name_public_access',
+        'gender_public_access','dob_public_access', 'phone_number_public_access', 'email_public_access', 'photo']
 class ProfileBasicForm(forms.Form):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)

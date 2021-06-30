@@ -64,12 +64,12 @@ def register_view(request, *args, **kwargs):
         gender = request.POST['gender']
         areaOfInterest = request.POST['areaOfInterest']
         first_name_public_access = request.POST['first_name_public_access']
-        last_name_public_access = request.POST['last_name_public_access']
+        # last_name_public_access = request.POST['last_name_public_access']
         gender_public_access = request.POST['gender_public_access']
         dob_public_access = request.POST['dob_public_access']
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
-        email2_public_access = request.POST.get('email2_public_access', False)
+        # email2_public_access = request.POST.get('email2_public_access', False)
         photo = request.FILES['photo']
         # if not last_name and (last_name_public_access == "Yes" or last_name_public_access == "No"):
         #     print("yeah")
@@ -77,8 +77,8 @@ def register_view(request, *args, **kwargs):
         #     print("abcd")
         user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
         city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
-        last_name_public_access=last_name_public_access, gender_public_access=gender_public_access, dob_public_access=dob_public_access,
-        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, email2_public_access=email2_public_access, photo = photo)
+        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
+        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo=photo)
         user.save()
         # user = form.save(commit=False)
         user.is_active = False
@@ -100,10 +100,11 @@ def register_view(request, *args, **kwargs):
         )
         print("hey")
             # send a confirmation email to verify their account
-        messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
+        # messages.success(request, 'Please confirm your email address to complete the registration and login successfully.')
+        messages.success(request, 'Congratulations! You have successfully created an account. Just one more thing...Confirmation email has been sent to your registered email-id. Please check your mail inbox/spam and click on the link within the body of the email to confirm your account.')
         email.send()
         login(request, user)
-        return redirect("/register")
+        return render(request, "accounts/registration_complete_message.html")
     
     context = {
         "form": form,
@@ -120,8 +121,7 @@ def activate(request, uidb64, token):
         print(uid)
     except(TypeError, ValueError, OverflowError, UserRegisterDetails.DoesNotExist):
         user = None
-    print(user)
-    print(token)
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()

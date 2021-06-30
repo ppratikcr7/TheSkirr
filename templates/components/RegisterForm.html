@@ -1,4 +1,11 @@
-<form method='POST' enctype = "multipart/form-data" class="mb-3"> 
+<style>
+    .errorlist
+        {
+            color: red;
+        }
+</style>
+
+<form method='POST' enctype = "multipart/form-data" autocomplete="off" class="mb-3"> 
 {% csrf_token %}
     {{ form.non_field_errors }}
 {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -49,13 +56,13 @@
         {{ form.last_name.errors }}
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         Would you like to make it public?
         {% for choice in form.last_name_public_access %}
         {{ choice }}
         {% endfor %}
         {{ form.last_name_public_access.errors }}
-    </div>
+    </div> -->
 
     <div class="form-group">
         <label for="{{ form.username.id_for_label }}">User Name: <span style="color:red"> *</span></label>
@@ -95,12 +102,12 @@
         {{ form.email2.errors }}
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         Would you like to make it public?
         {% for choice in form.email2_public_access %}
         {{ choice }}
         {% endfor %}
-    </div>
+    </div> -->
 
     <div class="form-group">
         <label for="{{ form.city.id_for_label }}">City: <span style="color:red"> *</span></label>

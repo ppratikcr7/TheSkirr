@@ -5,7 +5,7 @@
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
         <div class="mb-4">
             <!-- <a href="/profiles/my_wall/"+{{username}}> -->
-                <a href="/"></a>
+                <a href="/profiles/my_wall/{{username}}">
             <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Wall</button>
             </a>
         </div>
@@ -40,7 +40,7 @@
                 <div class="flex justify-center">
                     <div class="bg-white shadow-xl rounded-lg w-1/2">
                         <ul class="divide-y divide-gray-300">
-                            {% for uname in username %}
+                            {% for uname in usernames %}
                             <li class="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/user_wall/{{uname}}'>{{uname}}</a></li>
                             {% endfor %}
                         </ul>

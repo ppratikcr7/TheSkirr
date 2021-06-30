@@ -89,31 +89,6 @@ def profile_update_view(request, *args, **kwargs):
 def my_wall_view(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = UserRegisterDetails.objects.filter(username=username)
-    qs2 = Profile.objects.filter(user__username=username)
-    if not qs.exists():
-        raise Http404
-    profile_obj = qs.first()
-    profile_obj2 = qs2.first()
-    is_following = False
-    if request.user.is_authenticated:
-        user = request.user
-        is_following = user in profile_obj2.followers.all()
-        is_following = profile_obj2 in user.following.all()
-    
-    context = {
-        "username": username,
-        "name": profile_obj.first_name + profile_obj.last_name,
-        "profile": profile_obj,
-        "fans": profile_obj2.followers.count(),
-        "companions": user.following.count(),
-        "gender": profile_obj.gender,
-        "is_following": is_following
-    }
-    return render(request, "profiles/detail.html", context)
-
-def user_wall_view(request, username, *args, **kwargs):
-    # get the profile for the passed username
-    qs = UserRegisterDetails.objects.filter(username=username)
     print(qs)
     qs2 = Profile.objects.filter(user__username=username)
     if not qs.exists():
@@ -127,13 +102,13 @@ def user_wall_view(request, username, *args, **kwargs):
         is_following = profile_obj2 in user.following.all()
 
         fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = 1, username=username)
-        ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
+        # ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
         gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
         gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
         dob_pa = UserRegisterDetails.objects.filter(dob_public_access = 1, username=username)
         pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = 1, username=username)
         em_pa = UserRegisterDetails.objects.filter(email_public_access = 1, username=username)
-        em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
+        # em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
         fn = profile_obj.first_name
         ln = profile_obj.last_name
         gen = profile_obj.gender
@@ -150,8 +125,55 @@ def user_wall_view(request, username, *args, **kwargs):
         "is_following": is_following,
         "gender":profile_obj.gender,
         "fn_pa": fn_pa, 
-        "ln_pa": ln_pa, "gen_pa": gen_pa, "dob_pa" : dob_pa, 
-        "pn_pa" : pn_pa, "em_pa" : em_pa,"em2_pa" : em2_pa,
+        "gen_pa": gen_pa, "dob_pa" : dob_pa, 
+        "pn_pa" : pn_pa, "em_pa" : em_pa,
+        "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
+        "pn_show" : pn, "em_show" : em, "em2_show" : em2
+
+    }
+    print("gender",profile_obj.gender);
+    return render(request, "profiles/detail.html", context)
+
+def user_wall_view(request, username, *args, **kwargs):
+    # get the profile for the passed username
+    qs = UserRegisterDetails.objects.filter(username=username)
+    qs2 = Profile.objects.filter(user__username=username)
+    if not qs.exists():
+        raise Http404
+    profile_obj = qs.first()
+    profile_obj2 = qs2.first()
+    is_following = False
+    if request.user.is_authenticated:
+        user = request.user
+        is_following = user in profile_obj2.followers.all()
+        is_following = profile_obj2 in user.following.all()
+
+        fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = 1, username=username)
+        # ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
+        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
+        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
+        dob_pa = UserRegisterDetails.objects.filter(dob_public_access = 1, username=username)
+        pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = 1, username=username)
+        em_pa = UserRegisterDetails.objects.filter(email_public_access = 1, username=username)
+        # em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
+        fn = profile_obj.first_name
+        ln = profile_obj.last_name
+        gen = profile_obj.gender
+        dob = profile_obj.dob
+        pn = profile_obj.phone_number
+        em = profile_obj.email
+        em2 = profile_obj.email2
+
+    context = {
+        "username": username,        
+        "profile": profile_obj,
+        "fans": profile_obj2.followers.count(),
+        "companions": user.following.count(),
+        "is_following": is_following,
+        "gender":profile_obj.gender,
+        "fn_pa": fn_pa, 
+        "gen_pa": gen_pa, "dob_pa" : dob_pa, 
+        "pn_pa" : pn_pa, "em_pa" : em_pa,
         "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
@@ -160,7 +182,10 @@ def user_wall_view(request, username, *args, **kwargs):
 
 def trends_view(request, *args, **kwargs):
     trends_list = TrendsExclamation.objects.all()
+    username = request.user.username;
+    
     context = {
+        "username": username,
         "trends_list": trends_list
     }
     return render(request, "profiles/trends.html", context)
@@ -219,7 +244,8 @@ def show_more_view(request, *args, **kwargs):
             temp_list.append(i)
 
     final = random.sample(temp_list, len(temp_list))
-    # context = {
-    # "username":arr
-    #  }
-    return render(request, "profiles/show_more.html", {"username":final})
+    context = {
+        "username": un,
+        "usernames":final,
+    }
+    return render(request, "profiles/show_more.html", context)

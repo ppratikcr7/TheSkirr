@@ -23,7 +23,9 @@ export function TweetCreate(props){
     }
     return <div className={props.className}>
           <form onSubmit={handleSubmit}>
-            <textarea ref={textAreaRef} required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 140 characters...' maxlength="140"></textarea>
+            <textarea ref={textAreaRef} id="clackText" required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 200 characters...'></textarea>
+            <div id="info" className="text-right text-sm"></div>
+            <div id="error" className="text-center text-sm"></div>
             <button type='submit' className='btn btn-primary my-3'>Clack</button>
         </form>
   </div>
