@@ -49,7 +49,7 @@ def logout_view(request, *args, **kwargs):
 
 def register_view(request, *args, **kwargs):
     print("reqest:",request.GET.get('user_type'))
-    form = SignUpForm(request.POST or None, request.FILES)
+    form = SignUpForm(request.POST or None or request.FILES)
     if form.is_valid():
         username = request.POST['username']
         first_name = request.POST['first_name']
@@ -70,8 +70,8 @@ def register_view(request, *args, **kwargs):
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
         # email2_public_access = request.POST.get('email2_public_access', False)
-        photo = request.POST.get('photo')
-        # if not last_name and (last_name_public_access == "True" or last_name_public_access == "False"):
+        photo = request.FILES['photo']
+        # if not last_name and (last_name_public_access == "Yes" or last_name_public_access == "No"):
         #     print("yeah")
         # else:
         #     print("abcd")
