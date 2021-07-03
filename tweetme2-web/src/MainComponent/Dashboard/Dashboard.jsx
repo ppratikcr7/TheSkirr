@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button,Col, Input } from 'antd';
+import { Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
@@ -16,7 +18,6 @@ import $ from 'jquery';
 const { Search } = Input;
 
 export default function Dashboard(props) {
-    const onSearch = value => console.log(value);
 
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
@@ -24,6 +25,7 @@ export default function Dashboard(props) {
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
+    let [searchType, setSearch] = useState();
     // let [whotofollowProfile1, setProfile1] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
@@ -61,6 +63,10 @@ export default function Dashboard(props) {
     // const handleNewProfile1 = (whotofollowProfile1) => {
     //     setProfile1(whotofollowProfile1)
     // }
+
+    const handleSearch = (searchType) => {
+        setSearch(searchType)
+    }
 
     const handleWhoToFollowUser1 = (whoToFollowUser1) => {
         setwhoToFollowUser1(whoToFollowUser1)
@@ -183,6 +189,63 @@ export default function Dashboard(props) {
         }
     });
 
+    const handleClick = ({key}) => {
+        window.localStorage.setItem('search_type', key);
+        if(key == 0){
+            console.log("User")
+        }
+        else if(key == 1){
+            console.log("Clacks")
+        }
+        else {
+            console.log("Trends")
+        }
+
+      }
+
+    const menu = (
+        <Menu onClick={handleClick}>
+          <Menu.Item key="0">
+              User
+          </Menu.Item>
+          <Menu.Item key="1">
+              Clacks
+          </Menu.Item>
+          {/* <Menu.Divider /> */}
+          <Menu.Item key="2">
+            Trends
+          </Menu.Item>
+        </Menu>
+      );
+
+
+    const onSearch = value => {
+        console.log("searched keyword: ", value);
+        // replace below key value with one set from menu item:
+        const key = window.localStorage.getItem('search_type');
+        // const key = 0;
+        console.log("key: ",key);
+        try {
+            if(key == 0){
+                let endpoint = `/accounts/seach_users/?value`;
+                backendLookup("GET", endpoint, handleSearch);
+            }
+            else if(key == 1){
+                let endpoint = `/accounts/seach_clacks/?value`;
+                backendLookup("GET", endpoint, handleSearch);
+            }
+            else {
+                value = "!" + value;
+                let endpoint = `/accounts/seach_trends_in_clacks/?value`;
+                backendLookup("GET", endpoint, handleSearch);
+            } 
+            
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+
     // $('#clackText').trigger(function () {
     //     var maxLength = $(this).val().length;
     //     if (maxLength < MAX_TWEET_LENGTH) {
@@ -198,7 +261,7 @@ export default function Dashboard(props) {
                     <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
                         <div className="w-full lg:w-1/5">
                         </div>
-                        <div className="w-full lg:w-3/5">
+                        <div className="w-full lg:w-2/5">
                             <ul className="list-reset flex">
                                 <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
                                     <a href="#" className="text-grey-darker no-underline hover:no-underline">
@@ -232,14 +295,21 @@ export default function Dashboard(props) {
                                 </li>
                             </ul>
                         </div>
-                        <div className="w-full lg:w-1/5 flex lg:my-0 lg:justify-end items-center">
+                        <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center">
+                            <div className="mr-2">
+                            <Dropdown overlay={menu}>
+                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                Search Type <DownOutlined />
+                                </a>
+                            </Dropdown>
+                            </div>
                             {/* search box */}
                             <Search
                                 placeholder="input search text"
                                 allowClear
                                 enterButton="Search"
                                 size="large"
-                                onSearch={onSearch} style={{ width: 400, color: "#3b82f6"}}
+                                onSearch={onSearch} style={{ width: 300, color: "#3b82f6"}}
                                 />
 
                             {/* <svg version="1.1" className="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >

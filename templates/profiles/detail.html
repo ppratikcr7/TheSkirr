@@ -60,20 +60,27 @@
         <!-- profile new -->
         <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
             <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
-            <div class="flex justify-center -mt-8">
+            <div class="flex justify-center -mt-4">
             <!-- <img src="https://i.imgur.com/8Km9tLL.jpg" class="rounded-full border-solid border-white border-2 -mt-3">		 -->
-            {% if gender == 'Male' %}
-                {% if user.photo.url %}
-                    <img src="{{user.photo.url}}" width="100px" height="100px" class="h-25"/>
+            {% if gender == 'Male' or gender == 'Decline to answer' %}
+                {% if photo %}
+                    <!-- <img src="{{user.photo.url}}" width="100px" height="100px" class="h-25"/> -->
+                    <div class="relative w-20 h-20">
+                        <img class="rounded-full border border-gray-100 shadow-sm h-100" src="/media/{{photo}}" alt="user image" width="120px" height="120px"/>
+                        <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                    </div>
                 {%else%}
-                    <img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="150px" height="150px"/>
+                    <img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="100px" height="100px"/>
                 {%endif%}
             {%endif%}    
             {% if gender == 'Female' %}
-                {% if user.photo.url %}
-                    <img src="{{user.photo.url}}" width="100px" height="100px" class="h-25"/>
+                {% if photo %}
+                <div class="relative w-20 h-20">
+                    <img class="rounded-full border border-gray-100 shadow-sm h-100" src="/media/{{photo}}" alt="user image" width="120px" height="120px"/>
+                    <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                </div>
                 {%else%}
-                    <img src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="150px" height="150px"/>
+                    <img src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="100px" height="100px"/>
                 {%endif%}
             {%endif%}
             </div>

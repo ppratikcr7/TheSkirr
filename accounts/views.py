@@ -19,9 +19,13 @@ from django.core.mail import send_mail
 
 def login_view(request, *args, **kwargs):
     form = UserLoginForm(request, data=request.POST or None)
+    # for case insensitive check:
+    request.user.username = request.user.username.lower()
     if form.is_valid():
         if request.user.is_active==True:
             user_ = form.get_user()
+            user_.username = user_.username.lower()
+            # print("final username: ", user_.username)
             login(request, user_)
             return redirect("/")
         else:
@@ -70,15 +74,24 @@ def register_view(request, *args, **kwargs):
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
         # email2_public_access = request.POST.get('email2_public_access', False)
-        photo = request.FILES['photo']
+        if 'photo' in request.FILES:
+            photo = request.FILES['photo']
+            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+        city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
+        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
+        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo=photo)
+        else:
+            # print("photo not exists")
+            photo = request.FILES.get('media/images/default.jpg')
+            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+        city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
+        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
+        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access)
         # if not last_name and (last_name_public_access == "Yes" or last_name_public_access == "No"):
         #     print("yeah")
         # else:
         #     print("abcd")
-        user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
-        city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
-        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
-        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo=photo)
+        
         user.save()
         # user = form.save(commit=False)
         user.is_active = False
@@ -117,7 +130,6 @@ def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = UserRegisterDetails.objects.get(pk=uid)
-        print(uid)
     except(TypeError, ValueError, OverflowError, UserRegisterDetails.DoesNotExist):
         user = None
 
@@ -125,13 +137,15 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        user.username = user.username.lower()
+        request.user.username = request.user.username.lower()
         login(request, user)
-        print("yes")
         return redirect('/login')
     else:
-        messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
-        print("no")
         login(request, user)
+        user.username = user.username.lower()
+        request.user.username = request.user.username.lower()
+        messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
         return redirect('/login')
 
 def forgot_uname(request):

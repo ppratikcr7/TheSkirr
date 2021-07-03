@@ -64,10 +64,9 @@ def profile_update_view(request, *args, **kwargs):
         if 'photo' in request.FILES:
             print("yes")
             user.photo = request.FILES['photo']
-
             user.save()
         else:
-            user.photo = 'images/default.jpeg'
+            user.photo = 'images/default.jpg'
         
         user.save()
         profile_obj.save()
@@ -124,6 +123,7 @@ def my_wall_view(request, username, *args, **kwargs):
         "companions": user.following.count(),
         "is_following": is_following,
         "gender":profile_obj.gender,
+        "photo":profile_obj.photo,
         "fn_pa": fn_pa, 
         "gen_pa": gen_pa, "dob_pa" : dob_pa, 
         "pn_pa" : pn_pa, "em_pa" : em_pa,
@@ -171,6 +171,7 @@ def user_wall_view(request, username, *args, **kwargs):
         "companions": user.following.count(),
         "is_following": is_following,
         "gender":profile_obj.gender,
+        "photo":profile_obj.photo,
         "fn_pa": fn_pa, 
         "gen_pa": gen_pa, "dob_pa" : dob_pa, 
         "pn_pa" : pn_pa, "em_pa" : em_pa,

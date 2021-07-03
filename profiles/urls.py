@@ -1,8 +1,6 @@
 from django.urls import path
 from .views import my_wall_view, profile_update_view, trends_view , user_wall_view, show_more_view
 
-from django.contrib.auth import views as auth_views
-
 urlpatterns = [
     # api call for edit profile view
     path('edit', profile_update_view),

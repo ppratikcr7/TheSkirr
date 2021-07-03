@@ -22,9 +22,6 @@ def validate_email(value):
 def validate_phoneNumber(value):
     if UserRegisterDetails.objects.filter(phone_number = value).exists():
         raise ValidationError((f"The contact: {value} is already taken. Please use another contact."),params = {'value':value})
-
-    if len(value) < 10:
-         raise ValidationError("Please add the correct phone number")
          
 def validate_dob(value):
     try:

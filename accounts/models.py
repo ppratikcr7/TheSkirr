@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from PIL import Image
 # User = settings.AUTH_USER_MODEL
 
 # Create your models here.
@@ -33,9 +34,17 @@ class UserRegisterDetails(AbstractUser):
     email_public_access = models.BooleanField(null=True, blank=True)
     # email2_public_access = models.BooleanField(default = 'False',null=True, blank=True)
 
-    photo = models.ImageField(null=True, blank=True, upload_to = "images/")
-    # def __str__(self):
-    #     return self.city
+    photo = models.ImageField(null=True, blank=True, upload_to = "images/", default='images/default.jpg')
+
+    def save(self, *args, **kwargs):
+        super(UserRegisterDetails, self).save(*args, **kwargs)  # saving image first
+        if(self.photo.path):
+            img = Image.open(self.photo.path).convert('RGB') # Open image using self
+
+            if img.height > 120 or img.width > 120:
+                new_img = (120, 120)
+                img.thumbnail(new_img)
+                img.save(self.photo.path)  # saving image at the same path
 
 # class InstitutionalUserRegisterDetails(models.Model):
 #     GENDER_CHOICES = (
