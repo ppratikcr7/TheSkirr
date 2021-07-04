@@ -14,6 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from ..models import Profile
 from ..serializers import PublicProfileSerializer
+from django.db.models import Q
 
 User = get_user_model()
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
@@ -155,3 +156,34 @@ def user_follow_view(request, username, *args, **kwargs):
         pass
     data = PublicProfileSerializer(instance=profile, context={"request": request})
     return Response(data.data, status=200)
+
+@api_view(['GET', 'POST'])
+def search_users(request, *args, **kwargs):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+
+        submitbutton = request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(title__icontains=query) | Q(content__icontains=query)
+
+            results= UserRegisterDetails.objects.filter(lookups).distinct()
+
+            context={'results': results,
+                     'submitbutton': submitbutton}
+
+            serializer = PublicProfileSerializer(results)
+            return Response( serializer.data, status=200)
+        
+        else:
+             return Response({"detail": "User not found"}, status=404)
+        
+    else:
+        return Response({"detail": "User not found"}, status=404)
+    #         return render(request, 'profiles/search_users.html', context)
+
+    #     else:
+    #         return render(request, 'profiles/search_users.html')
+
+    # else:
+    #     return render(request, 'profiles/search_users.html')

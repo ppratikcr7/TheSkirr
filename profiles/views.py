@@ -11,6 +11,8 @@ from collections import defaultdict
 import random
 from django.contrib import messages
 
+from django.db.models import Q
+
 
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
@@ -250,3 +252,25 @@ def show_more_view(request, *args, **kwargs):
         "usernames":final,
     }
     return render(request, "profiles/show_more.html", context)
+
+def search_users(request, *args, **kwargs):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+
+        submitbutton= request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(title__icontains=query) | Q(content__icontains=query)
+
+            results= UserRegisterDetails.objects.filter(lookups).distinct()
+
+            context={'results': results,
+                     'submitbutton': submitbutton}
+
+            return render(request, 'profiles/search_users.html', context)
+
+        else:
+            return render(request, 'profiles/search_users.html')
+
+    else:
+        return render(request, 'profiles/search_users.html')
