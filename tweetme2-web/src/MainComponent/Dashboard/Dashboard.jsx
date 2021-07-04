@@ -200,23 +200,22 @@ export default function Dashboard(props) {
         else {
             console.log("Trends")
         }
-
-      }
+    }
 
     const menu = (
         <Menu onClick={handleClick}>
-          <Menu.Item key="0">
-              User
-          </Menu.Item>
-          <Menu.Item key="1">
-              Clacks
-          </Menu.Item>
-          {/* <Menu.Divider /> */}
-          <Menu.Item key="2">
+            <Menu.Item key="0">
+            User
+            </Menu.Item>
+            <Menu.Item key="1">
+            Clacks
+            </Menu.Item>
+            {/* <Menu.Divider /> */}
+            <Menu.Item key="2">
             Trends
-          </Menu.Item>
+            </Menu.Item>
         </Menu>
-      );
+    );
 
 
     const onSearch = value => {
