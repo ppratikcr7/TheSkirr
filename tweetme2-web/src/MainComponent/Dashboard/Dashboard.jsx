@@ -226,16 +226,16 @@ export default function Dashboard(props) {
         console.log("key: ",key);
         try {
             if(key == 0){
-                let endpoint = `/accounts/seach_users/?value`;
+                let endpoint = `/profiles/search_users/${value}`;
                 backendLookup("GET", endpoint, handleSearch);
             }
             else if(key == 1){
-                let endpoint = `/accounts/seach_clacks/?value`;
+                let endpoint = `/profiles/search_clacks/?value`;
                 backendLookup("GET", endpoint, handleSearch);
             }
             else {
                 value = "!" + value;
-                let endpoint = `/accounts/seach_trends_in_clacks/?value`;
+                let endpoint = `/profiles/search_trends_in_clacks/?value`;
                 backendLookup("GET", endpoint, handleSearch);
             } 
             

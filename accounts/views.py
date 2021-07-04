@@ -13,23 +13,41 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib import messages
 from django.conf import settings 
 from django.core.mail import send_mail 
+
+from django.contrib.auth.models import auth
 # Create your views here.
 
 # Function based views to Class Based Views
 
 def login_view(request, *args, **kwargs):
     form = UserLoginForm(request, data=request.POST or None)
-    # for case insensitive check:
-    request.user.username = request.user.username.lower()
+    # print(form.name)
     if form.is_valid():
-        if request.user.is_active==True:
-            user_ = form.get_user()
-            user_.username = user_.username.lower()
-            # print("final username: ", user_.username)
-            login(request, user_)
+        username = request.POST['username']
+        # print(username)
+        password = request.POST['password']
+        # print(password)
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
             return redirect("/")
         else:
+            messages.warning(request, 'Invalid Username or Password')
+            messages.info(request, 'OR')
             messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+    
+    # # for case insensitive check:
+    # request.user.username = request.user.username.lower()
+    # if form.is_valid():
+    #     if request.user.is_active==True:
+    #         user_ = form.get_user()
+    #         user_.username = user_.username.lower()
+    #         # print("final username: ", user_.username)
+    #         login(request, user_)
+    #         return redirect("/")
+    #     else:
+    #         messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
 
     context = {
         "form": form,
