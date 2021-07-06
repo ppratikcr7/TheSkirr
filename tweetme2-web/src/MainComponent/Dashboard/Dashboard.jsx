@@ -359,6 +359,11 @@ export default function Dashboard(props) {
                         <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
                             {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
                         </div>
+                        {/* <div>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="/profiles/report_adverse_effect_form" style={{ textDecoration: "none" }}>Report Adverse Effect</a>
+                            </Button>
+                        </div> */}
                         <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
                         {/* <TweetsList newTweets={newTweets} {...props} /> */}
 

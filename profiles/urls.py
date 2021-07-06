@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import my_wall_view, profile_update_view, trends_view , user_wall_view, show_more_view, search_users, search_clacks, search_trends
+from .views import my_wall_view, profile_update_view, trends_view , user_wall_view, show_more_view, search_users, search_clacks, search_trends, report_adverse_effect_form_view
 
 urlpatterns = [
     # api call for edit profile view
@@ -14,5 +14,6 @@ urlpatterns = [
     path('more_accounts', show_more_view),
     path('search_users/<str:value>', search_users),
     path('search_clacks/<str:value>', search_clacks),
-    path('search_trends/<str:value>', search_trends),   
+    path('search_trends/<str:value>', search_trends),  
+    path('report_adverse_effect_form', report_adverse_effect_form_view), 
 ]
