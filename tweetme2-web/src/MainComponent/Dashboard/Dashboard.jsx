@@ -219,24 +219,17 @@ export default function Dashboard(props) {
 
 
     const onSearch = value => {
-        console.log("searched keyword: ", value);
-        // replace below key value with one set from menu item:
         const key = window.localStorage.getItem('search_type');
-        // const key = 0;
-        console.log("key: ",key);
         try {
             if(key == 0){
-                let endpoint = `/profiles/search_users/${value}`;
-                backendLookup("GET", endpoint, handleSearch);
+                window.open(`http://localhost:8000/profiles/search_users/${value}`, '_self')
             }
             else if(key == 1){
-                let endpoint = `/profiles/search_clacks/?value`;
-                backendLookup("GET", endpoint, handleSearch);
+                window.open(`http://localhost:8000/profiles/search_clacks/${value}`, '_self')
             }
             else {
                 value = "!" + value;
-                let endpoint = `/profiles/search_trends_in_clacks/?value`;
-                backendLookup("GET", endpoint, handleSearch);
+                window.open(`http://localhost:8000/profiles/search_trends/${value}`, '_self')
             } 
             
         } catch (error) {
@@ -339,19 +332,19 @@ export default function Dashboard(props) {
                         <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? newProfile.email : "EmailID"}</a></div>
                         <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? "Joined: " + cleanDate : "Joined: 1 Jan 2021 12AM"}</a></div>
                         <Col span={7} >
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push(`/profiles/my_wall/?username=${newUserName}`) }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>My Dashboard</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/trending_exclamation") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/profiles/more_accounts") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/profiles/more_accounts" style={{ textDecoration: "none" }}>Who to Follow</a>
                             </Button>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} onClick={() => { this.props.history.push("/") }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>Clack Now</a>
                             </Button>
                         </Col>

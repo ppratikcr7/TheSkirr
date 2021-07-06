@@ -13,7 +13,7 @@ class UserRegisterDetails(AbstractUser):
         ('Decline to answer', 'Decline to answer'),
     )
     first_name = models.CharField(max_length=220, null=True, blank=True)
-    last_name = models.CharField(max_length=220, null=True, blank=True)
+    last_name = models.CharField(max_length=220, blank=True)
     gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
     dob = models.DateField(null=True, blank=True)
     phone_number = models.BigIntegerField(null=True, blank=True)

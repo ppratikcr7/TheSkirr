@@ -35,20 +35,15 @@
         <div class="flex items-center justify-center h-full bg-gray-100">
             <div class="container">
                 <div class="flex justify-center p-4 mb-2">
-                    <h1 class="text-xl text-blue-500">Searched Users: </h1>
+                    <h1 class="text-xl text-blue-500">Searched trending clacks: </h1>
                 </div>
                 <div class="flex justify-center">
                     <div class="bg-white shadow-xl rounded-lg w-1/2">
                         <ul class="divide-y divide-gray-300">
-                            {% if usernames %}
-                                {% for uname in usernames %}
-                                    <li class="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/user_wall/{{uname}}'>{{uname}}</a></li>
-                                {% endfor %}
-                            {% else %}
-                            <h2 class="text-l">No user found! Please check the searched keyword</h2>
-                            {% endif %}
+                            {% for uname in usernames %}
+                            <li class="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/user_wall/{{uname}}'>{{uname}}</a></li>
+                            {% endfor %}
                         </ul>
-                        
                     </div>
                 </div>
             </div>

@@ -253,24 +253,42 @@ def show_more_view(request, *args, **kwargs):
     }
     return render(request, "profiles/show_more.html", context)
 
-def search_users(request, *args, **kwargs):
-    if request.method == 'GET':
-        query= request.GET.get('q')
-
-        submitbutton= request.GET.get('submit')
-
-        if query is not None:
-            lookups= Q(title__icontains=query) | Q(content__icontains=query)
-
-            results= UserRegisterDetails.objects.filter(lookups).distinct()
-
-            context={'results': results,
-                     'submitbutton': submitbutton}
-
-            return render(request, 'profiles/search_users.html', context)
-
-        else:
-            return render(request, 'profiles/search_users.html')
-
+def search_users(request, value, *args, **kwargs):
+    un = request.user.username
+    if value is not None:
+        lookups= Q(username__icontains=value) | Q(first_name__icontains=value) | Q(last_name__icontains=value)
+        usernames= UserRegisterDetails.objects.filter(lookups).distinct()
+        context={
+            "username": un,
+            'usernames': usernames}
+        return render(request, 'profiles/search_users.html', context)
     else:
         return render(request, 'profiles/search_users.html')
+
+
+def search_clacks(request, value, *args, **kwargs):
+    un = request.user.username
+    if value is not None:
+        lookups= Q(content__icontains=value)
+        usernames= Tweet.objects.filter(lookups).distinct()
+        # TODO: change below context to show tweetlist with those tweets
+        context={
+            "username": un,
+            'usernames': usernames}
+        return render(request, 'profiles/search_clacks.html', context)
+    else:
+        return render(request, 'profiles/search_clacks.html')
+
+def search_trends(request, value, *args, **kwargs):
+    un = request.user.username
+    if value is not None:
+        lookups= Q(content__icontains=value)
+        usernames= Tweet.objects.filter(lookups).distinct()
+
+        # TODO: change below context to show tweetlist with those tweets
+        context={
+            "username": un,
+            'usernames': usernames}
+        return render(request, 'profiles/search_trends.html', context)
+    else:
+        return render(request, 'profiles/search_trends.html')

@@ -9,7 +9,6 @@ from .views import (
     who_to_follow_user1,
     who_to_follow_user2,
     who_to_follow_user3,
-    search_users
 )
 '''
 CLIENT
@@ -32,6 +31,5 @@ urlpatterns = [
     path('who_to_follow_users/user1/', who_to_follow_user1),
     path('who_to_follow_users/user2/', who_to_follow_user2),
     path('who_to_follow_users/user3/', who_to_follow_user3),
-    path('search_users/<str:value', search_users)
     
 ]

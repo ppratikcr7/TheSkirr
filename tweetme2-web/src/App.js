@@ -18,7 +18,8 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route path="/register" component={Home}></Route>
           <Route path="/login" component={Home}></Route>
-          <Route path="/my_wall" component={MyWall}></Route>
+          <Route path="/profiles/my_wall/:username" component={MyWall}></Route>
+          {/* <Route path="/profiles/user_wall/:xyz_name" component={UserWall}></Route> */}
           <Route path="/submit" component={SubmitResearch}></Route>
           <Route path="/dashboard" component={Dashboard}></Route>
         </Switch>
