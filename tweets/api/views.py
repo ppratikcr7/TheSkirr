@@ -49,7 +49,7 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
 def tweet_action_view(request, *args, **kwargs):
     '''
     id is required.
-    Action options are: like, unlike, retweet
+    Action options are: like, unlike, retweet, delete and reply
     '''
     serializer = TweetActionSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
@@ -68,18 +68,20 @@ def tweet_action_view(request, *args, **kwargs):
             # print("like obj:", obj)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
+
         elif action == "unlike":
             obj.likes.remove(request.user)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
+
         elif action == "retweet":
             new_tweet = Tweet.objects.create(
                     user=request.user, 
                     parent=obj,
-                    content=content,
-                    )
+                    content=content,)
             serializer = TweetSerializer(new_tweet)
             return Response(serializer.data, status=201)
+
         elif action == "delete":
             qs = Tweet.objects.filter(id=tweet_id)
             if not qs.exists():
@@ -93,6 +95,11 @@ def tweet_action_view(request, *args, **kwargs):
             # to update tweet text with deleted text
             obj.content = "This Clack is deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
             obj.save()
+            return Response(serializer.data, status=200)
+        
+        elif action == "reply":
+            # change below code to perform reply action
+            serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
     return Response({}, status=200)
 
