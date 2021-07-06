@@ -2,26 +2,12 @@
 <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
 <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
 <script>
-  webshims.setOptions('waitReady', false);
-  webshims.setOptions('forms-ext', {type: 'date'});
-  webshims.setOptions('forms-ext', {type: 'time'});
-  webshims.polyfill('forms forms-ext');
+webshims.setOptions('waitReady', false);
+webshims.setOptions('forms-ext', {type: 'date'});
+webshims.setOptions('forms-ext', {type: 'time'});
+webshims.polyfill('forms forms-ext');
 </script>
 {% extends "base.html" %}
- {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script>
-        $('input[type="text"]').bind('blur', function (e) {
-
-            if ($('#last_name').val().length > 0) {
-
-                $('input[type="radio"]').prop('disabled', false);
-
-            } else {
-                $('input[type="radio"]').prop('disabled', true);
-            }
-
-        });
-    </script> {% endcomment %}
 
 {% block content %}
 <div class='col-12 col-md-4 mx-auto mb-10'>
