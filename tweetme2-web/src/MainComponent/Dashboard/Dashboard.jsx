@@ -40,13 +40,15 @@ export default function Dashboard(props) {
         setNewTweets(tempNewTweets)
     }
     const handleNewUsername = (newUserName) => {
+        // console.log("newUserName:", newUserName);
+        localStorage.setItem("newUserName", JSON.stringify(newUserName));
         setUserName(newUserName ? newUserName.username : "")
         //get random 3 users to follow:
         getWhoToFollowUser1();
         getWhoToFollowUser2();
         getWhoToFollowUser3();
         // function call for getting current user profile
-        getMainProfile(newUserName.username, handleNewProfile);
+        // getMainProfile(newUserName.username, handleNewProfile);
         // function call for getting gagan user profile
         // getProfile1("Gagan123", handleNewProfile1);
         // function call for getting total likes for current user
@@ -58,9 +60,20 @@ export default function Dashboard(props) {
     useEffect(() => {
         getCurrentUserTotalLikes();
         getCurrentUserTotalClacks();
+        let userName = localStorage.getItem("newUserName");
+        let userData = userName && JSON.parse(userName);
+        // if (userData && userData.username) {
+        //     getMainProfile(userData.username, handleNewProfile);
+        // }
+        // console.log("newProfileInstant", newProfile);
     })
 
+    useEffect(() => {
+        getMainProfile(newUserName, handleNewProfile);
+    }, [newUserName])
+
     const handleNewProfile = (newProfile) => {
+        // console.log("newProfile:", newProfile);
         setNewProfile(newProfile)
     }
 
