@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { ProfileBadgeComponent } from './profiles'
-import { Dashboard, Home, FeedComponent, TweetsComponent, TweetDetailComponent } from './tweets'
+import { Dashboard, Home, MyWall, FeedComponent, TweetsComponent, TweetDetailComponent } from './tweets'
 import * as serviceWorker from './serviceWorker';
 import Footer from './Common/footer';
 
@@ -22,6 +22,12 @@ const tweetFeedEl = document.getElementById("tweetme-feed")
 if (tweetFeedEl) {
     ReactDOM.render(
         e(Dashboard, tweetFeedEl.dataset), tweetFeedEl);
+}
+
+const tweetPorfileWallEl = document.getElementById("tweetme-profile-myWall")
+if (tweetPorfileWallEl) {
+    ReactDOM.render(
+        e(MyWall, tweetPorfileWallEl.dataset), tweetPorfileWallEl);
 }
 
 const tweetDetailElements = document.querySelectorAll(".tweetme-2-detail")
