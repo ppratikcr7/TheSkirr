@@ -292,3 +292,10 @@ def search_trends(request, value, *args, **kwargs):
         return render(request, 'profiles/search_trends.html', context)
     else:
         return render(request, 'profiles/search_trends.html')
+
+def report_adverse_effect_form_view(request, *args, **kwargs):
+    un = request.user.username
+    context={
+        "username": un
+    }
+    return render(request, 'profiles/report_adverse_effect_form.html', context)
