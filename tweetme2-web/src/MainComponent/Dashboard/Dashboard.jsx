@@ -176,7 +176,16 @@ export default function Dashboard(props) {
     }
 
     function handleTweetList(value) {
-        apiTweetList(null, handleListLookup);
+        console.log("value:", value);
+        if (value !== "like" && value !== "unlike") {
+            console.log("enter1");
+            apiTweetList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
+            console.log("enter2");
+            console.log("setNewTweets", newTweets);
+        }
     }
 
     useEffect(() => {
