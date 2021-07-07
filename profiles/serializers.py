@@ -6,6 +6,8 @@ class PublicProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
     email = serializers.SerializerMethodField(read_only=True)
+    email2 = serializers.SerializerMethodField(read_only=True)
+    phone_number = serializers.SerializerMethodField(read_only=True)
     date_joined = serializers.SerializerMethodField(read_only=True)
     is_following = serializers.SerializerMethodField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
@@ -17,6 +19,8 @@ class PublicProfileSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "email2",
+            "phone_number",
             "date_joined",
             "id",
             "bio",
@@ -54,6 +58,12 @@ class PublicProfileSerializer(serializers.ModelSerializer):
 
     def get_email(self, obj):
         return obj.user.email
+    
+    def get_email2(self, obj):
+        return obj.user.email2
+    
+    def get_phone_number(self, obj):
+        return obj.user.phone_number
 
     def get_date_joined(self, obj):
         return obj.user.date_joined

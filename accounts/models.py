@@ -2,10 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from PIL import Image
+
 # User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class UserRegisterDetails(AbstractUser):
+    unique_id = models.CharField(max_length=12, null=True, blank=True)
     GENDER_CHOICES = (
         ('Select', 'Select'),
         ('Male', 'Male'),
@@ -13,7 +15,7 @@ class UserRegisterDetails(AbstractUser):
         ('Decline to answer', 'Decline to answer'),
     )
     first_name = models.CharField(max_length=220, null=True, blank=True)
-    last_name = models.CharField(max_length=220, blank=True)
+    last_name = models.CharField(max_length=220, blank=True, default='')
     gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
     dob = models.DateField(null=True, blank=True)
     phone_number = models.BigIntegerField(null=True, blank=True)

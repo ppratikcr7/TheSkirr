@@ -12,7 +12,7 @@ import random
 from django.contrib import messages
 
 from django.db.models import Q
-
+from django.utils.crypto import get_random_string
 
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
@@ -49,8 +49,9 @@ def profile_update_view(request, *args, **kwargs):
         dob = form.cleaned_data.get('dob')
         gender = form.cleaned_data.get('gender')
         areaOfInterest = form.cleaned_data.get('areaOfInterest')
+        unique_id = get_random_string(length=12)
         # photo = form.cleaned_data.get('photo')
-
+        user.unique_id = unique_id
         user.first_name = first_name
         user.last_name = last_name
         user.username = username
@@ -61,10 +62,9 @@ def profile_update_view(request, *args, **kwargs):
         user.dob = dob
         user.gender = gender
         user.areaOfInterest = areaOfInterest
-        # user.photo = photo
+
 
         if 'photo' in request.FILES:
-            print("yes")
             user.photo = request.FILES['photo']
             user.save()
         else:
@@ -72,14 +72,11 @@ def profile_update_view(request, *args, **kwargs):
         
         user.save()
         profile_obj.save()
-        # print(user.save())
         if user.save()==None:
             messages.success(request, 'You Profile has been successfully updated :)')
         else:
             messages.warning(request, 'Update Failed:(')
-           
 
-        
     context = {
         "form": form,
         "btn_label": "Update",
@@ -185,7 +182,7 @@ def user_wall_view(request, username, *args, **kwargs):
 
 def trends_view(request, *args, **kwargs):
     trends_list = TrendsExclamation.objects.all()
-    username = request.user.username;
+    username = request.user.username
     
     context = {
         "username": username,
@@ -217,7 +214,6 @@ def show_more_view(request, *args, **kwargs):
     else:
         more_users = []
 
-    
     new_dict = defaultdict(list)
     for user in all:
         me = user

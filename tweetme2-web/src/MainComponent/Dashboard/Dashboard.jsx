@@ -25,8 +25,6 @@ export default function Dashboard(props) {
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
-    let [searchType, setSearch] = useState();
-    // let [whotofollowProfile1, setProfile1] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
@@ -46,8 +44,6 @@ export default function Dashboard(props) {
         getWhoToFollowUser3();
         // function call for getting current user profile
         getMainProfile(newUserName.username, handleNewProfile);
-        // function call for getting gagan user profile
-        // getProfile1("Gagan123", handleNewProfile1);
         // function call for getting total likes for current user
         getCurrentUserTotalLikes();
         // function call for getting total clacks for current user
@@ -60,14 +56,6 @@ export default function Dashboard(props) {
     }
 
     // who to follow:
-    // const handleNewProfile1 = (whotofollowProfile1) => {
-    //     setProfile1(whotofollowProfile1)
-    // }
-
-    const handleSearch = (searchType) => {
-        setSearch(searchType)
-    }
-
     const handleWhoToFollowUser1 = (whoToFollowUser1) => {
         setwhoToFollowUser1(whoToFollowUser1)
     }
@@ -233,7 +221,7 @@ export default function Dashboard(props) {
             } 
             
         } catch (error) {
-            console.log("error:", error);
+            console.log("error in search:", error);
         }
     }
 
@@ -323,14 +311,15 @@ export default function Dashboard(props) {
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <span className="text-lg font-bold">User Bio</span>
-                            <br />
                         </div>
-                        <h1><a href="#" className="text-black font-bold no-underline">{newProfile ? newProfile.first_name + " " + newProfile.last_name : "Name"}</a></h1>
-                        <div className="mb-4"><a href="#" className="text-grey-darker no-underline">{newProfile ? newProfile.username : "@username"}</a></div>
-                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? newProfile.email : "EmailID"}</a></div>
-                        <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#" className="text-teal no-underline">{newProfile ? "Joined: " + cleanDate : "Joined: 1 Jan 2021 12AM"}</a></div>
+                        <div className="mb-2"><i className="fa fa-id-badge fa-lg text-grey-darker mr-1"></i>Name: {newProfile ? newProfile.first_name + " " + newProfile.last_name : "User"}</div>
+                        <div className="mb-2"><i className="fa fa-user fa-lg text-grey-darker mr-1"></i>Username: <a href= {"/profiles/my_wall/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></div>
+                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Email: {newProfile ? newProfile.email : "EmailID"}</div>
+                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Secondary Email: {newProfile ? newProfile.email2 : "EmailID2"}</div>
+                        <div className="mb-2"><i className="fa fa-phone fa-lg text-grey-darker mr-1"></i>Contact Number: {newProfile ? newProfile.phone_number : "EmailID2"}</div>
+                        <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
