@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button,Col, Input } from 'antd';
+import { Button, Col, Input } from 'antd';
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
@@ -31,27 +31,45 @@ export default function Dashboard(props) {
     const canTweet = props.canTweet === "false" ? false : true
 
     const handleNewTweet = (newTweet) => {
+        console.log("newTweet1:", newTweet);
         let tempNewTweets = [...newTweets]
         tempNewTweets.unshift(newTweet)
+        console.log("tempNewTweets2:", tempNewTweets);
         setNewTweets(tempNewTweets)
     }
     const handleNewUsername = (newUserName) => {
-
+        // console.log("newUserName:", newUserName);
+        localStorage.setItem("newUserName", JSON.stringify(newUserName));
         setUserName(newUserName ? newUserName.username : "")
         //get random 3 users to follow:
         getWhoToFollowUser1();
         getWhoToFollowUser2();
         getWhoToFollowUser3();
         // function call for getting current user profile
-        getMainProfile(newUserName.username, handleNewProfile);
+        // getMainProfile(newUserName.username, handleNewProfile);
         // function call for getting total likes for current user
-        getCurrentUserTotalLikes();
+        // getCurrentUserTotalLikes();
         // function call for getting total clacks for current user
-        getCurrentUserTotalClacks();
-
+        // getCurrentUserTotalClacks();
     }
 
+    useEffect(() => {
+        getCurrentUserTotalLikes();
+        getCurrentUserTotalClacks();
+        let userName = localStorage.getItem("newUserName");
+        let userData = userName && JSON.parse(userName);
+        // if (userData && userData.username) {
+        //     getMainProfile(userData.username, handleNewProfile);
+        // }
+        // console.log("newProfileInstant", newProfile);
+    })
+
+    useEffect(() => {
+        getMainProfile(newUserName, handleNewProfile);
+    }, [newUserName])
+
     const handleNewProfile = (newProfile) => {
+        // console.log("newProfile:", newProfile);
         setNewProfile(newProfile)
     }
 
@@ -146,7 +164,7 @@ export default function Dashboard(props) {
     }
 
     function handleTweetList(value) {
-    apiTweetList(null, handleListLookup);
+        apiTweetList(null, handleListLookup);
     }
 
     useEffect(() => {
@@ -160,7 +178,7 @@ export default function Dashboard(props) {
 
     const MAX_TWEET_LENGTH = 200;
 
-    $("#clackText").keyup(function(){
+    $("#clackText").keyup(function () {
         $("#info").text(($(this).val().length) + " / " + MAX_TWEET_LENGTH)
     });
 
@@ -177,12 +195,12 @@ export default function Dashboard(props) {
         }
     });
 
-    const handleClick = ({key}) => {
+    const handleClick = ({ key }) => {
         window.localStorage.setItem('search_type', key);
-        if(key == 0){
+        if (key == 0) {
             console.log("User")
         }
-        else if(key == 1){
+        else if (key == 1) {
             console.log("Clacks")
         }
         else {
@@ -193,14 +211,14 @@ export default function Dashboard(props) {
     const menu = (
         <Menu onClick={handleClick}>
             <Menu.Item key="0">
-            User
+                User
             </Menu.Item>
             <Menu.Item key="1">
-            Clacks
+                Clacks
             </Menu.Item>
             {/* <Menu.Divider /> */}
             <Menu.Item key="2">
-            Trends
+                Trends
             </Menu.Item>
         </Menu>
     );
@@ -234,65 +252,65 @@ export default function Dashboard(props) {
     //     }
     // });
 
-        return (
-            <>
-                <div className="bg-white shadow">
-                    {/* style={{ marginTop: 104 }} */}
-                    <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
-                        <div className="w-full lg:w-1/5">
-                        </div>
-                        <div className="w-full lg:w-2/5">
-                            <ul className="list-reset flex">
-                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
-                                    <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">Clacks</div>
-                                        <div className="text-lg tracking-tight font-bold text-teal">{currentUserTotalClacks ? currentUserTotalClacks : "0"}</div>
-                                    </a>
-                                </li>
-                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
-                                    <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">Fans</div>
-                                        <div className="text-lg tracking-tight font-bold hover:text-teal">{newProfile ? newProfile.follower_count : "0"}</div>
-                                    </a>
-                                </li>
-                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
-                                    <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">Companion</div>
-                                        <div className="text-lg tracking-tight font-bold hover:text-teal">{newProfile ? newProfile.following_count : "0"}</div>
-                                    </a>
-                                </li>
-                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
-                                    <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">Likes</div>
-                                        <div className="text-lg tracking-tight font-bold hover:text-teal">{currentUserTotalLikes ? currentUserTotalLikes : "0"}</div>
-                                    </a>
-                                </li>
-                                <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
-                                    <a href="#" className="text-grey-darker no-underline hover:no-underline">
-                                        <div className="text-sm font-bold tracking-tight mb-1">Moments</div>
-                                        <div className="text-lg tracking-tight font-bold hover:text-teal">0</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center">
-                            <div className="mr-2">
+    return (
+        <>
+            <div className="bg-white shadow">
+                {/* style={{ marginTop: 104 }} */}
+                <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
+                    <div className="w-full lg:w-1/5">
+                    </div>
+                    <div className="w-full lg:w-2/5">
+                        <ul className="list-reset flex">
+                            <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent border-teal">
+                                <a href="#" className="text-grey-darker no-underline hover:no-underline">
+                                    <div className="text-sm font-bold tracking-tight mb-1">Clacks</div>
+                                    <div className="text-lg tracking-tight font-bold text-teal">{currentUserTotalClacks ? currentUserTotalClacks : "0"}</div>
+                                </a>
+                            </li>
+                            <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
+                                <a href="#" className="text-grey-darker no-underline hover:no-underline">
+                                    <div className="text-sm font-bold tracking-tight mb-1">Fans</div>
+                                    <div className="text-lg tracking-tight font-bold hover:text-teal">{newProfile ? newProfile.follower_count : "0"}</div>
+                                </a>
+                            </li>
+                            <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
+                                <a href="#" className="text-grey-darker no-underline hover:no-underline">
+                                    <div className="text-sm font-bold tracking-tight mb-1">Companion</div>
+                                    <div className="text-lg tracking-tight font-bold hover:text-teal">{newProfile ? newProfile.following_count : "0"}</div>
+                                </a>
+                            </li>
+                            <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
+                                <a href="#" className="text-grey-darker no-underline hover:no-underline">
+                                    <div className="text-sm font-bold tracking-tight mb-1">Likes</div>
+                                    <div className="text-lg tracking-tight font-bold hover:text-teal">{currentUserTotalLikes ? currentUserTotalLikes : "0"}</div>
+                                </a>
+                            </li>
+                            <li className="text-center py-3 px-4 border-b-2 border-solid border-transparent hover:border-teal">
+                                <a href="#" className="text-grey-darker no-underline hover:no-underline">
+                                    <div className="text-sm font-bold tracking-tight mb-1">Moments</div>
+                                    <div className="text-lg tracking-tight font-bold hover:text-teal">0</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center">
+                        <div className="mr-2">
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                Search Type <DownOutlined />
+                                    Search Type <DownOutlined />
                                 </a>
                             </Dropdown>
-                            </div>
-                            {/* search box */}
-                            <Search
-                                placeholder="input search text"
-                                allowClear
-                                enterButton="Search"
-                                size="large"
-                                onSearch={onSearch} style={{ width: 300, color: "#3b82f6"}}
-                                />
+                        </div>
+                        {/* search box */}
+                        <Search
+                            placeholder="input search text"
+                            allowClear
+                            enterButton="Search"
+                            size="large"
+                            onSearch={onSearch} style={{ width: 300, color: "#3b82f6" }}
+                        />
 
-                            {/* <svg version="1.1" className="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
+                        {/* <svg version="1.1" className="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
                                 <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
                                         c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
                                         C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
@@ -305,9 +323,9 @@ export default function Dashboard(props) {
                                     </div>
                                 </div>
                             </div> */}
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
@@ -339,47 +357,42 @@ export default function Dashboard(props) {
                         </Col>
                     </div>
 
-                    <div className="w-full lg:w-3/5 bg-white mb-20">
-                        <div className="flex justify-between mb-1">
-                            <div>
-                                <span className="text-lg font-bold">&emsp;&emsp;Home</span>
-                            </div>
+                <div className="w-full lg:w-3/5 bg-white mb-20">
+                    <div className="flex justify-between mb-1">
+                        <div>
+                            <span className="text-lg font-bold">&emsp;&emsp;Home</span>
                         </div>
-                        <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
-                            {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
-                        </div>
-                        {/* <div>
-                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href="/profiles/report_adverse_effect_form" style={{ textDecoration: "none" }}>Report Adverse Effect</a>
-                            </Button>
-                        </div> */}
-                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
-                        {/* <TweetsList newTweets={newTweets} {...props} /> */}
-
                     </div>
+                    <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
+                    </div>
+                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                    {/* <TweetsList newTweets={newTweets} {...props} /> */}
 
-                    <div className="w-full lg:w-1/5 pl-0">
-                        <div className="bg-white p-3 mb-3">
-                            <div>
-                                <span className="text-lg font-bold p-2">Who to follow</span>
-                            </div>
-                            <div className="p-2">
-                            
-                                {(whoToFollowUser1) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser1} /> : <div></div>}
-                                {/* use the below for color encoding */}
-                                {/* <span class="text-grey-dark">&middot;</span> */}
-                            </div>
-                            <div className="p-2">
-                                {(whoToFollowUser2) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser2} /> : <div></div>}
-                                {/* use the below for color encoding */}
-                                {/* <span class="text-grey-dark">&middot;</span> */}
-                            </div>
-                            <div className="p-2">
-                                {(whoToFollowUser3) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser3} /> : <div></div>}
-                                {/* use the below for color encoding */}
-                                {/* <span class="text-grey-dark">&middot;</span> */}
-                            </div>
-                            {/* <div className="flex border-b border-solid border-grey-light">
+                </div>
+
+                <div className="w-full lg:w-1/5 pl-0">
+                    <div className="bg-white p-3 mb-3">
+                        <div>
+                            <span className="text-lg font-bold p-2">Who to follow</span>
+                        </div>
+                        <div className="p-2">
+
+                            {(whoToFollowUser1) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser1} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <div className="p-2">
+                            {(whoToFollowUser2) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser2} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <div className="p-2">
+                            {(whoToFollowUser3) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser3} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        {/* <div className="flex border-b border-solid border-grey-light">
                             <div className="py-2">
                                 <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
                             </div>
@@ -431,15 +444,15 @@ export default function Dashboard(props) {
                                 </div>
                             </div>
                         </div> */}
-                            <hr className="mt-2 mb-2"></hr>
-                            <div className="flex justify-between mb-1">
-                                <div>  
-                                    <a href="/profiles/more_accounts" className="font-bold text-black">Show more</a>
-                                </div>
+                        <hr className="mt-2 mb-2"></hr>
+                        <div className="flex justify-between mb-1">
+                            <div>
+                                <a href="/profiles/more_accounts" className="font-bold text-black">Show more</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </>
-        )
-    }
+            </div>
+        </>
+    )
+}
