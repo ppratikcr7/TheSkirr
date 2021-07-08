@@ -11,6 +11,8 @@
 
     <div class="form-group">
         <label for="{{ form.photo.id_for_label }}">Photo: </label>
+        {% comment %} <input type="checkbox" name="photo-clear" id="photo-clear_id">
+        <label for="photo-clear_id">Clear</label>     {% endcomment %}
         {{ form.photo }}
         {{ form.photo.errors }}
     </div>

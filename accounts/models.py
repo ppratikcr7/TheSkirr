@@ -2,9 +2,13 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from PIL import Image
+
+from django.forms.widgets import ClearableFileInput
 # User = settings.AUTH_USER_MODEL
 
 # Create your models here.
+
+
 class UserRegisterDetails(AbstractUser):
     GENDER_CHOICES = (
         ('Select', 'Select'),

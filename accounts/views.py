@@ -109,10 +109,10 @@ def register_view(request, *args, **kwargs):
         #     print("yeah")
         # else:
         #     print("abcd")
-        
+        user.is_active = False
         user.save()
         # user = form.save(commit=False)
-        user.is_active = False
+        
         # user.save()
         # user.set_password(form.cleaned_data.get(password1))
         user.set_password(request.POST.get('password1'))
