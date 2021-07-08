@@ -70,8 +70,9 @@ def logout_view(request, *args, **kwargs):
 
 
 def register_view(request, *args, **kwargs):
-    print("reqest:",request.GET.get('user_type'))
+    # print("reqest:",request.GET.get('user_type'))
     form = SignUpForm(request.POST or None or request.FILES)
+    # print(form)
     if form.is_valid():
         username = request.POST['username']
         first_name = request.POST['first_name']
@@ -91,20 +92,29 @@ def register_view(request, *args, **kwargs):
         dob_public_access = request.POST['dob_public_access']
         phone_number_public_access = request.POST['phone_number_public_access']
         email_public_access = request.POST['email_public_access']
+        clear = request.POST.get('clear', False)
+
         # email2_public_access = request.POST.get('email2_public_access', False)
-        if 'photo' in request.FILES:
-            photo = request.FILES['photo']
-            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
-        city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
-        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
-        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo=photo)
-        else:
-            # print("photo not exists")
+        # print(clear)
+        # if clear == 'None':
+        #     clear = "False"
+        # print(clear)
+
+        if((('photo' in request.FILES or 'photo' not in request.FILES)and clear=="True") or ('photo' not in request.FILES and clear == False)):
+            # photo = request.FILES['photo']
+            # print("abc")
             photo = request.FILES.get('media/images/default.jpg')
             user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
-        city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
-        gender_public_access=gender_public_access, dob_public_access=dob_public_access,
-        phone_number_public_access=phone_number_public_access, email_public_access=email_public_access)
+            city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
+            gender_public_access=gender_public_access, dob_public_access=dob_public_access,
+            phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, clear_photo = clear )
+           
+        if 'photo' in request.FILES and (clear == False):            
+            photo = request.FILES['photo']
+            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+            city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
+            gender_public_access=gender_public_access, dob_public_access=dob_public_access,
+            phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo = photo, clear_photo = clear)
         # if not last_name and (last_name_public_access == "Yes" or last_name_public_access == "No"):
         #     print("yeah")
         # else:

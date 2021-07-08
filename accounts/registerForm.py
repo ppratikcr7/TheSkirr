@@ -45,11 +45,11 @@ def validate_future_dob(value):
     if value > datetime.date.today():
         raise ValidationError("Incorrect date. DOB can't be a future date.")
 
-def age_check(value):
-        # dob = self.cleaned_data['birthday']
-    age = (datetime.date.today() - value).days / 365
-    if age < 15:
-        raise forms.ValidationError('You must be at least 15 years old')
+# def age_check(value):
+#         # dob = self.cleaned_data['birthday']
+#     age = (datetime.date.today() - value).days / 365
+#     if age < 15:
+#         raise forms.ValidationError('You must be at least 15 years old')
     
 def validate_gender(value):
     if value == 'Select':
@@ -106,10 +106,10 @@ class SignUpForm(UserCreationForm):
 
     # last_name_public_access = forms.ChoiceField(initial='False', required=False, widget=forms.RadioSelect(
         # attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
-    # uname_regex = RegexValidator(regex = r'^?=.{8,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$',
-    #           message="Please enter the correct username")
-    uname_regex1 = RegexValidator(regex = r'^\d{5,8}$', message="Username should not contain more than 5 consecutive numerals" )
-    username = forms.CharField(error_messages={'required': ''}, validators = [uname_regex1], max_length=100, widget=forms.TextInput(
+    uname_regex = RegexValidator(regex = r'^(?=.{8,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$',
+              message="Please enter the correct username")
+    # uname_regex1 = RegexValidator(regex = r'^\d{5,8}$', message="Username should not contain more than 5 consecutive numerals" )
+    username = forms.CharField(error_messages={'required': ''}, validators = [uname_regex], max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'User Name', 'id': 'username'}))
 
     phone_regex = RegexValidator(regex=r'^\d{8,10}$', message="Phone number must be entered in the format: '9999999999'. Up to 10 digits allowed.")
@@ -137,7 +137,7 @@ class SignUpForm(UserCreationForm):
     
     # dob = forms.DateField(widget=forms.TextInput(
     #     attrs={'class': 'datepicker', 'placeholder': 'DOB', 'id'Register: 'username'}))
-    dob = forms.DateField(error_messages={'required':''}, validators = [validate_dob, validate_future_dob, age_check], widget=DateInput(attrs={'class': 'datepicker', 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder': 'YYYY-MM-DD', 'id': 'username'}))
+    dob = forms.DateField(error_messages={'required':''}, validators = [validate_dob, validate_future_dob], widget=DateInput(attrs={'class': 'datepicker', 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder': 'YYYY-MM-DD', 'id': 'username'}))
     # dob = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     dob_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
