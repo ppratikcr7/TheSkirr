@@ -107,7 +107,7 @@ export function Tweet(props) {
         </div>
         <div>
           {/* use this to populate delete clack option */}
-          <a href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></a>
+          {/* <a href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></a> */}
         </div>
       </div>
 
