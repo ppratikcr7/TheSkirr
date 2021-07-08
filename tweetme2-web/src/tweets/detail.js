@@ -82,15 +82,6 @@ export function Tweet(props) {
     }
   }
 
-<<<<<<< HEAD
-  useEffect(()=>{
-    // console.log("i m here", tweet.content)
-    // setNewTweetContent(convertLinks(tweet.content))
-    //tweet.content = convertLinks(tweet.content)
-    // const text = refs[clackContent].innerHTML;
-    // refs[clackContent].innerHTML = convertLinks( text );
-  },[tweet.content])
-=======
   // useEffect(() => {
   // console.log("i m here", tweet.content)
   // setNewTweetContent(convertLinks(tweet.content))
@@ -98,7 +89,6 @@ export function Tweet(props) {
   // const text = refs[clackContent].innerHTML;
   // refs[clackContent].innerHTML = convertLinks( text );
   // }, [tweet.content])
->>>>>>> 4ab7610014a0bd54ada8824b2e62b23e7e12a5a6
 
   return <div className="flex border-b border-solid border-grey-light">
 
