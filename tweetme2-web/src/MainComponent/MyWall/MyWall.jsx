@@ -136,7 +136,7 @@ export default function MyWall(props) {
     // });
 
         return (
-            <>  const 
+            <>   
                 <div className="bg-white shadow">
                     {/* style={{ marginTop: 104 }} */}
                     <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">

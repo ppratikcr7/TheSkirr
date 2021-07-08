@@ -1,6 +1,7 @@
 from django.core.mail.message import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
+from django.utils.crypto import get_random_string
 from .registerForm import SignUpForm
 from .loginForm import UserLoginForm
 from .models import UserRegisterDetails
@@ -73,6 +74,7 @@ def register_view(request, *args, **kwargs):
     print("reqest:",request.GET.get('user_type'))
     form = SignUpForm(request.POST or None or request.FILES)
     if form.is_valid():
+        unique_id = get_random_string(length=12, allowed_chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
         username = request.POST['username']
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -94,14 +96,14 @@ def register_view(request, *args, **kwargs):
         # email2_public_access = request.POST.get('email2_public_access', False)
         if 'photo' in request.FILES:
             photo = request.FILES['photo']
-            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+            user = UserRegisterDetails.objects.create_user(unique_id = unique_id, username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
         city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
         gender_public_access=gender_public_access, dob_public_access=dob_public_access,
         phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo=photo)
         else:
             # print("photo not exists")
             photo = request.FILES.get('media/images/default.jpg')
-            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+            user = UserRegisterDetails.objects.create_user(unique_id = unique_id, username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
         city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
         gender_public_access=gender_public_access, dob_public_access=dob_public_access,
         phone_number_public_access=phone_number_public_access, email_public_access=email_public_access)

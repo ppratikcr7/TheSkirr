@@ -49,9 +49,7 @@ def profile_update_view(request, *args, **kwargs):
         dob = form.cleaned_data.get('dob')
         gender = form.cleaned_data.get('gender')
         areaOfInterest = form.cleaned_data.get('areaOfInterest')
-        unique_id = get_random_string(length=12)
         # photo = form.cleaned_data.get('photo')
-        user.unique_id = unique_id
         user.first_name = first_name
         user.last_name = last_name
         user.username = username
