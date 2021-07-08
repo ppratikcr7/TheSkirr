@@ -10,8 +10,13 @@ export function TweetsList(props) {
   const [nextUrl, setNextUrl] = useState(null)
   const [tweetsDidSet, setTweetsDidSet] = useState(false)
   useEffect(() => {
+    // console.log("props.newTweets:", props.newTweets);
+    // console.log("tweetsInit:", tweetsInit);
+    // if()
     const final = [...props.newTweets].concat(tweetsInit)
+
     if (final.length !== tweets.length) {
+      // console.log("final:", final);
       setTweets(final)
     }
   }, [props.newTweets, tweets, tweetsInit])
@@ -53,12 +58,13 @@ export function TweetsList(props) {
           alert("There was an error")
         }
       }
-      console.log("worked2");
+      // console.log("worked2");
       apiTweetList(props.username, handleLoadNextResponse, nextUrl)
     }
   }
 
   return <React.Fragment>{tweets.map((item, index) => {
+    // console.log("item:", item)
     return <Tweet
       tweetHandle={props.tweetHandle}
       tweet={item}
