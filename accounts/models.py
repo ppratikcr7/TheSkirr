@@ -6,6 +6,8 @@ from PIL import Image
 # User = settings.AUTH_USER_MODEL
 
 # Create your models here.
+
+
 class UserRegisterDetails(AbstractUser):
     unique_id = models.CharField(max_length=12, null=True, blank=True)
     GENDER_CHOICES = (
@@ -37,6 +39,7 @@ class UserRegisterDetails(AbstractUser):
     # email2_public_access = models.BooleanField(default = 'False',null=True, blank=True)
 
     photo = models.ImageField(null=True, blank=True, upload_to = "images/", default='images/default.jpg')
+    clear_photo = models.BooleanField(null = True, blank = True, default=False)
 
     def save(self, *args, **kwargs):
         super(UserRegisterDetails, self).save(*args, **kwargs)  # saving image first

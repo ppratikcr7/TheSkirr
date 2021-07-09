@@ -10,8 +10,11 @@
     {{ form.non_field_errors }}
 
     <div class="form-group">
-        <label for="{{ form.photo.id_for_label }}">Photo: </label>
+        <label for="{{ form.photo.id_for_label }}">Photo: </label>        
         {{ form.photo }}
+        <br>
+        <input type="checkbox" name="clear" id="clear" value="True">
+        <label for="photo-clear_id">If you want to deselect the uploaded photo select the checkbox</label>
         {{ form.photo.errors }}
     </div>
 
