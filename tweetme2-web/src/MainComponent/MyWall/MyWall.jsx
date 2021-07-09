@@ -25,8 +25,8 @@ export default function MyWall(props) {
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
-    let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
-    let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
+    // let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
+    // let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
     const canTweet = props.canTweet === "false" ? false : true
 
@@ -38,38 +38,20 @@ export default function MyWall(props) {
         setNewTweets(tempNewTweets)
     }
     const handleNewUsername = (newUserName) => {
-        // console.log("newUserName:", newUserName);
-        localStorage.setItem("newUserName", JSON.stringify(newUserName));
-        setUserName(newUserName ? newUserName.username : "")
+        setUserName(newUserName ? newUserName : "")
+        getMainProfile(newUserName, handleNewProfile);
         //get random 3 users to follow:
         getWhoToFollowUser1();
         getWhoToFollowUser2();
         getWhoToFollowUser3();
-        // function call for getting current user profile
-        // getMainProfile(newUserName.username, handleNewProfile);
-        // function call for getting total likes for current user
-        // getCurrentUserTotalLikes();
-        // function call for getting total clacks for current user
-        // getCurrentUserTotalClacks();
     }
 
-    useEffect(() => {
-        getCurrentUserTotalLikes();
-        getCurrentUserTotalClacks();
-        let userName = localStorage.getItem("newUserName");
-        let userData = userName && JSON.parse(userName);
-        // if (userData && userData.username) {
-        //     getMainProfile(userData.username, handleNewProfile);
-        // }
-        // console.log("newProfileInstant", newProfile);
-    })
-
-    useEffect(() => {
-        getMainProfile(newUserName, handleNewProfile);
-    }, [newUserName])
+    // useEffect(() => {
+    //     getCurrentUserTotalLikes();
+    //     getCurrentUserTotalClacks();
+    // })
 
     const handleNewProfile = (newProfile) => {
-        // console.log("newProfile:", newProfile);
         setNewProfile(newProfile)
     }
 
@@ -84,13 +66,13 @@ export default function MyWall(props) {
         setwhoToFollowUser3(whoToFollowUser3)
     }
 
-    const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
-        setCurrentUserTotalLikes(currentUserTotalLikes)
-    }
+    // const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
+    //     setCurrentUserTotalLikes(currentUserTotalLikes)
+    // }
 
-    const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
-        setCurrentUserTotalClacks(currentUserTotalClacks)
-    }
+    // const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
+    //     setCurrentUserTotalClacks(currentUserTotalClacks)
+    // }
 
     function getWhoToFollowUser1() {
         try {
@@ -119,23 +101,23 @@ export default function MyWall(props) {
         }
     }
 
-    function getCurrentUserTotalLikes() {
-        try {
-            let endpoint = `/profiles/current_user/likes/`;
-            backendLookup("GET", endpoint, handleCurrentUserTotalLikes)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
+    // function getCurrentUserTotalLikes() {
+    //     try {
+    //         let endpoint = `/profiles/current_user/likes/`;
+    //         backendLookup("GET", endpoint, handleCurrentUserTotalLikes)
+    //     } catch (error) {
+    //         console.log("error:", error);
+    //     }
+    // }
 
-    function getCurrentUserTotalClacks() {
-        try {
-            let endpoint = `/profiles/current_user/clacks/`;
-            backendLookup("GET", endpoint, handleCurrentUserTotalClacks)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
+    // function getCurrentUserTotalClacks() {
+    //     try {
+    //         let endpoint = `/profiles/current_user/clacks/`;
+    //         backendLookup("GET", endpoint, handleCurrentUserTotalClacks)
+    //     } catch (error) {
+    //         console.log("error:", error);
+    //     }
+    // }
 
     function getMainProfile(username) {
         try {
@@ -169,8 +151,6 @@ export default function MyWall(props) {
             console.log("enter1");
             apiTweetList(null, handleListLookup);
         } else {
-            getCurrentUserTotalLikes();
-            getCurrentUserTotalClacks();
             console.log("enter2");
             console.log("setNewTweets", newTweets);
         }
@@ -252,7 +232,6 @@ export default function MyWall(props) {
         }
     }
 
-
     // $('#clackText').trigger(function () {
     //     var maxLength = $(this).val().length;
     //     if (maxLength < MAX_TWEET_LENGTH) {
@@ -265,12 +244,12 @@ export default function MyWall(props) {
         <>
             <div className="bg-white shadow">
                 {/* style={{ marginTop: 104 }} */}
-                <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
+                <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative mt-2 mb-2">
                     <div className="w-full lg:w-1/5">
                     </div>
                     <div className="w-full lg:w-2/5">
                     </div>
-                    <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center">
+                    <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center mb-2">
                         <div className="mr-2">
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -286,20 +265,6 @@ export default function MyWall(props) {
                             size="large"
                             onSearch={onSearch} style={{ width: 300, color: "#3b82f6" }}
                         />
-
-                        {/* <svg version="1.1" className="h-4 text-dark" x="0px" y="0px" viewBox="0 0 52.966 52.966" >
-                                <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
-                                        c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
-                                        C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
-                                        S32.459,40,21.983,40z"/></svg>
-                            <div className="searchbox">
-                                <div className="relative ml-2">
-                                    <input type="search" className="bg-purple-white shadow rounded border-0 p-3" placeholder="Search" />
-                                    <div className="absolute pin-r pin-t text-purple-lighter">
-
-                                    </div>
-                                </div>
-                            </div> */}
                     </div>
                 </div>
             </div>
@@ -315,6 +280,7 @@ export default function MyWall(props) {
                         <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Secondary Email: {newProfile ? newProfile.email2 : "EmailID2"}</div>
                         <div className="mb-2"><i className="fa fa-phone fa-lg text-grey-darker mr-1"></i>Contact Number: {newProfile ? newProfile.phone_number : "EmailID2"}</div>
                         <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
+                        <hr class="mt-3 mb-3"></hr>
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
@@ -369,58 +335,6 @@ export default function MyWall(props) {
                             {/* use the below for color encoding */}
                             {/* <span class="text-grey-dark">&middot;</span> */}
                         </div>
-                        {/* <div className="flex border-b border-solid border-grey-light">
-                            <div className="py-2">
-                                <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
-                            </div>
-                            <div className="pl-2 py-2 w-full">
-                                <div className="flex justify-between mb-1">
-                                    <div>
-                                        <a href="#" className="font-bold text-black">Vidhi</a> <a href="#" className="text-grey-dark">@vidhi123</a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                        Follow
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex border-b border-solid border-grey-light">
-                            <div className="py-2">
-                                <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow2.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
-                            </div>
-                            <div className="pl-2 py-2 w-full">
-                                <div className="flex justify-between mb-1">
-                                    <div>
-                                        <a href="#" className="font-bold text-black">Gagan</a> <a href="#" className="text-grey-dark">@gagan123</a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                        Follow
-                            </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex border-b border-solid border-grey-light">
-                            <div className="py-2">
-                                <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow3.jpg" alt="follow1" className="rounded-full h-12 w-12" /></a>
-                            </div>
-                            <div className="pl-2 py-2 w-full">
-                                <div className="flex justify-between mb-1">
-                                    <div>
-                                        <a href="#" className="font-bold text-black">Ketul</a> <a href="#" className="text-grey-dark">@ketulshah</a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                        Follow
-                                    </button>
-                                </div>
-                            </div>
-                        </div> */}
                         <hr className="mt-2 mb-2"></hr>
                         <div className="flex justify-between mb-1">
                             <div>

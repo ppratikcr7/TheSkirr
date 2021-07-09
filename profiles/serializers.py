@@ -77,6 +77,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
 class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
+    dob = serializers.SerializerMethodField(read_only=True)
     gender = serializers.SerializerMethodField(read_only=True)
     email = serializers.SerializerMethodField(read_only=True)
     email2 = serializers.SerializerMethodField(read_only=True)
@@ -86,7 +87,7 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField(read_only=True)
     follower_count = serializers.SerializerMethodField(read_only=True)
     following_count = serializers.SerializerMethodField(read_only=True)
-    photo = serializers.SerializerMethodField(read_only=True) 
+    # photo = serializers.SerializerMethodField(read_only=True) 
     first_name_public_access = serializers.SerializerMethodField(read_only=True)
     gender_public_access = serializers.SerializerMethodField(read_only=True)
     dob_public_access = serializers.SerializerMethodField(read_only=True)
@@ -97,6 +98,7 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "dob",
             "gender",
             "email",
             "email2",
@@ -109,7 +111,7 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
             "following_count",
             "is_following",
             "username",
-            "photo",
+            # "photo",
             "first_name_public_access", 
             "gender_public_access",
             "dob_public_access", 
@@ -129,12 +131,15 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
     
     def get_first_name(self, obj):
         return obj.user.first_name
-    
-    def get_gender(self, obj):
-        return obj.user.gender
 
     def get_last_name(self, obj):
         return obj.user.last_name
+
+    def get_dob(self, obj):
+        return obj.user.dob
+
+    def get_gender(self, obj):
+        return obj.user.gender
     
     def get_username(self, obj):
         return obj.user.username
@@ -157,8 +162,8 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
     def get_date_joined(self, obj):
         return obj.user.date_joined
 
-    def get_photo(self, obj):
-        return obj.user.photo
+    # def get_photo(self, obj):
+    #     return obj.user.photo
 
     def get_first_name_public_access(self, obj):
         return obj.user.first_name_public_access

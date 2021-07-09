@@ -22,66 +22,40 @@ export default function Dashboard(props) {
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
-    let [whoToFollowUser1, setwhoToFollowUser1] = useState();
-    let [whoToFollowUser2, setwhoToFollowUser2] = useState();
-    let [whoToFollowUser3, setwhoToFollowUser3] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
-    const canTweet = props.canTweet === "false" ? false : true
+    // const canTweet = props.canTweet === "false" ? false : true
 
-    const handleNewTweet = (newTweet) => {
-        console.log("newTweet1:", newTweet);
-        let tempNewTweets = [...newTweets]
-        tempNewTweets.unshift(newTweet)
-        console.log("tempNewTweets2:", tempNewTweets);
-        setNewTweets(tempNewTweets)
-    }
+    // const handleNewTweet = (newTweet) => {
+    //     console.log("newTweet1:", newTweet);
+    //     let tempNewTweets = [...newTweets]
+    //     tempNewTweets.unshift(newTweet)
+    //     console.log("tempNewTweets2:", tempNewTweets);
+    //     setNewTweets(tempNewTweets)
+    // }
     const handleNewUsername = (newUserName) => {
-        // console.log("newUserName:", newUserName);
-        localStorage.setItem("newUserName", JSON.stringify(newUserName));
-        setUserName(newUserName ? newUserName.username : "")
-        //get random 3 users to follow:
-        getWhoToFollowUser1();
-        getWhoToFollowUser2();
-        getWhoToFollowUser3();
-        // function call for getting current user profile
-        // getMainProfile(newUserName.username, handleNewProfile);
-        // function call for getting total likes for current user
-        // getCurrentUserTotalLikes();
-        // function call for getting total clacks for current user
-        // getCurrentUserTotalClacks();
+        setUserName(newUserName ? newUserName : "")
+        console.log("newUserName", newUserName)
+        getMainProfile(newUserName, handleNewProfile);
     }
+
+    useEffect(() => {
+        try {
+            let endpoint1 = "/profiles/get_user/username/";
+            backendLookup("GET", endpoint1, handleNewUsername)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }, [])
 
     useEffect(() => {
         getCurrentUserTotalLikes();
         getCurrentUserTotalClacks();
-        let userName = localStorage.getItem("newUserName");
-        let userData = userName && JSON.parse(userName);
-        // if (userData && userData.username) {
-        //     getMainProfile(userData.username, handleNewProfile);
-        // }
-        // console.log("newProfileInstant", newProfile);
     })
 
-    useEffect(() => {
-        getMainProfile(newUserName, handleNewProfile);
-    }, [newUserName])
-
     const handleNewProfile = (newProfile) => {
-        // console.log("newProfile:", newProfile);
         setNewProfile(newProfile)
-    }
-
-    // who to follow:
-    const handleWhoToFollowUser1 = (whoToFollowUser1) => {
-        setwhoToFollowUser1(whoToFollowUser1)
-    }
-    const handleWhoToFollowUser2 = (whoToFollowUser2) => {
-        setwhoToFollowUser2(whoToFollowUser2)
-    }
-    const handleWhoToFollowUser3 = (whoToFollowUser3) => {
-        setwhoToFollowUser3(whoToFollowUser3)
     }
 
     const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
@@ -90,33 +64,6 @@ export default function Dashboard(props) {
 
     const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
         setCurrentUserTotalClacks(currentUserTotalClacks)
-    }
-
-    function getWhoToFollowUser1() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/user1/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser1)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getWhoToFollowUser2() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/user2/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser2)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    function getWhoToFollowUser3() {
-        try {
-            let endpoint = `/profiles/who_to_follow_users/user3/`;
-            backendLookup("GET", endpoint, handleWhoToFollowUser3)
-        } catch (error) {
-            console.log("error:", error);
-        }
     }
 
     function getCurrentUserTotalLikes() {
@@ -138,6 +85,7 @@ export default function Dashboard(props) {
     }
 
     function getMainProfile(username) {
+        console.log("username", username)
         try {
             let endpoint = `/profiles/user/${username}/`;
             backendLookup("GET", endpoint, handleNewProfile)
@@ -361,64 +309,92 @@ export default function Dashboard(props) {
                 <div className="w-full lg:w-1/5 pl-0">
                     {/* profile new */}
                     <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
-                            <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
-                            {/* <div class="flex justify-center -mt-4">
-                            { newProfile.gender == 'Male' | newProfile.gender == 'Decline to answer'}
-                                { newProfile.photo }
-                                    <div class="relative w-20 h-20">
-                                        <img class="rounded-full border border-gray-100 shadow-sm h-100" src="/media/{{newProfile.photo}}" alt="user image" width="120px" height="120px"/>
+                        <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
+                            <div class="flex justify-center -mt-2">
+                                { ( newProfile && newProfile.photo ) ? 
+                                    <div class="relative w-25 h-25">
+                                        <img class="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/${newProfile.photo}`} alt="user image" width="100px" height="100px"/>
                                         <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
                                     </div>
-                                    :
-                                    <img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="100px" height="100px"/>
-                            { newProfile.gender == 'Female' }
-                                { newProfile.photo }
-                                <div class="relative w-20 h-20">
-                                    <img class="rounded-full border border-gray-100 shadow-sm h-100" src="/media/{{newProfile.photo}}" alt="user image" width="120px" height="120px"/>
-                                    <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
-                                </div>
-                                :
-                                <img src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="100px" height="100px"/>
+                                    : 
+                                    <div class="relative w-25 h-25">
+                                        <img class="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/images/default.jpg`} alt="user image" width="100px" height="100px"/>
+                                        <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                                    </div>
+                                }    
                             </div>
                             <div class="text-center px-3 pb-2 pt-2">
                                 <h3 class="text-white text-sm bold font-sans">Username: {newUserName}</h3>
-                                { newProfile.fn_pa }
-                                <p class="mt-2 font-sans font-light text-white">First Name: {newProfile.first_name}</p>
+                                { (newProfile && newProfile.first_name_public_access) ?
+                                    <div>
+                                        <p class="mt-1 font-sans font-light text-white">First Name: {newProfile && newProfile.first_name}</p>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
                                 {/* { newProfile.ln_pa } */}
-                                {/* <p class="mt-2 font-sans font-light text-white">Last Name: {{newProfile.last_name}}</p> */}
-                                {/* { newProfile.gen_pa }
-                                <p class="mt-2 font-sans font-light text-white">Gender: {newProfile.gender}</p>
-                                { newProfile.dob_pa }
-                                <p class="mt-2 font-sans font-light text-white">DOB: {newProfile.dob}</p>
-                                { newProfile.pn_pa }
-                                <p class="mt-2 font-sans font-light text-white">Contact: {newProfile.phone_number}</p>
-                                { newProfile.em_pa }
-                                <p class="mt-2 font-sans font-light text-white">Email: {newProfile.email}</p> */}
+                                {/* <p class="mt-1 font-sans font-light text-white">Last Name: {{newProfile.last_name}}</p> */}
+                                
+                                { (newProfile && newProfile.gender_public_access) ?
+                                    <div>
+                                        <p class="mt-1 font-sans font-light text-white">Gender: {newProfile && newProfile.gender}</p>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+
+                                { (newProfile && newProfile.dob_public_access) ?
+                                    <div>
+                                        <p class="mt-1 font-sans font-light text-white">DOB: {newProfile && newProfile.dob}</p>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+
+                                { (newProfile && newProfile.phone_number_public_access) ?
+                                    <div>
+                                        <p class="mt-1 font-sans font-light text-white">Contact: {newProfile && newProfile.phone_number}</p>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+
+                                { (newProfile && newProfile.email_public_access) ?
+                                    <div>
+                                        <p class="mt-1 font-sans font-light text-white">Email: {newProfile && newProfile.email}</p>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+
                                 {/* { newProfile.em2_pa }
                                 <p class="mt-2 font-sans font-light text-white">Secondary Email: {{newProfile.email2}}</p> */}
-                            {/* </div>
-                            <hr class="mt-2 mb-2"></hr>
+                            </div>
+                            <hr class="mt-1 mb-1"></hr>
                             <div class="flex justify-center pb-1 text-white">
                                 <div class="text-center mr-4 border-r pr-3">
-                                    <h2>{newProfile.follower_count}</h2>
+                                    <h2>{newProfile && newProfile.follower_count}</h2>
                                     <span>Fans</span>
                                 </div>
                                 <div class="text-center">
-                                    <h2>{newProfile.following_count}</h2>
+                                    <h2>{newProfile && newProfile.following_count}</h2>
                                     <span>Companions</span>
                                 </div>
                             </div>
-                            <div class="tweetme-2-profile-badge" data-username={newUserName} style="margin:2 auto;padding:2px 2px 2px 2px;"><br/>
-                            </div>
-                            <div id='tweetme-2' style="margin:20 auto;padding:2px 2px 2px 2px;" 
-                                data-username={newUserName} data-can-tweet="false">
-                            </div> */} 
-                        <br />
-                        <br />
-                        <br />
-                    </div> 
+                            { (newUserName) ?
+                                <div>
+                                    <div class="tweetme-2-profile-badge" data-username={newUserName} style={{ margin:"2px", padding: "2px"}}><br/></div>
+                                    <div id='tweetme-2' style={{ margin:"2px", padding: "2px"}} data-username={newUserName} data-can-tweet="false"></div>
+                                </div>
+                                :
+                                <div></div>
+                            }
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </>
+            </>
     )
 }

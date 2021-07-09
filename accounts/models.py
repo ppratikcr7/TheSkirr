@@ -42,7 +42,7 @@ class UserRegisterDetails(AbstractUser):
         super(UserRegisterDetails, self).save(*args, **kwargs)  # saving image first
         if(self.photo.path):
             img = Image.open(self.photo.path).convert('RGB') # Open image using self
-
+            # File(open(result[0], 'rb')
             if img.height > 120 or img.width > 120:
                 new_img = (120, 120)
                 img.thumbnail(new_img)

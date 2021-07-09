@@ -51,13 +51,8 @@ def profile_detail_api_view(request, username, *args, **kwargs):
 # @permission_classes([IsAuthenticated])
 def get_username(request, *args, **kwargs):
     # get the profile for the passed username
-    me = request.user
-    qs = Profile.objects.filter(user__username=me)
-    if not qs.exists():
-        return Response({"detail": "User not found"}, status=404)
-    profile_obj = qs.first()
-    serializer = PublicProfileSerializer(profile_obj)
-    return Response( serializer.data, status=200)
+    username = request.user.username
+    return Response( username, status=200)
 
 @api_view(['GET'])
 def who_to_follow_user1(request, *args, **kwargs):
@@ -132,6 +127,18 @@ def profile_details(request, username, *args, **kwargs):
     profile_obj = qs.first()
     # data = request.data or {}
     serializer = PublicProfileSerializer(profile_obj)
+    return Response( serializer.data, status=200)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def profile_card_details(request, username, *args, **kwargs):
+    # get the profile for the passed username
+    qs = Profile.objects.filter(user__username=username)
+    if not qs.exists():
+        return Response({"detail": "User not found"}, status=404)
+    profile_obj = qs.first()
+    # data = request.data or {}
+    serializer = PublicNonPublicProfileSerializer(profile_obj)
     return Response( serializer.data, status=200)
 
 @api_view(['GET', 'POST'])

@@ -5,6 +5,7 @@ from .views import (
     get_total_likes,
     profile_detail_api_view,
     profile_details,
+    profile_card_details,
     get_username,
     who_to_follow_user1,
     who_to_follow_user2,
@@ -18,7 +19,7 @@ urlpatterns = [
     # to fetch profile details to show my wall details.html page
     path('<str:username>/', profile_details),
     # to fetch profile details on my dashboard bio section
-    path('user/<str:username>/', profile_details),
+    path('user/<str:username>/', profile_card_details),
     # to fetch current user data
     path('get_user/username/', get_username),
     # to trigger follow view
