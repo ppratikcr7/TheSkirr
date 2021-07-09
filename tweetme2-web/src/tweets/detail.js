@@ -18,6 +18,7 @@ export function Tweet(props) {
   const clackContent = React.createRef()
   const { tweet, didRetweet, hideActions, isRetweet, retweeter } = props
   const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
+  // console.log("props.tweet:", props.tweet);
   const [newTweetContent, setNewTweetContent] = useState();
   let className = props.className ? props.className : 'col-10 mx-auto col-md-6'
   className = isRetweet === true ? `${className} p-2 border rounded` : className
@@ -29,12 +30,16 @@ export function Tweet(props) {
   const tweetTimestampRaw = `${tweet.timestamp}`;
   const tweetTimestampClean = formatDate(tweetTimestampRaw);
 
+  useEffect(() => {
+    setActionTweet(props.tweet ? props.tweet : null)
+  }, [props.tweet]);
+
   const handleLink = (event) => {
     event.preventDefault()
     window.location.href = `/${tweet.id}`
   }
   const handlePerformAction = (newActionTweet, status, action) => {
-    console.log("action:", action);
+    // console.log("action:", action);
     if (status === 200) {
       setActionTweet(newActionTweet)
       // if (action === "delete") {
