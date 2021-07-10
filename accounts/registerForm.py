@@ -61,12 +61,11 @@ def validate_gender(value):
 #     or '[' or ']' or ':' or ';' or '"' or '<' or '>' or "\\"  in value:
 #         raise ValidationError(" Symbols are not allowed in firstname.")
 
-def validate_city_fname_lname(value):
-    if ('@' or '+' or '-' or '.' or ',' or '!' or '#' or '$' or '%' or '^' \
-    or '&' or '*' or '(' or ')' or '/' or ' ' or '=' or '{' or '}' or '' or '|' \
-    or '[' or ']' or ':' or ';' or '"' or '<' or '>' or '?'or '1' or '2' \
-    or '3 'or '4' or '5' or '6' or '7' or '8' or '9' or '0') in value:
-        raise ValidationError("Symbols and Numerals are not allowed.")
+# def validate_city_fname_lname(value):
+#     if ('@' or '+' or '-' or '.' or ',' or '!' or '#' or '$' or '%' or '^' \
+#     or '&' or '*' or '(' or ')' or '/' or ' ' or '=' or '{' or '}' or '' or '|' \
+#     or '[' or ']' or ':' or ';' or '"' or '<' or '>' or '?') in value:
+#         raise ValidationError("Symbols and Numerals are not allowed.")
 
 
 # def last_name(value):
@@ -95,13 +94,15 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 class SignUpForm(UserCreationForm):
 
-    first_name = forms.CharField(error_messages={'required':''}, validators = [validate_city_fname_lname], max_length=100,widget=forms.TextInput(
+    fname_lname_regex = RegexValidator(regex = r'^[a-zA-Z][a-zA-Z]{1,}$', message="No numerals allowed!")
+
+    first_name = forms.CharField(error_messages={'required':''}, validators = [fname_lname_regex], max_length=100,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'First Name', 'id': 'username'}))
 
     first_name_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
         attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
 
-    last_name = forms.CharField(error_messages={'required':''}, validators = [validate_city_fname_lname], max_length=100, required=False, widget=forms.TextInput(
+    last_name = forms.CharField(error_messages={'required':''}, validators = [fname_lname_regex], max_length=100, required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Last Name', 'id': 'username'}))
 
     # last_name_public_access = forms.ChoiceField(initial='False', required=False, widget=forms.RadioSelect(
@@ -132,7 +133,7 @@ class SignUpForm(UserCreationForm):
     # email2_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
     #     attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
     
-    city = forms.CharField(error_messages={'required':''}, validators = [validate_city_fname_lname], max_length=100, widget=forms.TextInput(
+    city = forms.CharField(error_messages={'required':''}, validators = [fname_lname_regex], max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'City', 'id': 'city'}))
     
     # dob = forms.DateField(widget=forms.TextInput(
