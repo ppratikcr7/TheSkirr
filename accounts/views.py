@@ -1,4 +1,5 @@
 from django.core.mail.message import EmailMessage
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.utils.crypto import get_random_string
@@ -16,6 +17,8 @@ from django.conf import settings
 from django.core.mail import send_mail 
 
 from django.contrib.auth.models import auth
+import json
+import requests
 # Create your views here.
 
 # Function based views to Class Based Views
@@ -102,6 +105,21 @@ def register_view(request, *args, **kwargs):
         #     clear = "False"
         # print(clear)
 
+        #recaptcha
+        # clientKey = request.POST['6LdLTIQbAAAAABWsr9HAF2uAxCxh8Q0SFzJVieDh']
+        # secretKey = 
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        response = json.loads(r.text)
+        verify = response['success']
+        print("your success is", verify)
+        if not verify:
+            return HttpResponse('<script> alert("Please verify whether you are human or not"); window.location.href = \'http://localhost:8000/register\';</script>')
+        
         if((('photo' in request.FILES or 'photo' not in request.FILES)and clear=="True") or ('photo' not in request.FILES and clear == False)):
             # photo = request.FILES['photo']
             # print("abc")
