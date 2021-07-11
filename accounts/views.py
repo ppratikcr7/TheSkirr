@@ -23,42 +23,7 @@ import requests
 
 # Function based views to Class Based Views
 
-def login_view(request, *args, **kwargs):
-    form = UserLoginForm(request, data=request.POST or None)
-    # print(form.name)
-    if form.is_valid():
-        username = request.POST['username']
-        # print(username)
-        password = request.POST['password']
-        # print(password)
-        user = auth.authenticate(username=username, password=password)
 
-        if user is not None:
-            auth.login(request, user)
-            return redirect("/")
-        else:
-            messages.warning(request, 'Invalid Username or Password')
-            messages.info(request, 'OR')
-            messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
-    
-    # # for case insensitive check:
-    # request.user.username = request.user.username.lower()
-    # if form.is_valid():
-    #     if request.user.is_active==True:
-    #         user_ = form.get_user()
-    #         user_.username = user_.username.lower()
-    #         # print("final username: ", user_.username)
-    #         login(request, user_)
-    #         return redirect("/")
-    #     else:
-    #         messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
-
-    context = {
-        "form": form,
-        "btn_label": "Login",
-        "title": "Login"
-    }
-    return render(request, "accounts/auth.html", context)
 
 def logout_view(request, *args, **kwargs):
     if request.method == "POST":
@@ -117,9 +82,18 @@ def register_view(request, *args, **kwargs):
         response = json.loads(r.text)
         verify = response['success']
         print("your success is", verify)
+        # if not verify:
+        #     return HttpResponse('<script> alert("Please verify whether you are human or not"); window.location.href = \'http://localhost:8000/register\';</script>')
+        context = {
+        "form": form,
+        "btn_label": "Register",
+        "title": "Register",
+        "type":request.GET.get('user_type')
+        }
         if not verify:
-            return HttpResponse('<script> alert("Please verify whether you are human or not"); window.location.href = \'http://localhost:8000/register\';</script>')
-        
+            messages.warning(request, 'please verify whether you are human or not')
+            return render(request, "accounts/register.html", context)
+
         if((('photo' in request.FILES or 'photo' not in request.FILES)and clear=="True") or ('photo' not in request.FILES and clear == False)):
             # photo = request.FILES['photo']
             # print("abc")
@@ -139,7 +113,7 @@ def register_view(request, *args, **kwargs):
         #     print("yeah")
         # else:
         #     print("abcd")
-        user.is_active = False
+        # user.is_active = False
         user.save()
         # user = form.save(commit=False)
         
@@ -180,21 +154,25 @@ def activate(request, uidb64, token):
         user = UserRegisterDetails.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, UserRegisterDetails.DoesNotExist):
         user = None
-
+    print(user.is_verified)
+    
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
+        user.is_verified = True
+        print(user.is_verified)
         user.save()
+        print(user.is_verified)
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         user.username = user.username.lower()
         request.user.username = request.user.username.lower()
         login(request, user)
         return redirect('/login')
-    else:
-        login(request, user)
-        user.username = user.username.lower()
-        request.user.username = request.user.username.lower()
-        messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
-        return redirect('/login')
+
+    # elif user.is_active == False:
+    #     login(request, user)
+    #     user.username = user.username.lower()
+    #     request.user.username = request.user.username.lower()
+    #     messages.warning(request, 'Email Verification link is not validated yet, please check your maillll!')
+    #     return redirect('/login')
 
 def forgot_uname(request):
     if request.method == 'POST':
@@ -212,3 +190,45 @@ def forgot_uname(request):
             return redirect('forgot_uname')
     else:
         return render(request, 'accounts/forgot_uname.html')
+
+def login_view(request, *args, **kwargs):
+    form = UserLoginForm(request, data=request.POST or None)
+    # print(form.name)
+    if form.is_valid():
+        username = request.POST['username']
+        # print(username)
+        password = request.POST['password']
+        # print(password)
+        user = auth.authenticate(username=username, password=password)
+        print(user.username)
+        print(user.is_verified)        # if not activate():
+        #     messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+        if user is not None and user.is_verified == True:
+            auth.login(request, user)
+            return redirect("/")
+        else:
+            # messages.warning(request, 'Invalid Username or Password')
+            # messages.info(request, 'OR')
+            messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+        # if user.is_verified == False:
+        #     messages.warning(request, "Email Link not verified yet!")
+    # # for case insensitive check:
+    # request.user.username = request.user.username.lower()
+    # if form.is_valid():
+    #     print(request.user.is_active)
+    #     if request.user.is_active==True:
+    #         user_ = form.get_user()
+    #         user_.username = user_.username.lower()
+    #         # print("final username: ", user_.username)
+    #         login(request, user_)
+    #         return redirect("/")
+    #     else:
+    #         print(request.user.is_active)
+    #         messages.warning(request, 'Email Verification link is not validated yet, please check your mail!')
+
+    context = {
+        "form": form,
+        "btn_label": "Login",
+        "title": "Login"
+    }
+    return render(request, "accounts/auth.html", context)

@@ -40,6 +40,7 @@ class UserRegisterDetails(AbstractUser):
 
     photo = models.ImageField(null=True, blank=True, upload_to = "images/", default='images/default.jpg')
     clear_photo = models.BooleanField(null = True, blank = True, default=False)
+    is_verified = models.BooleanField(null = True, blank = True, default=False)
 
     def save(self, *args, **kwargs):
         super(UserRegisterDetails, self).save(*args, **kwargs)  # saving image first
