@@ -238,15 +238,18 @@ export default function Dashboard(props) {
     const onSearch = value => {
         const key = window.localStorage.getItem('search_type');
         try {
+            let domain = "https://www.theskirr.com/";
+            // let domain = "http://localhost:8000/";
+
             if(key == 0){
-                window.open(`http://localhost:8000/profiles/search_users/${value}`, '_self')
+                window.open(`${domain}profiles/search_users/${value}`, '_self')
             }
             else if(key == 1){
-                window.open(`http://localhost:8000/profiles/search_clacks/${value}`, '_self')
+                window.open(`${domain}profiles/search_clacks/${value}`, '_self')
             }
             else {
                 value = "!" + value;
-                window.open(`http://localhost:8000/profiles/search_trends/${value}`, '_self')
+                window.open(`${domain}profiles/search_trends/${value}`, '_self')
             } 
             
         } catch (error) {
