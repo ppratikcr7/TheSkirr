@@ -17,23 +17,25 @@ GENDER_CHOICES = (
         ('Decline to answer', 'Decline to answer'),
     )
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
-    
 
+def validate_username(value):
+    if UserRegisterDetails.objects.filter(username = value).exists():
+        raise ValidationError((f"The username: {value} is already taken. Please use another username."),params = {'value':value})
+    
 def validate_email(value):
     if UserRegisterDetails.objects.filter(email = value).exists():
         raise ValidationError((f"The email id: {value} is already taken. Please use another email id."),params = {'value':value})
-    if '@' not in value:
-        raise ValidationError("Please Enter the proper Email")
+    # if '@' not in value:
+    #     raise ValidationError("Please Enter the proper Email")
 
 def validate_phoneNumber(value):
-    if UserRegisterDetails.objects.filter(phone_number = value).exists():
-        raise ValidationError((f"The contact: {value} is already taken. Please use another contact."),params = {'value':value})
     if ('@' or '+' or '-' or '.' or ',' or '!' or '#' or '$' or '%' or '^' \
     or '&' or '*' or '(' or ')' or '/' or ' ' or '=' or '{' or '}' or '' or '|' \
     or '[' or ']' or ':' or ';' or '"' or '<' or '>' or '?') in value:
         raise ValidationError(" Symbols are not allowed in Phone Number.")
-
-
+    else:
+        if UserRegisterDetails.objects.filter(phone_number = value).exists():
+            raise ValidationError((f"The contact: {value} is already taken. Please use another contact."),params = {'value':value})
 
 def validate_dob(value):
     try:
@@ -44,12 +46,6 @@ def validate_dob(value):
 def validate_future_dob(value):
     if value > datetime.date.today():
         raise ValidationError("Incorrect date. DOB can't be a future date.")
-
-# def age_check(value):
-#         # dob = self.cleaned_data['birthday']
-#     age = (datetime.date.today() - value).days / 365
-#     if age < 15:
-#         raise forms.ValidationError('You must be at least 15 years old')
     
 def validate_gender(value):
     if value == 'Select':
@@ -61,30 +57,6 @@ def validate_age(value):
         if age < 15:
             raise ValidationError('Must be at least 15 years old to register')
         return dob
-        
-# def validate_fname(value):
-#     if '@' or '+' or '-' or '.' or ',' or '!' or '#' or '$' or '%' or '^' \
-#     or '&' or '*' or '(' or ')' or '/' or ' ' or '=' or '{' or '}' or '' or '|' \
-#     or '[' or ']' or ':' or ';' or '"' or '<' or '>' or "\\"  in value:
-#         raise ValidationError(" Symbols are not allowed in firstname.")
-
-# def validate_city_fname_lname(value):
-#     if ('@' or '+' or '-' or '.' or ',' or '!' or '#' or '$' or '%' or '^' \
-#     or '&' or '*' or '(' or ')' or '/' or ' ' or '=' or '{' or '}' or '' or '|' \
-#     or '[' or ']' or ':' or ';' or '"' or '<' or '>' or '?') in value:
-#         raise ValidationError("Symbols and Numerals are not allowed.")
-
-
-# def last_name(value):
-#     if value:
-#         return True
-#     else:
-#         return False
-
-
-# def last_name_pa(value):
-#     if value and not last_name():
-#         raise ValidationError("You have not entered the last name")
 
 class MyClearableFileInput(ClearableFileInput):
     initial_text = 'currently'
@@ -101,26 +73,26 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 class SignUpForm(UserCreationForm):
 
-    fname_lname_regex = RegexValidator(regex = r'^[a-zA-Z][a-zA-Z]{1,}$', message="No numerals allowed!")
+    city_fname_lname_regex = RegexValidator(regex = r'^[a-zA-Z][a-zA-Z]{1,}$', message="No special characters or numerals allowed!")
 
-    first_name = forms.CharField(error_messages={'required':''}, validators = [fname_lname_regex], max_length=100,widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'First Name', 'id': 'username'}))
+    first_name = forms.CharField(error_messages={'required':''}, validators = [city_fname_lname_regex], max_length=100,widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'First Name', 'id': 'first_name'}))
 
     first_name_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
         attrs={'class': 'Radio'}), choices=(('True','Public'),('False','NonPublic'),))
 
-    last_name = forms.CharField(error_messages={'required':''}, validators = [fname_lname_regex], max_length=100, required=False, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Last Name', 'id': 'username'}))
+    last_name = forms.CharField(error_messages={'required':''}, validators = [city_fname_lname_regex], max_length=100, required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Last Name', 'id': 'last_name'}))
 
     # last_name_public_access = forms.ChoiceField(initial='False', required=False, widget=forms.RadioSelect(
         # attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
-    uname_regex = RegexValidator(regex = r'^(?=.{2,20}$)(?![.])(?!.*[.]{2})[a-zA-Z0-9.]+(?<![.])$',
-              message="Please enter the correct username")
+    uname_regex = RegexValidator(regex = r'^(?=.{2,15}$)(?![_.@*])(?!.*[_.@*]{2})[a-zA-Z0-9._@*]+(?<![_.@*])$',
+        message="Please enter correct username with 2 or more alpha numeric characters. Special characters allowed are _.@*")
     # uname_regex1 = RegexValidator(regex = r'^\d{5,8}$', message="Username should not contain more than 5 consecutive numerals" )
-    username = forms.CharField(error_messages={'required': ''}, validators=[uname_regex],  max_length=100, widget=forms.TextInput(
+    username = forms.CharField(error_messages={'required': ''}, validators = [validate_username, uname_regex], max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'User Name', 'id': 'username'}))
 
-    phone_regex = RegexValidator(regex=r'^\d{8,10}$', message="Phone number must be entered in the format: '9999999999'. Up to 10 digits allowed.")
+    phone_regex = RegexValidator(regex=r'^\d{8,10}$', message="Phone number must be entered in the format: '9999999999' with no special characters. Up to 8-10 digits allowed.")
     phone_number = forms.CharField(error_messages={'required': ''}, validators=[phone_regex, validate_phoneNumber ], max_length=10, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Phone', 'id': 'phone_num'})) # validators should be a list
 
@@ -140,33 +112,33 @@ class SignUpForm(UserCreationForm):
     # email2_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
     #     attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
     
-    city = forms.CharField(error_messages={'required':''}, validators = [fname_lname_regex], max_length=100, widget=forms.TextInput(
+    city = forms.CharField(error_messages={'required':''}, validators = [city_fname_lname_regex], max_length=100, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'City', 'id': 'city'}))
     
     # dob = forms.DateField(widget=forms.TextInput(
     #     attrs={'class': 'datepicker', 'placeholder': 'DOB', 'id'Register: 'username'}))
-    dob = forms.DateField(error_messages={'required':''}, validators = [validate_dob, validate_future_dob, validate_age], widget=DateInput(attrs={'class': 'datepicker', 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder': 'YYYY-MM-DD', 'id': 'username'}))
+    dob = forms.DateField(error_messages={'required':''}, validators = [validate_dob, validate_future_dob, validate_age], widget=DateInput(attrs={'class': 'datepicker', 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder': 'YYYY-MM-DD', 'id': 'dob'}))
     # dob = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     dob_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
         attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
 
     gender = forms.TypedChoiceField(error_messages={'required':''}, validators = [validate_gender],choices=GENDER_CHOICES, widget=forms.Select(
-        attrs={'class': 'form-control', 'placeholder': 'Select Gender', 'id': 'username'}))
+        attrs={'class': 'form-control', 'placeholder': 'Select Gender', 'id': 'gender'}))
     
     gender_public_access = forms.ChoiceField(error_messages={'required':''},widget=forms.RadioSelect(
         attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
     
-    areaOfInterest = forms.CharField(error_messages={'required':''},required=False, widget=forms.Textarea(attrs={'cols':50, 'rows': 3 , 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder':' Write your area of interest here!'}))
-    
-    password1 = forms.CharField(error_messages={'required': ''}, widget=forms.PasswordInput(
+    areaOfInterest = forms.CharField(error_messages={'required':''},required=False, widget=forms.Textarea(attrs={'cols':55, 'rows': 3 , 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder':' Write your area of interest here!'}))
+    password_regex = RegexValidator(regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,20}$', message="Aleast 8 characters with one UpperCase, one LoweCase, one Special Character and one Numeral.")
+    password1 = forms.CharField(error_messages={'required': ''}, validators = [password_regex], widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Password',
                 'id': 'password1',
             }))
     
-    password2 = forms.CharField(error_messages={'required': ''}, widget=forms.PasswordInput(
+    password2 = forms.CharField(error_messages={'required': ''}, validators = [password_regex], widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Confirm Password',

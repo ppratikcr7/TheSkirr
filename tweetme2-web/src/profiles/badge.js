@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
-import {UserDisplay, UserPicture} from './components'
 import {apiProfileDetail, apiProfileFollowToggle} from './lookup'
-
-import {DisplayCount} from './utils'
 
 function ProfileBadge(props) {
     const {user, didFollowToggle, profileLoading} = props
@@ -15,13 +11,7 @@ function ProfileBadge(props) {
             didFollowToggle(currentVerb)
         }
     }
-    return user ? <div style={{ paddingTop: 0, paddingBottom: 4, paddingRight: 20, paddingLeft: 100,  margin: 5 }}>
-        {/* <UserPicture user={user} hideLink style={{ paddingTop: 20, paddingBottom: 20, paddingRight: 20, paddingLeft: 20,  margin: 5 }}/>
-        <p style={{ paddingTop: 20, paddingBottom: 0, paddingRight: 10, paddingLeft: 0,  margin: 5 }}><UserDisplay user={user} includeFullName hideLink /></p>
-        <p style={{ paddingTop: 20, paddingBottom: 0, paddingRight: 10, paddingLeft: 0,  margin: 5 }}><DisplayCount>{user.follower_count}</DisplayCount> {user.follower_count === 1 ? "follower" : "followers"} </p>
-        <p style={{ paddingTop: 20, paddingBottom: 0, paddingRight: 10, paddingLeft: 0,  margin: 5 }}><DisplayCount>{user.following_count}</DisplayCount> following</p> */}
-        {/* <p style={{ paddingTop: 20, paddingBottom: 20, paddingRight: 20, paddingLeft: 20,  margin: 5 }}>{user.location}</p>
-        <p style={{ paddingTop: 20, paddingBottom: 20, paddingRight: 20, paddingLeft: 20,  margin: 5 }}>{user.bio}</p> */}
+    return user ? <div style={{ paddingTop: 0, paddingBottom: 4, paddingRight: 20, paddingLeft: 80,  margin: 5 }}>
         <button className='btn btn-primary' onClick={handleFollowToggle}>{currentVerb}</button>
     </div> : null
 }

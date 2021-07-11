@@ -130,54 +130,54 @@ def my_wall_view(request, username, *args, **kwargs):
     print("gender",profile_obj.gender);
     return render(request, "profiles/my_wall.html", context)
 
-def user_wall_view(request, username, *args, **kwargs):
-    # get the profile for the passed username
-    qs = UserRegisterDetails.objects.filter(username=username)
-    qs2 = Profile.objects.filter(user__username=username)
-    if not qs.exists():
-        raise Http404
-    profile_obj = qs.first()
-    profile_obj2 = qs2.first()
-    is_following = False
-    if request.user.is_authenticated:
-        user = request.user
-        is_following = user in profile_obj2.followers.all()
-        is_following = profile_obj2 in user.following.all()
+# def user_dashboard_view(request, username, *args, **kwargs):
+#     # get the profile for the passed username
+#     qs = UserRegisterDetails.objects.filter(username=username)
+#     qs2 = Profile.objects.filter(user__username=username)
+#     if not qs.exists():
+#         raise Http404
+#     profile_obj = qs.first()
+#     profile_obj2 = qs2.first()
+#     is_following = False
+#     if request.user.is_authenticated:
+#         user = request.user
+#         is_following = user in profile_obj2.followers.all()
+#         is_following = profile_obj2 in user.following.all()
 
-        fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = 1, username=username)
-        # ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
-        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
-        gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
-        dob_pa = UserRegisterDetails.objects.filter(dob_public_access = 1, username=username)
-        pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = 1, username=username)
-        em_pa = UserRegisterDetails.objects.filter(email_public_access = 1, username=username)
-        # em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
-        fn = profile_obj.first_name
-        ln = profile_obj.last_name
-        gen = profile_obj.gender
-        dob = profile_obj.dob
-        pn = profile_obj.phone_number
-        em = profile_obj.email
-        em2 = profile_obj.email2
+#         fn_pa = UserRegisterDetails.objects.filter(first_name_public_access = 1, username=username)
+#         # ln_pa = UserRegisterDetails.objects.filter(last_name_public_access = 1, username=username)
+#         gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
+#         gen_pa = UserRegisterDetails.objects.filter(gender_public_access = 1, username=username)
+#         dob_pa = UserRegisterDetails.objects.filter(dob_public_access = 1, username=username)
+#         pn_pa =  UserRegisterDetails.objects.filter(phone_number_public_access = 1, username=username)
+#         em_pa = UserRegisterDetails.objects.filter(email_public_access = 1, username=username)
+#         # em2_pa = UserRegisterDetails.objects.filter(email2_public_access = 1, username=username)
+#         fn = profile_obj.first_name
+#         ln = profile_obj.last_name
+#         gen = profile_obj.gender
+#         dob = profile_obj.dob
+#         pn = profile_obj.phone_number
+#         em = profile_obj.email
+#         em2 = profile_obj.email2
 
-    context = {
-        "username": username,        
-        "profile": profile_obj,
-        "fans": profile_obj2.followers.count(),
-        "companions": user.following.count(),
-        "is_following": is_following,
-        "gender":profile_obj.gender,
-        "photo":profile_obj.photo,
-        "fn_pa": fn_pa, 
-        "gen_pa": gen_pa, "dob_pa" : dob_pa, 
-        "pn_pa" : pn_pa, "em_pa" : em_pa,
-        "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
-        "pn_show" : pn, "em_show" : em, "em2_show" : em2
+#     context = {
+#         "username": username,        
+#         "profile": profile_obj,
+#         "fans": profile_obj2.followers.count(),
+#         "companions": user.following.count(),
+#         "is_following": is_following,
+#         "gender":profile_obj.gender,
+#         "photo":profile_obj.photo,
+#         "fn_pa": fn_pa, 
+#         "gen_pa": gen_pa, "dob_pa" : dob_pa, 
+#         "pn_pa" : pn_pa, "em_pa" : em_pa,
+#         "fn_show" : fn, "ln_show" : ln, "gen_show" : gen, "dob_show" : dob,
+#         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
-    }
-    return render(request, "profiles/my_wall.html", context)
+#     }
+#     return render(request, "profiles/dashboard.html", context)
 
-def my_dashboard_view(request, username, *args, **kwargs):
+def dashboard_view(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = UserRegisterDetails.objects.filter(username=username)
     print(qs)
@@ -222,7 +222,7 @@ def my_dashboard_view(request, username, *args, **kwargs):
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
     }
-    print("gender",profile_obj.gender);
+    print("username: ", profile_obj.username);
     return render(request, "profiles/dashboard.html", context)
 
 def trends_view(request, *args, **kwargs):

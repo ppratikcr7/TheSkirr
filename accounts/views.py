@@ -124,14 +124,14 @@ def register_view(request, *args, **kwargs):
             # photo = request.FILES['photo']
             # print("abc")
             photo = request.FILES.get('media/images/default.jpg')
-            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+            user = UserRegisterDetails.objects.create_user(unique_id=unique_id, username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
             city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
             gender_public_access=gender_public_access, dob_public_access=dob_public_access,
             phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, clear_photo = clear )
         
         if 'photo' in request.FILES and (clear == False):            
             photo = request.FILES['photo']
-            user = UserRegisterDetails.objects.create_user(username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
+            user = UserRegisterDetails.objects.create_user(unique_id=unique_id,username=username.lower(),first_name=first_name,last_name=last_name, phone_number=phone_number, email=email, email2=email2, 
             city=city, dob=dob, areaOfInterest=areaOfInterest, password=password1, password2=password2,gender=gender, first_name_public_access=first_name_public_access,
             gender_public_access=gender_public_access, dob_public_access=dob_public_access,
             phone_number_public_access=phone_number_public_access, email_public_access=email_public_access, photo = photo, clear_photo = clear)

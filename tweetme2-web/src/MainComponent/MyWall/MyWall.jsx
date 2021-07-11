@@ -277,8 +277,9 @@ export default function MyWall(props) {
                         <div className="mb-2"><i className="fa fa-id-badge fa-lg text-grey-darker mr-1"></i>Name: {newProfile ? newProfile.first_name + " " + newProfile.last_name : "User"}</div>
                         <div className="mb-2"><i className="fa fa-user fa-lg text-grey-darker mr-1"></i>Username: <a href= {"/profiles/my_wall/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></div>
                         <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Email: {newProfile ? newProfile.email : "EmailID"}</div>
-                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Secondary Email: {newProfile ? newProfile.email2 : "EmailID2"}</div>
-                        <div className="mb-2"><i className="fa fa-phone fa-lg text-grey-darker mr-1"></i>Contact Number: {newProfile ? newProfile.phone_number : "EmailID2"}</div>
+                        { (newProfile && newProfile.email2) ? <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Secondary Email: {newProfile.email2}</div> : <div></div>}
+                        <div className="mb-2"><i className="fa fa-phone fa-lg text-grey-darker mr-1"></i>Contact Number: {newProfile ? newProfile.phone_number : ""}</div>
+                        { (newProfile && newProfile.areaOfInterest) ? <div className="mb-2"><i className="fa fa-clipboard fa-lg text-grey-darker mr-1"></i>Area of Interest: {newProfile.areaOfInterest}</div> : <div></div>}
                         <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
                         <hr class="mt-3 mb-3"></hr>
                         <Col span={7} >

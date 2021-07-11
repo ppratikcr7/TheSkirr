@@ -3,25 +3,80 @@ import { Button, Col, Input } from 'antd';
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import { TweetCreate } from '../../tweets/create';
+// import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
-import {
-    UserWhoToFollowDisplay
-} from '../../profiles'
+// import {
+//     UserWhoToFollowDisplay
+// } from '../../profiles'
 import $ from 'jquery';
 
+import {apiProfileDetail, apiProfileFollowToggle} from '../../profiles/lookup'
+import ReactDOM from 'react-dom';
+
+function ProfileBadge(props) {
+    const {user, didFollowToggle, profileLoading} = props
+    let currentVerb = (user && user.is_following) ? "Unfollow" : "Follow"
+    currentVerb = profileLoading ? "Loading..." : currentVerb
+    const handleFollowToggle = (event) => {
+        event.preventDefault()
+        if (didFollowToggle && !profileLoading) {
+            didFollowToggle(currentVerb)
+        }
+    }
+    return user ? <div style={{ paddingTop: 0, paddingBottom: 4, paddingRight: 20, paddingLeft: 100,  margin: 5 }}>
+        <button className='btn btn-primary' onClick={handleFollowToggle}>{currentVerb}</button>
+    </div> : null
+}
+
+export function ProfileBadgeComponent (props) {
+    const {username} = props;
+    console.log("follow button username: ", username)
+    // lookup
+    const [didLookup, setDidLookup] = useState(false)
+    const [profile, setProfile] = useState(null)
+    const [profileLoading, setProfileLoading] = useState(false)
+    const handleBackendLookup = (response, status) => {
+    if (status === 200) {
+        setProfile(response)
+    }
+    }
+    useEffect(()=>{
+        if (didLookup === false){
+        apiProfileDetail(username, handleBackendLookup)
+        setDidLookup(true)
+    }
+    }, [username, didLookup, setDidLookup])
+
+    const handleNewFollow = (actionVerb) => {
+        apiProfileFollowToggle(username, actionVerb, (response, status)=>{
+            // console.log(response, status)
+            if (status===200) {
+                setProfile(response)
+                // apiProfileDetail(username, handleBackendLookup)
+            }
+            setProfileLoading(false)
+        })
+        setProfileLoading(true)
+        
+    }
+    return didLookup === false ? "Loading..." : profile ? <ProfileBadge user={profile} didFollowToggle={handleNewFollow} profileLoading={profileLoading} /> : null
+}
+
+// Search feature
 const { Search } = Input;
 
 export default function Dashboard(props) {
-
+    const {username} = props;
+    let newUserName = username;
     const [newTweets, setNewTweets] = useState([]);
+    let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
-    let [newUserName, setUserName] = useState();
+    // let [newUserName, setUserName] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
@@ -34,16 +89,21 @@ export default function Dashboard(props) {
     //     console.log("tempNewTweets2:", tempNewTweets);
     //     setNewTweets(tempNewTweets)
     // }
-    const handleNewUsername = (newUserName) => {
-        setUserName(newUserName ? newUserName : "")
-        console.log("newUserName", newUserName)
-        getMainProfile(newUserName, handleNewProfile);
-    }
+    // const handleNewUsername = (newUserName) => {
+    //     setUserName(newUserName ? newUserName : "")
+    //     getMainProfile(newUserName, handleNewProfile);
+    // }
 
     useEffect(() => {
         try {
             let endpoint1 = "/profiles/get_user/username/";
-            backendLookup("GET", endpoint1, handleNewUsername)
+            backendLookup("GET", endpoint1, handleCurrentUsername)
+        } catch (error) {
+            console.log("error:", error);
+        }
+        try {
+            let endpoint = `/profiles/user/${newUserName}/`;
+            backendLookup("GET", endpoint, handleNewProfile)
         } catch (error) {
             console.log("error:", error);
         }
@@ -53,6 +113,10 @@ export default function Dashboard(props) {
         getCurrentUserTotalLikes();
         getCurrentUserTotalClacks();
     })
+
+    const handleCurrentUsername = (currentUserName) => {
+        setCurrentUserName(currentUserName ? currentUserName : "")
+    }
 
     const handleNewProfile = (newProfile) => {
         setNewProfile(newProfile)
@@ -84,15 +148,14 @@ export default function Dashboard(props) {
         }
     }
 
-    function getMainProfile(username) {
-        console.log("username", username)
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
+    // function getMainProfile(username) {
+    //     try {
+    //         let endpoint = `/profiles/user/${username}/`;
+    //         backendLookup("GET", endpoint, handleNewProfile)
+    //     } catch (error) {
+    //         console.log("error:", error);
+    //     }
+    // }
 
     // join date update:
     if (newProfile && newProfile.date_joined) {
@@ -123,15 +186,6 @@ export default function Dashboard(props) {
             // console.log("setNewTweets", newTweets);
         }
     }
-
-    useEffect(() => {
-        try {
-            let endpoint1 = "/profiles/get_user/username/";
-            backendLookup("GET", endpoint1, handleNewUsername)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }, [])
 
     const MAX_TWEET_LENGTH = 200;
 
@@ -274,8 +328,12 @@ export default function Dashboard(props) {
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
                         <div className="mb-2">
                             <span className="text-lg font-bold">User Bio</span>
+                            <br />
+                            <br />
                         </div>
                         <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
+                        <br />
+                        <br />
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
@@ -299,6 +357,8 @@ export default function Dashboard(props) {
                     <div className="flex justify-between mb-1">
                         <div>
                             <span className="text-lg font-bold">&emsp;&emsp;My Dashboard</span>
+                            <br />
+                            <br />
                         </div>
                     </div>
                     <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
@@ -308,26 +368,26 @@ export default function Dashboard(props) {
 
                 <div className="w-full lg:w-1/5 pl-0">
                     {/* profile new */}
-                    <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
-                        <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
-                            <div class="flex justify-center -mt-2">
-                                { ( newProfile && newProfile.photo ) ? 
-                                    <div class="relative w-25 h-25">
-                                        <img class="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/${newProfile.photo}`} alt="user image" width="100px" height="100px"/>
-                                        <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                    <div className="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
+                        <img src="https://i.imgur.com/dYcYQ7E.png" className="w-full" />
+                            <div className="flex justify-center -mt-2">
+                                { ( newProfile && newProfile.photo_url ) ? 
+                                    <div className="relative w-25 h-25">
+                                        <img className="rounded-full border border-gray-100 shadow-sm h-100" src={`${newProfile.photo_url}`} alt="user image" width="100px" height="100px"/>
+                                        <div className="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
                                     </div>
                                     : 
-                                    <div class="relative w-25 h-25">
-                                        <img class="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/images/default.jpg`} alt="user image" width="100px" height="100px"/>
-                                        <div class="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                                    <div className="relative w-25 h-25">
+                                        <img className="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/images/default.jpg`} alt="user image" width="100px" height="100px"/>
+                                        <div className="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
                                     </div>
                                 }    
                             </div>
-                            <div class="text-center px-3 pb-2 pt-2">
-                                <h3 class="text-white text-sm bold font-sans">Username: {newUserName}</h3>
+                            <div className="text-center px-3 pb-2 pt-2">
+                                <h3 className="text-white text-sm bold font-sans">Username: {newUserName}</h3>
                                 { (newProfile && newProfile.first_name_public_access) ?
                                     <div>
-                                        <p class="mt-1 font-sans font-light text-white">First Name: {newProfile && newProfile.first_name}</p>
+                                        <p className="mt-1 font-sans font-light text-white">First Name: {newProfile && newProfile.first_name}</p>
                                     </div>
                                     :
                                     <div></div>
@@ -337,7 +397,7 @@ export default function Dashboard(props) {
                                 
                                 { (newProfile && newProfile.gender_public_access) ?
                                     <div>
-                                        <p class="mt-1 font-sans font-light text-white">Gender: {newProfile && newProfile.gender}</p>
+                                        <p className="mt-1 font-sans font-light text-white">Gender: {newProfile && newProfile.gender}</p>
                                     </div>
                                     :
                                     <div></div>
@@ -345,7 +405,7 @@ export default function Dashboard(props) {
 
                                 { (newProfile && newProfile.dob_public_access) ?
                                     <div>
-                                        <p class="mt-1 font-sans font-light text-white">DOB: {newProfile && newProfile.dob}</p>
+                                        <p className="mt-1 font-sans font-light text-white">DOB: {newProfile && newProfile.dob}</p>
                                     </div>
                                     :
                                     <div></div>
@@ -353,7 +413,7 @@ export default function Dashboard(props) {
 
                                 { (newProfile && newProfile.phone_number_public_access) ?
                                     <div>
-                                        <p class="mt-1 font-sans font-light text-white">Contact: {newProfile && newProfile.phone_number}</p>
+                                        <p className="mt-1 font-sans font-light text-white">Contact: {newProfile && newProfile.phone_number}</p>
                                     </div>
                                     :
                                     <div></div>
@@ -361,7 +421,7 @@ export default function Dashboard(props) {
 
                                 { (newProfile && newProfile.email_public_access) ?
                                     <div>
-                                        <p class="mt-1 font-sans font-light text-white">Email: {newProfile && newProfile.email}</p>
+                                        <p className="mt-1 font-sans font-light text-white">Email: {newProfile && newProfile.email}</p>
                                     </div>
                                     :
                                     <div></div>
@@ -370,27 +430,25 @@ export default function Dashboard(props) {
                                 {/* { newProfile.em2_pa }
                                 <p class="mt-2 font-sans font-light text-white">Secondary Email: {{newProfile.email2}}</p> */}
                             </div>
-                            <hr class="mt-1 mb-1"></hr>
-                            <div class="flex justify-center pb-1 text-white">
-                                <div class="text-center mr-4 border-r pr-3">
+                            <hr className="mt-1 mb-1"></hr>
+                            <div className="flex justify-center pb-1 text-white">
+                                <div className="text-center mr-4 border-r pr-3">
                                     <h2>{newProfile && newProfile.follower_count}</h2>
                                     <span>Fans</span>
                                 </div>
-                                <div class="text-center">
+                                <div className="text-center">
                                     <h2>{newProfile && newProfile.following_count}</h2>
                                     <span>Companions</span>
                                 </div>
                             </div>
-                            { (newUserName) ?
+                            { (newUserName && newUserName != currentUserName) ?
                                 <div>
-                                    <div class="tweetme-2-profile-badge" data-username={newUserName} style={{ margin:"2px", padding: "2px"}}><br/></div>
-                                    <div id='tweetme-2' style={{ margin:"2px", padding: "2px"}} data-username={newUserName} data-can-tweet="false"></div>
+                                    <div className="tweetme-2-profile-badge" data-username={`${newUserName}`} ><br/></div>
+                                    <div className="d-none" id='tweetme-2' data-username={`${newUserName}`} data-can-tweet="false"></div>
                                 </div>
                                 :
                                 <div></div>
                             }
-                            <br />
-                            <br />
                             <br />
                         </div>
                     </div>
@@ -398,3 +456,14 @@ export default function Dashboard(props) {
             </>
     )
 }
+
+const userProfileBadgeElements = document.querySelectorAll(".tweetme-2-profile-badge")
+console.log("userProfileBadgeElements: ", userProfileBadgeElements)
+
+const e = React.createElement;
+userProfileBadgeElements.forEach(container => {
+    console.log("container: ", container)
+    ReactDOM.render(
+        e(ProfileBadgeComponent, container.dataset),
+        container);
+})

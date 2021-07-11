@@ -82,12 +82,13 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField(read_only=True)
     email2 = serializers.SerializerMethodField(read_only=True)
     phone_number = serializers.SerializerMethodField(read_only=True)
+    areaOfInterest = serializers.SerializerMethodField(read_only=True)
     date_joined = serializers.SerializerMethodField(read_only=True)
     is_following = serializers.SerializerMethodField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
     follower_count = serializers.SerializerMethodField(read_only=True)
     following_count = serializers.SerializerMethodField(read_only=True)
-    # photo = serializers.SerializerMethodField(read_only=True) 
+    photo_url = serializers.SerializerMethodField(read_only=True) 
     first_name_public_access = serializers.SerializerMethodField(read_only=True)
     gender_public_access = serializers.SerializerMethodField(read_only=True)
     dob_public_access = serializers.SerializerMethodField(read_only=True)
@@ -103,6 +104,7 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
             "email",
             "email2",
             "phone_number",
+            "areaOfInterest",
             "date_joined",
             "id",
             "bio",
@@ -111,7 +113,7 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
             "following_count",
             "is_following",
             "username",
-            # "photo",
+            "photo_url",
             "first_name_public_access", 
             "gender_public_access",
             "dob_public_access", 
@@ -159,11 +161,14 @@ class PublicNonPublicProfileSerializer(serializers.ModelSerializer):
     def get_phone_number(self, obj):
         return obj.user.phone_number
 
+    def get_areaOfInterest(self, obj):
+        return obj.user.areaOfInterest
+
     def get_date_joined(self, obj):
         return obj.user.date_joined
 
-    # def get_photo(self, obj):
-    #     return obj.user.photo
+    def get_photo_url(self, obj):
+        return obj.user.photo.url
 
     def get_first_name_public_access(self, obj):
         return obj.user.first_name_public_access

@@ -18,7 +18,7 @@ if (tweetsEl) {
         e(Home, tweetsEl.dataset), tweetsEl);
 }
 
-const tweetFeedEl = document.getElementById("tweetme-feed")
+const tweetFeedEl = document.getElementById("user-dashboard-view")
 if (tweetFeedEl) {
     ReactDOM.render(
         e(Dashboard, tweetFeedEl.dataset), tweetFeedEl);
@@ -31,7 +31,7 @@ if (tweetPorfileWallEl) {
 }
 
 const tweetDetailElements = document.querySelectorAll(".tweetme-2-detail")
-
+console.log("tweetDetailElements: ", tweetDetailElements)
 tweetDetailElements.forEach(container => {
     ReactDOM.render(
         e(TweetDetailComponent, container.dataset),
@@ -39,8 +39,10 @@ tweetDetailElements.forEach(container => {
 })
 
 const userProfileBadgeElements = document.querySelectorAll(".tweetme-2-profile-badge")
+console.log("userProfileBadgeElements: ", userProfileBadgeElements)
 
 userProfileBadgeElements.forEach(container => {
+    console.log("container: ", container)
     ReactDOM.render(
         e(ProfileBadgeComponent, container.dataset),
         container);
