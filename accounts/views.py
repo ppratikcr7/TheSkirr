@@ -197,6 +197,7 @@ def login_view(request, *args, **kwargs):
     if form.is_valid():
         username = request.POST['username']
         # print(username)
+        username = username.lower()
         password = request.POST['password']
         # print(password)
         user = auth.authenticate(username=username, password=password)

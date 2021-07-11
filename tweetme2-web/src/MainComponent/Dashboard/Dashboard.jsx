@@ -336,10 +336,10 @@ export default function Dashboard(props) {
                         <br />
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
+                                <a href={"/profiles/my_wall/" + currentUserName} style={{ textDecoration: "none" }}>My wall</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href="/" style={{ textDecoration: "none" }}>My Dashboard</a>
+                                <a href={"/profiles/dashboard/" + currentUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
@@ -453,6 +453,7 @@ export default function Dashboard(props) {
                         </div>
                     </div>
                 </div>
+                <br />
             </>
     )
 }
