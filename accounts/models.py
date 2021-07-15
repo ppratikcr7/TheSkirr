@@ -20,7 +20,7 @@ class UserRegisterDetails(AbstractUser):
     last_name = models.CharField(max_length=220, blank=True, default='')
     gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
     dob = models.DateField(null=True, blank=True)
-    phone_number = models.BigIntegerField(null=True, blank=True)
+    phone_number = models.CharField(null=True, max_length=10, blank=True)
     # phone_number_public = models.CharField(max_length=10,choices=TYPE_SELECT)
     email = models.EmailField(max_length=220, null=True, blank=True)
     email2 = models.EmailField(max_length=220, null=True, blank=True)
