@@ -25,8 +25,6 @@ def validate_username(value):
 def validate_email(value):
     if UserRegisterDetails.objects.filter(email = value).exists():
         raise ValidationError((f"The email id: {value} is already taken. Please use another email id."),params = {'value':value})
-    # if '@' not in value:
-    #     raise ValidationError("Please Enter the proper Email")
 
 def validate_phoneNumber(value):
     if ('@' or '+' or '-' or '.' or ',' or '!' or '#' or '$' or '%' or '^' \
@@ -55,7 +53,7 @@ def validate_age(value):
         dob = value
         age = (datetime.date.today() - dob).days/365
         if age < 15:
-            raise ValidationError('Must be at least 15 years old to register')
+            raise ValidationError('You must be above 15 years of age to sign up / register with theskirr. Filling in wrong information could lead to suspension of your account and due compliances with rules and regulations as stipulated by Government of India would be followed.')
         return dob
 
 class MyClearableFileInput(ClearableFileInput):
@@ -73,7 +71,7 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 class SignUpForm(UserCreationForm):
 
-    city_fname_lname_regex = RegexValidator(regex = r'^[a-zA-Z][a-zA-Z]{1,}$', message="No special characters or numerals allowed!")
+    city_fname_lname_regex = RegexValidator(regex = r'^[a-zA-Z][a-zA-Z ]{1,}$', message="No special characters or numerals allowed!")
 
     first_name = forms.CharField(error_messages={'required':''}, validators = [city_fname_lname_regex], max_length=100,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'First Name', 'id': 'first_name'}))
