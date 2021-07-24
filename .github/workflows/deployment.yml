@@ -16,4 +16,4 @@ jobs:
           host: ${{ secrets.HOST_IP }}
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.HOST_KEY }}
-          script: cd /home/ubuntu/repo/TheSkirr && git checkout db.sqlite3 && git checkout accounts/migrations/0001_initial.py && git checkout profiles/migrations/0001_initial.py && git checkout tweets/migrations/0001_initial.py && git pull origin master
+          script: cd /home/ubuntu/repo/TheSkirr && npm i @material-ui/core && git checkout db.sqlite3 && git checkout accounts/migrations/0001_initial.py && git checkout profiles/migrations/0001_initial.py && git checkout tweets/migrations/0001_initial.py && git pull origin master
