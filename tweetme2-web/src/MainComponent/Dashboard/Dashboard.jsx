@@ -10,13 +10,62 @@ import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
-// import {
-//     UserWhoToFollowDisplay
-// } from '../../profiles'
+import {
+    UserWhoToFollowDisplay
+} from '../../profiles'
 import $ from 'jquery';
+
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 import {apiProfileDetail, apiProfileFollowToggle} from '../../profiles/lookup'
 import ReactDOM from 'react-dom';
+
+function TabPanel(props) {
+const { children, value, index, ...other } = props;
+
+return (
+    <div
+    role="tabpanel"
+    hidden={value !== index}
+    id={`simple-tabpanel-${index}`}
+    aria-labelledby={`simple-tab-${index}`}
+    {...other}
+    >
+    {value === index && (
+        <Box p={3}>
+        <Typography>{children}</Typography>
+        </Box>
+    )}
+    </div>
+);
+}
+
+TabPanel.propTypes = {
+children: PropTypes.node,
+index: PropTypes.any.isRequired,
+value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+};
+}
+
+const useStyles = makeStyles((theme) => ({
+root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+},
+}));
+
 
 function ProfileBadge(props) {
     const {user, didFollowToggle, profileLoading} = props
@@ -71,6 +120,13 @@ export function ProfileBadgeComponent (props) {
 const { Search } = Input;
 
 export default function Dashboard(props) {
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     const {username} = props;
     let newUserName = username;
     const [newTweets, setNewTweets] = useState([]);
@@ -79,20 +135,9 @@ export default function Dashboard(props) {
     // let [newUserName, setUserName] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
-
-    // const canTweet = props.canTweet === "false" ? false : true
-
-    // const handleNewTweet = (newTweet) => {
-    //     console.log("newTweet1:", newTweet);
-    //     let tempNewTweets = [...newTweets]
-    //     tempNewTweets.unshift(newTweet)
-    //     console.log("tempNewTweets2:", tempNewTweets);
-    //     setNewTweets(tempNewTweets)
-    // }
-    // const handleNewUsername = (newUserName) => {
-    //     setUserName(newUserName ? newUserName : "")
-    //     getMainProfile(newUserName, handleNewProfile);
-    // }
+    let [whoToFollowUser1, setwhoToFollowUser1] = useState();
+    let [whoToFollowUser2, setwhoToFollowUser2] = useState();
+    let [whoToFollowUser3, setwhoToFollowUser3] = useState();
 
     useEffect(() => {
         try {
@@ -107,6 +152,10 @@ export default function Dashboard(props) {
         } catch (error) {
             console.log("error:", error);
         }
+        //get random 3 users to follow:
+        getWhoToFollowUser1();
+        getWhoToFollowUser2();
+        getWhoToFollowUser3();
     }, [])
 
     useEffect(() => {
@@ -128,6 +177,44 @@ export default function Dashboard(props) {
 
     const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
         setCurrentUserTotalClacks(currentUserTotalClacks)
+    }
+
+    // who to follow:
+    const handleWhoToFollowUser1 = (whoToFollowUser1) => {
+        setwhoToFollowUser1(whoToFollowUser1)
+    }
+    const handleWhoToFollowUser2 = (whoToFollowUser2) => {
+        setwhoToFollowUser2(whoToFollowUser2)
+    }
+    const handleWhoToFollowUser3 = (whoToFollowUser3) => {
+        setwhoToFollowUser3(whoToFollowUser3)
+    }
+
+    function getWhoToFollowUser1() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/user1/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser1)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser2() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/user2/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser2)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getWhoToFollowUser3() {
+        try {
+            let endpoint = `/profiles/who_to_follow_users/user3/`;
+            backendLookup("GET", endpoint, handleWhoToFollowUser3)
+        } catch (error) {
+            console.log("error:", error);
+        }
     }
 
     function getCurrentUserTotalLikes() {
@@ -186,25 +273,6 @@ export default function Dashboard(props) {
             // console.log("setNewTweets", newTweets);
         }
     }
-
-    const MAX_TWEET_LENGTH = 200;
-
-    $("#clackText").keyup(function () {
-        $("#info").text(($(this).val().length) + " / " + MAX_TWEET_LENGTH)
-    });
-
-    $('#clackText').keypress(function () {
-        var charLength = $(this).val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
-        }
-        var textareaLength = document.getElementById("clackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error").text((''));
-            return false;
-        }
-    });
 
     const handleClick = ({ key }) => {
         window.localStorage.setItem('search_type', key);
@@ -329,20 +397,12 @@ export default function Dashboard(props) {
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
-                        <div className="mb-2">
-                            <span className="text-lg font-bold">User Bio</span>
-                            <br />
-                            <br />
-                        </div>
-                        <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
-                        <br />
-                        <br />
                         <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href={"/profiles/my_wall/" + currentUserName} style={{ textDecoration: "none" }}>My wall</a>
+                                <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                                <a href={"/profiles/dashboard/" + currentUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
+                                <a href={"/profiles/dashboard/" + newUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
@@ -351,112 +411,142 @@ export default function Dashboard(props) {
                                 <a href="/profiles/more_accounts" style={{ textDecoration: "none" }}>Who to Follow</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="#" style={{ textDecoration: "none" }}>Skirr</a>
+                            </Button>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="#" style={{ textDecoration: "none" }}>Messages</a>
+                            </Button>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="#" style={{ textDecoration: "none" }}>Notification</a>
+                            </Button>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>Clack Now</a>
                             </Button>
                         </Col>
                     </div>
 
                 <div className="w-full lg:w-3/5 bg-white mb-20">
+                    <div className="flex justify-center mb-1">
+                        <span className="text-lg font-bold">My Dashboard</span>
+                        <hr className="mt-2 mb-2"></hr>
+                    </div>
                     <div className="flex justify-between mb-1">
                         <div>
-                            <span className="text-lg font-bold">&emsp;&emsp;My Dashboard</span>
-                            <br />
-                            <br />
+                            
+                            <span className="flex justify-left mt-4">
+                                { ( newProfile && newProfile.photo_url ) ? 
+                                    <span className="relative w-18 h-18">
+                                        <img className="rounded-full border border-gray-100 shadow-sm h-100" src={`${newProfile.photo_url}`} alt="user image" width="60px" height="60px"/>
+                                        <div className="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                                    </span>
+                                    : 
+                                    <span className="relative w-18 h-18">
+                                        <img className="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/images/default.jpg`} alt="user image" width="60px" height="60px"/>
+                                        <div className="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
+                                    </span>
+                                }    
+                            </span>
+
+                            <div className="mt-2 mb-2">
+                                <span className="text-lg font-bold">User Bio</span>
+                                <hr class="mt-0 mb-3"></hr>
+                            </div>
+                            <div className="mb-2"><i className="fa fa-id-badge fa-lg text-grey-darker mr-1"></i>Name: {newProfile ? newProfile.first_name + " " + newProfile.last_name : "User"}</div>
+                            <div className="mb-2"><i className="fa fa-user fa-lg text-grey-darker mr-1"></i>Username: <a href= {"/profiles/my_wall/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></div>
+                            <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Email: {newProfile ? newProfile.email : "EmailID"}</div>
+                            { (newProfile && newProfile.email2) ? <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Secondary Email: {newProfile.email2}</div> : <div></div>}
+                            <div className="mb-2"><i className="fa fa-phone fa-lg text-grey-darker mr-1"></i>Contact Number: {newProfile ? newProfile.phone_number : ""}</div>
+                            { (newProfile && newProfile.areaOfInterest) ? <div className="mb-2"><i className="fa fa-clipboard fa-lg text-grey-darker mr-1"></i>Area of Interest: {newProfile.areaOfInterest}</div> : <div></div>}
+                            <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
+                            <button className="btn btn-primary  my-3 mr-3"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
+                            <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
+                            <hr class="mt-1 mb-1"></hr>
+                            {/* <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
+                            <hr class="mt-1 mb-2"></hr> */}
                         </div>
                     </div>
-                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                    <br />
+                    <div className={classes.root}>
+                        <AppBar position="static" style={{ background: '#007bff', margin: 0}}>
+                        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
+                            <Tab label="Clacks" {...a11yProps(0)} />
+                            <Tab label="Replies" {...a11yProps(1)} disabled/>
+                            <Tab label="Reclacks" {...a11yProps(2)} />
+                            <Tab label="Likes" {...a11yProps(3)} disabled/>
+                        </Tabs>
+                        </AppBar>
+                        <TabPanel value={value} index={0}>
+                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                        No Replies
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                        No Reclacks
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                        No Liked Clacks
+                        </TabPanel>
+                    </div>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}
 
                 </div>
 
                 <div className="w-full lg:w-1/5 pl-0">
-                    {/* profile new */}
-                    <div className="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-yellow-500">
-                        <img src="https://i.imgur.com/dYcYQ7E.png" className="w-full" />
-                            <div className="flex justify-center -mt-2">
-                                { ( newProfile && newProfile.photo_url ) ? 
-                                    <div className="relative w-25 h-25">
-                                        <img className="rounded-full border border-gray-100 shadow-sm h-100" src={`${newProfile.photo_url}`} alt="user image" width="100px" height="100px"/>
-                                        <div className="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
-                                    </div>
-                                    : 
-                                    <div className="relative w-25 h-25">
-                                        <img className="rounded-full border border-gray-100 shadow-sm h-100" src={`/media/images/default.jpg`} alt="user image" width="100px" height="100px"/>
-                                        <div className="absolute top-0 right-0 h-3 w-3 my-1 mx-1 border-2 border-white rounded-full bg-green-400 z-2"></div>
-                                    </div>
-                                }    
-                            </div>
-                            <div className="text-center px-3 pb-2 pt-2">
-                                <h3 className="text-white text-sm bold font-sans">Username: {newUserName}</h3>
-                                { (newProfile && newProfile.first_name_public_access) ?
-                                    <div>
-                                        <p className="mt-1 font-sans font-light text-white">First Name: {newProfile && newProfile.first_name}</p>
-                                    </div>
-                                    :
-                                    <div></div>
-                                }
-                                {/* { newProfile.ln_pa } */}
-                                {/* <p class="mt-1 font-sans font-light text-white">Last Name: {{newProfile.last_name}}</p> */}
-                                
-                                { (newProfile && newProfile.gender_public_access) ?
-                                    <div>
-                                        <p className="mt-1 font-sans font-light text-white">Gender: {newProfile && newProfile.gender}</p>
-                                    </div>
-                                    :
-                                    <div></div>
-                                }
-
-                                { (newProfile && newProfile.dob_public_access) ?
-                                    <div>
-                                        <p className="mt-1 font-sans font-light text-white">DOB: {newProfile && newProfile.dob}</p>
-                                    </div>
-                                    :
-                                    <div></div>
-                                }
-
-                                { (newProfile && newProfile.phone_number_public_access) ?
-                                    <div>
-                                        <p className="mt-1 font-sans font-light text-white">Contact: {newProfile && newProfile.phone_number}</p>
-                                    </div>
-                                    :
-                                    <div></div>
-                                }
-
-                                { (newProfile && newProfile.email_public_access) ?
-                                    <div>
-                                        <p className="mt-1 font-sans font-light text-white">Email: {newProfile && newProfile.email}</p>
-                                    </div>
-                                    :
-                                    <div></div>
-                                }
-
-                                {/* { newProfile.em2_pa }
-                                <p class="mt-2 font-sans font-light text-white">Secondary Email: {{newProfile.email2}}</p> */}
-                            </div>
-                            <hr className="mt-1 mb-1"></hr>
-                            <div className="flex justify-center pb-1 text-white">
-                                <div className="text-center mr-4 border-r pr-3">
-                                    <h2>{newProfile && newProfile.follower_count}</h2>
-                                    <span>Fans</span>
-                                </div>
-                                <div className="text-center">
-                                    <h2>{newProfile && newProfile.following_count}</h2>
-                                    <span>Companions</span>
-                                </div>
-                            </div>
-                            { (newUserName && newUserName != currentUserName) ?
-                                <div>
-                                    <div className="tweetme-2-profile-badge" data-username={`${newUserName}`} ><br/></div>
-                                    <div className="d-none" id='tweetme-2' data-username={`${newUserName}`} data-can-tweet="false"></div>
-                                </div>
-                                :
-                                <div></div>
-                            }
-                            <br />
+                    <div className="bg-white p-3 mb-3">
+                        <div>
+                            <span className="text-lg font-bold p-2">Who to follow</span>
+                            <hr className="mt-2 mb-2"></hr>
                         </div>
+                        <div className="p-3">
+
+                            {(whoToFollowUser1) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser1} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <div className="p-3">
+                            {(whoToFollowUser2) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser2} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <div className="p-3">
+                            {(whoToFollowUser3) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser3} /> : <div></div>}
+                            {/* use the below for color encoding */}
+                            {/* <span class="text-grey-dark">&middot;</span> */}
+                        </div>
+                        <hr className="mt-2 mb-2"></hr>
+                        <div className="flex justify-between mb-1">
+                            <div>
+                                <a href="/profiles/more_accounts" className="font-bold text-black">Show more</a>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        {/* new section */}
+                        <div>
+                            <span className="text-lg font-bold p-2">News</span>
+                            <hr className="mt-2 mb-2"></hr>
+                        </div>
+                        <div className="p-3">
+                            <p>News article 1</p>
+                        </div>
+                        <div className="p-3">
+                        <p>News article 2</p>
+                        </div>
+                        <div className="p-3">
+                            <p>News article 3</p>
+                        </div>
+                        <hr className="mt-2 mb-2"></hr>
+                        {/* <div className="flex justify-between mb-1">
+                            <div>
+                                <a href="" className="font-bold text-black">Show more news</a>
+                            </div>
+                        </div> */}
                     </div>
                 </div>
                 <br />
+            </div>
             </>
     )
 }

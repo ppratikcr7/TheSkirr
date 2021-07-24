@@ -13,22 +13,33 @@ export function TweetCreate(props){
         // alert("An error occured please try again")
       }
     }
-
+    const MAX_TWEET_LENGTH = 200;
+    const clack_btn_disable = '';
     const handleSubmit = (event) => {
       event.preventDefault()
       const newVal = textAreaRef.current.value
       // backend api request
       apiTweetCreate(newVal, handleBackendUpdate)
-      textAreaRef.current.value = ''
+      if (newVal.length <= MAX_TWEET_LENGTH){
+        textAreaRef.current.value = ''
+      }
+      else{
+        // clack_btn_disable = 'disabled'
+        var element = document.getElementById("clack_btn");
+        // it's a good idea to check whether the element exists
+        if (element != null && element != undefined) {
+          element.disabled = "disabled";
+        }
+      }
     }
     return <div className={props.className}>
           <form onSubmit={handleSubmit}>
             <textarea ref={textAreaRef} id="clackText" required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 200 characters...'></textarea>
             <div id="info" className="text-right text-sm"></div>
             <div id="error" className="text-center text-sm"></div>
-            <button type='submit' className='btn btn-primary my-3 mr-3'>Clack</button>
-            <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
-            <button className='btn btn-primary my-3 mr-2' disabled>News</button>
+            <button id="clack_btn" type='submit' className='btn btn-primary my-3 mr-3'>Clack</button>
+            {/* <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button> */}
+            {/* <button className='btn btn-primary my-3 mr-2' disabled>News</button> */}
         </form>
   </div>
 }

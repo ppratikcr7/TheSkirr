@@ -18,15 +18,14 @@ import $ from 'jquery';
 const { Search } = Input;
 
 export default function MyWall(props) {
-
+    // const {username} = props;
+    // let newUserName = username;
     const [newTweets, setNewTweets] = useState([]);
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
-    // let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
-    // let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
 
     const canTweet = props.canTweet === "false" ? false : true
 
@@ -46,11 +45,6 @@ export default function MyWall(props) {
         getWhoToFollowUser3();
     }
 
-    // useEffect(() => {
-    //     getCurrentUserTotalLikes();
-    //     getCurrentUserTotalClacks();
-    // })
-
     const handleNewProfile = (newProfile) => {
         setNewProfile(newProfile)
     }
@@ -65,14 +59,6 @@ export default function MyWall(props) {
     const handleWhoToFollowUser3 = (whoToFollowUser3) => {
         setwhoToFollowUser3(whoToFollowUser3)
     }
-
-    // const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
-    //     setCurrentUserTotalLikes(currentUserTotalLikes)
-    // }
-
-    // const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
-    //     setCurrentUserTotalClacks(currentUserTotalClacks)
-    // }
 
     function getWhoToFollowUser1() {
         try {
@@ -100,24 +86,6 @@ export default function MyWall(props) {
             console.log("error:", error);
         }
     }
-
-    // function getCurrentUserTotalLikes() {
-    //     try {
-    //         let endpoint = `/profiles/current_user/likes/`;
-    //         backendLookup("GET", endpoint, handleCurrentUserTotalLikes)
-    //     } catch (error) {
-    //         console.log("error:", error);
-    //     }
-    // }
-
-    // function getCurrentUserTotalClacks() {
-    //     try {
-    //         let endpoint = `/profiles/current_user/clacks/`;
-    //         backendLookup("GET", endpoint, handleCurrentUserTotalClacks)
-    //     } catch (error) {
-    //         console.log("error:", error);
-    //     }
-    // }
 
     function getMainProfile(username) {
         try {
@@ -274,18 +242,7 @@ export default function MyWall(props) {
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                     <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
-                        <div className="mb-2">
-                            <span className="text-lg font-bold">User Bio</span>
-                        </div>
-                        <div className="mb-2"><i className="fa fa-id-badge fa-lg text-grey-darker mr-1"></i>Name: {newProfile ? newProfile.first_name + " " + newProfile.last_name : "User"}</div>
-                        <div className="mb-2"><i className="fa fa-user fa-lg text-grey-darker mr-1"></i>Username: <a href= {"/profiles/my_wall/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></div>
-                        <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Email: {newProfile ? newProfile.email : "EmailID"}</div>
-                        { (newProfile && newProfile.email2) ? <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i>Secondary Email: {newProfile.email2}</div> : <div></div>}
-                        <div className="mb-2"><i className="fa fa-phone fa-lg text-grey-darker mr-1"></i>Contact Number: {newProfile ? newProfile.phone_number : ""}</div>
-                        { (newProfile && newProfile.areaOfInterest) ? <div className="mb-2"><i className="fa fa-clipboard fa-lg text-grey-darker mr-1"></i>Area of Interest: {newProfile.areaOfInterest}</div> : <div></div>}
-                        <div className="mb-2"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i>Joined: {newProfile ? cleanDate : "Joined: 1 Jan 2021 12AM"}</div>
-                        <hr class="mt-3 mb-3"></hr>
-                        <Col span={7} >
+                    <Col span={7} >
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
                             </Button>
@@ -299,18 +256,39 @@ export default function MyWall(props) {
                                 <a href="/profiles/more_accounts" style={{ textDecoration: "none" }}>Who to Follow</a>
                             </Button>
                             <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="#" style={{ textDecoration: "none" }}>Skirr</a>
+                            </Button>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="#" style={{ textDecoration: "none" }}>Messages</a>
+                            </Button>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
+                                <a href="#" style={{ textDecoration: "none" }}>Notification</a>
+                            </Button>
+                            <Button type={'primary'} style={{ width: 190, margin: 5 }} shape="round" size={'large'} block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                                 <a href="/" style={{ textDecoration: "none" }}>Clack Now</a>
                             </Button>
                         </Col>
+
+                        <br />
+                        <br />
+                        <hr className="mt-2 mb-2"></hr>
+                        <br />
+                        <span className="mb-2 pl-4"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
+                        <div className="p-2 text-lg font-bold border-b border-solid border-grey-light">
+                            {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
+                        </div>
                     </div>
 
                 <div className="w-full lg:w-3/5 bg-white mb-20">
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-center mb-1">
                         <div>
-                            <span className="text-lg font-bold">&emsp;&emsp;My Wall</span>
+                            <span className="text-lg font-bold">My Wall</span>  
                         </div>
+                        <hr className="mt-2 mb-2"></hr>
                     </div>
-                    <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
+                    <br />
+                    <span className="mb-2 pl-4"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
+                    <div className="p-2 text-lg font-bold border-b border-solid border-grey-light">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
                     </div>
                     <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
@@ -322,19 +300,20 @@ export default function MyWall(props) {
                     <div className="bg-white p-3 mb-3">
                         <div>
                             <span className="text-lg font-bold p-2">Who to follow</span>
+                            <hr className="mt-2 mb-2"></hr>
                         </div>
-                        <div className="p-2">
+                        <div className="p-3">
 
                             {(whoToFollowUser1) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser1} /> : <div></div>}
                             {/* use the below for color encoding */}
                             {/* <span class="text-grey-dark">&middot;</span> */}
                         </div>
-                        <div className="p-2">
+                        <div className="p-3">
                             {(whoToFollowUser2) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser2} /> : <div></div>}
                             {/* use the below for color encoding */}
                             {/* <span class="text-grey-dark">&middot;</span> */}
                         </div>
-                        <div className="p-2">
+                        <div className="p-3">
                             {(whoToFollowUser3) ? <UserWhoToFollowDisplay includeFullName user={whoToFollowUser3} /> : <div></div>}
                             {/* use the below for color encoding */}
                             {/* <span class="text-grey-dark">&middot;</span> */}
@@ -345,6 +324,29 @@ export default function MyWall(props) {
                                 <a href="/profiles/more_accounts" className="font-bold text-black">Show more</a>
                             </div>
                         </div>
+                        <br />
+                        <br />
+                        <br />
+                        {/* new section */}
+                        <div>
+                            <span className="text-lg font-bold p-2">News</span>
+                            <hr className="mt-2 mb-2"></hr>
+                        </div>
+                        <div className="p-3">
+                            <p>News article 1</p>
+                        </div>
+                        <div className="p-3">
+                        <p>News article 2</p>
+                        </div>
+                        <div className="p-3">
+                        <p>News article 3</p>
+                        </div>
+                        <hr className="mt-2 mb-2"></hr>
+                        {/* <div className="flex justify-between mb-1">
+                            <div>
+                                <a href="" className="font-bold text-black">Show more news</a>
+                            </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
