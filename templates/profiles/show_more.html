@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
+<!-- <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
         <div class="mb-4">
-            <!-- <a href="/profiles/my_wall/"+{{username}}> -->
                 <a href="/profiles/my_wall/{{username}}">
             <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Wall</button>
             </a>
@@ -31,7 +29,6 @@
     </div>
 
     <div class="w-full lg:w-3/5 bg-white mb-4">
-        <!-- who to follow -->
         <div class="flex items-center justify-center h-full bg-gray-100">
             <div class="container">
                 <div class="flex justify-center p-4 mb-2">
@@ -54,7 +51,8 @@
         <div class="bg-white p-3 mb-3">
         </div>
     </div>
-</div>
+</div> -->
+<div id="tweetme-profile-whoToFollow" data-username="{{ username }}"></div>
 <br>
 <br>
 <br>

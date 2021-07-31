@@ -6,11 +6,13 @@ import { ProfileBadgeComponent } from './profiles'
 import { Dashboard, Home, MyWall, FeedComponent, TweetsComponent, TweetDetailComponent } from './tweets'
 import * as serviceWorker from './serviceWorker';
 import Footer from './Common/footer';
+import WhoToFollow from './MainComponent/WhoToFollow/WhoToFollow';
 
 const appEl = document.getElementById('root')
 if (appEl) {
     ReactDOM.render(<App />, appEl);
 }
+// Home page:
 const e = React.createElement
 const tweetsEl = document.getElementById("tweetme-home")
 if (tweetsEl) {
@@ -18,18 +20,28 @@ if (tweetsEl) {
         e(Home, tweetsEl.dataset), tweetsEl);
 }
 
-const tweetFeedEl = document.getElementById("user-dashboard-view")
-if (tweetFeedEl) {
+// My Wall Page:
+const MyWallElement = document.getElementById("tweetme-profile-myWall")
+if (MyWallElement) {
     ReactDOM.render(
-        e(Dashboard, tweetFeedEl.dataset), tweetFeedEl);
+        e(MyWall, MyWallElement.dataset), MyWallElement);
 }
 
-const tweetPorfileWallEl = document.getElementById("tweetme-profile-myWall")
-if (tweetPorfileWallEl) {
+// Dashboard Page:
+const DashboardElement = document.getElementById("user-dashboard-view")
+if (DashboardElement) {
     ReactDOM.render(
-        e(MyWall, tweetPorfileWallEl.dataset), tweetPorfileWallEl);
+        e(Dashboard, DashboardElement.dataset), DashboardElement);
 }
 
+// Who to Follow Page:
+const WhoToFollowElement = document.getElementById("tweetme-profile-whoToFollow")
+if (WhoToFollowElement) {
+    ReactDOM.render(
+        e(WhoToFollow, WhoToFollowElement.dataset), WhoToFollowElement);
+}
+
+// Tweet Details Element:
 const tweetDetailElements = document.querySelectorAll(".tweetme-2-detail")
 console.log("tweetDetailElements: ", tweetDetailElements)
 tweetDetailElements.forEach(container => {
@@ -38,6 +50,7 @@ tweetDetailElements.forEach(container => {
         container);
 })
 
+// User Profile Badge Element:
 const userProfileBadgeElements = document.querySelectorAll(".tweetme-2-profile-badge")
 console.log("userProfileBadgeElements: ", userProfileBadgeElements)
 
