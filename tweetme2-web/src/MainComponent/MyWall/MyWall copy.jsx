@@ -232,7 +232,7 @@ export default function MyWall(props) {
                             </div>
                         </div>
                         <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
-                            {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-10 mb-3' />}
+                            {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
                         </div>
                         <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
                     </div>

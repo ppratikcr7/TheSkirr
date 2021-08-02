@@ -35,12 +35,6 @@ python manage.py runserver
 
 Open: http://localhost:8000/ and not http://127.0.0.1:8000/ as you would get forbidden error.
 
-Now, login once with the SMTP gmail account in your browser google accounts inorder to not get STMPAuth error on verification mail on user registration.
-
-Credentials:
-EMAIL = 'editor.aspire@gmail.com'
-PASSWORD = 'login&aspire'
-
 Click signup. Register your user and open link received on email and login with your credentials.
 
 # If you want to work on react app:
@@ -75,3 +69,7 @@ Open: http://localhost:8000/admin/
 # to view updates in our db.sqlite3 file:
 Open: https://sqliteonline.com/
 File -> Open DB and select our db.sqlite3 file 
+
+OR
+
+Use MySQL exetension in VSCode

@@ -240,7 +240,7 @@ export default function MyWall(props) {
             </div>
 
                 <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-                <div className="w-full lg:w-1/5 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
+                <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
                     <br />
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
@@ -273,11 +273,11 @@ export default function MyWall(props) {
                 <div style={{ position:"fixed", top: 510}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-10 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
                     </div>
                 </div>
 
-                <div className="w-full lg:w-3/5 bg-white mb-20">
+                <div className="w-full lg:w-6/7 bg-white mb-20">
                     <div className="flex justify-center mb-1">
                         <div>
                             <span className="text-lg font-bold">My Wall</span>  
@@ -294,7 +294,7 @@ export default function MyWall(props) {
 
                 </div>
 
-                <div className="w-full lg:w-1/5 pl-0">
+                <div className="w-full lg:w-1/6 pl-0">
                     <div className="bg-white p-3 mb-3">
                         <div>
                             <span className="text-lg font-bold p-2">Who to follow</span>
