@@ -3,25 +3,76 @@ import { Button, Col, Input } from 'antd';
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
-import { TweetsList } from '../../tweets/list';
-import './Mywall.css';
+import './SearchedClacks.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
-import formatDate from './date';
-import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
-import $ from 'jquery';
+import { TweetCreate } from '../../tweets/create';
+import {apiProfileDetail, apiProfileFollowToggle} from '../../profiles/lookup'
+import ReactDOM from 'react-dom';
 
+function ProfileBadge(props) {
+    const {user, didFollowToggle, profileLoading} = props
+    let currentVerb = (user && user.is_following) ? "Unfollow" : "Follow"
+    currentVerb = profileLoading ? "Loading..." : currentVerb
+    const handleFollowToggle = (event) => {
+        event.preventDefault()
+        if (didFollowToggle && !profileLoading) {
+            didFollowToggle(currentVerb)
+        }
+    }
+    return user ? <div style={{ paddingTop: 0, paddingBottom: 4, paddingRight: 20, paddingLeft: 100,  margin: 5 }}>
+        <button className='btn btn-primary' onClick={handleFollowToggle}>{currentVerb}</button>
+    </div> : null
+}
+
+export function ProfileBadgeComponent (props) {
+    const {username} = props;
+    console.log("follow button username: ", username)
+    // lookup
+    const [didLookup, setDidLookup] = useState(false)
+    const [profile, setProfile] = useState(null)
+    const [profileLoading, setProfileLoading] = useState(false)
+    const handleBackendLookup = (response, status) => {
+    if (status === 200) {
+        setProfile(response)
+    }
+    }
+    useEffect(()=>{
+        if (didLookup === false){
+        apiProfileDetail(username, handleBackendLookup)
+        setDidLookup(true)
+    }
+    }, [username, didLookup, setDidLookup])
+
+    const handleNewFollow = (actionVerb) => {
+        apiProfileFollowToggle(username, actionVerb, (response, status)=>{
+            // console.log(response, status)
+            if (status===200) {
+                setProfile(response)
+                // apiProfileDetail(username, handleBackendLookup)
+            }
+            setProfileLoading(false)
+        })
+        setProfileLoading(true)
+        
+    }
+    return didLookup === false ? "Loading..." : profile ? <ProfileBadge user={profile} didFollowToggle={handleNewFollow} profileLoading={profileLoading} /> : null
+}
+
+// Search feature
 const { Search } = Input;
 
-export default function MyWall(props) {
-    // const {username} = props;
-    // let newUserName = username;
+export default function SearchedClacks(props) {
+    let {username, searched_clacklist} = props;
+    searched_clacklist = searched_clacklist.replace(/'/g, '"')
+    const searched_clackslist = JSON.parse(searched_clacklist)
+    console.log("searched_clackslist:", searched_clackslist);
+    let newUserName = username;
+    let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
-    let [newUserName, setUserName] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
@@ -35,13 +86,31 @@ export default function MyWall(props) {
         console.log("tempNewTweets2:", tempNewTweets);
         setNewTweets(tempNewTweets)
     }
-    const handleNewUsername = (newUserName) => {
-        setUserName(newUserName ? newUserName : "")
-        getMainProfile(newUserName, handleNewProfile);
+    
+    useEffect(() => {
+        try {
+            let endpoint1 = "/profiles/get_user/username/";
+            backendLookup("GET", endpoint1, handleCurrentUsername)
+        } catch (error) {
+            console.log("error:", error);
+        }
+        try {
+            let endpoint = `/profiles/user/${newUserName}/`;
+            backendLookup("GET", endpoint, handleNewProfile)
+        } catch (error) {
+            console.log("error:", error);
+        }
         //get random 3 users to follow:
         getWhoToFollowUser1();
         getWhoToFollowUser2();
         getWhoToFollowUser3();
+    }, [])
+
+    useEffect(() => {
+    })
+
+    const handleCurrentUsername = (currentUserName) => {
+        setCurrentUserName(currentUserName ? currentUserName : "")
     }
 
     const handleNewProfile = (newProfile) => {
@@ -85,71 +154,6 @@ export default function MyWall(props) {
             console.log("error:", error);
         }
     }
-
-    function getMainProfile(username) {
-        try {
-            let endpoint = `/profiles/user/${username}/`;
-            backendLookup("GET", endpoint, handleNewProfile)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }
-
-    // join date update:
-    if (newProfile && newProfile.date_joined) {
-        var date = newProfile.date_joined;
-        var cleanDate = formatDate(date)
-    }
-    else {
-        var cleanDate = "1 Jan 2021, 12AM";
-    }
-
-    const handleListLookup = (response, status) => {
-        if (status === 200) {
-            setNewTweets(response.results)
-        } else {
-            alert("There was an error")
-        }
-    }
-
-    function handleTweetList(value) {
-        console.log("value:", value);
-        if (value !== "like" && value !== "unlike") {
-            console.log("enter1");
-            apiTweetList(null, handleListLookup);
-        } else {
-            console.log("enter2");
-            console.log("setNewTweets", newTweets);
-        }
-    }
-
-    useEffect(() => {
-        try {
-            let endpoint1 = "/profiles/get_user/username/";
-            backendLookup("GET", endpoint1, handleNewUsername)
-        } catch (error) {
-            console.log("error:", error);
-        }
-    }, [])
-
-    const MAX_TWEET_LENGTH = 200;
-
-    $("#clackText").keyup(function () {
-        $("#info").text(($(this).val().length) + " / " + MAX_TWEET_LENGTH)
-    });
-
-    $('#clackText').keypress(function () {
-        var charLength = $(this).val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
-        }
-        var textareaLength = document.getElementById("clackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error").text((''));
-            return false;
-        }
-    });
 
     const handleClick = ({ key }) => {
         window.localStorage.setItem('search_type', key);
@@ -209,17 +213,23 @@ export default function MyWall(props) {
     //         return false;
     //     }
     // });
+    // let uname = [];
+    // { (usernamelist) ? (uname = usernamelist.map((username) =>
+    // <li className="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/dashboard/{{username}}'>{username}</a></li>)) : uname=[]}
 
     return (
+        
         <>
             <div className="bg-white shadow">
                 {/* style={{ marginTop: 104 }} */}
-                <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative mt-2 mb-2">
+                <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
                     <div className="w-full lg:w-1/5">
+
                     </div>
                     <div className="w-full lg:w-2/5">
+                        
                     </div>
-                    <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center mb-2">
+                    <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center mt-1 mb-2">
                         <div className="mr-2">
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -239,7 +249,8 @@ export default function MyWall(props) {
                 </div>
             </div>
 
-                <div className="container mx-auto flex justify-left flex-col lg:flex-row mt-3 text-sm leading-normal">
+            {/* LEFT SECTION for page navigation: */}
+            <div className="container mx-auto flex lg:flex-row mt-3 text-sm leading-normal">
                 <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 -mt-2 mb-4">
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
@@ -275,23 +286,32 @@ export default function MyWall(props) {
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
                     </div>
                 </div>
-
+            
+                {/* CENTRAL AREA FOR EACH PAGE: */}
                 <div className="w-full lg:w-6/7 bg-white mb-20">
-                    <div className="flex justify-center mb-1">
-                        <div>
-                            <span className="text-lg font-bold">My Wall</span>  
-                        </div>
+                    {/* <div className="flex justify-center mb-1">
+                        <span className="text-lg font-bold">Who To Follow:</span>
                         <hr className="mt-2 mb-2"></hr>
+                    </div> */}
+                    <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
+                        <div class="container">
+                            <div class="flex justify-center p-1 mb-2">
+                                <h1 class="text-xl text-blue-500">Searched Clacks: </h1>
+                            </div>
+                            <div class="flex justify-center">
+                                <div class="bg-white shadow-xl rounded-lg w-1/2">
+                                    <ul class="divide-y divide-gray-300">
+                                    {(searched_clackslist) ? searched_clackslist.map(function(clack, index){
+                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer">{clack}</li>;
+                                        }) : <h2 class="text-l">No clacks found with the searched keyword!</h2>}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br />
-                    <span className="mb-2 pl-4"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
-                    <div className="p-2 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
-                    </div>
-                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
-                    {/* <TweetsList newTweets={newTweets} {...props} /> */}
-
                 </div>
+                
+                {/* RIGHT SECTION with who to follow, trends, news: */}
 
                 <div className="w-full lg:w-1/6 pl-0">
                     <div className="bg-white p-3 mb-3">
@@ -336,7 +356,7 @@ export default function MyWall(props) {
                         <p>News article 2</p>
                         </div>
                         <div className="p-3">
-                        <p>News article 3</p>
+                            <p>News article 3</p>
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                         {/* <div className="flex justify-between mb-1">
@@ -346,7 +366,19 @@ export default function MyWall(props) {
                         </div> */}
                     </div>
                 </div>
+                <br />
             </div>
         </>
     )
 }
+
+const userProfileBadgeElements = document.querySelectorAll(".tweetme-2-profile-badge")
+console.log("userProfileBadgeElements: ", userProfileBadgeElements)
+
+const e = React.createElement;
+userProfileBadgeElements.forEach(container => {
+    console.log("container: ", container)
+    ReactDOM.render(
+        e(ProfileBadgeComponent, container.dataset),
+        container);
+})

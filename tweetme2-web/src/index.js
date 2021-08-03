@@ -6,11 +6,18 @@ import { ProfileBadgeComponent } from './profiles'
 import { Dashboard, Home, MyWall, FeedComponent, TweetsComponent, TweetDetailComponent } from './tweets'
 import * as serviceWorker from './serviceWorker';
 import Footer from './Common/footer';
+import WhoToFollow from './MainComponent/WhoToFollow/WhoToFollow';
+import ReportAdverse from './MainComponent/ReportAdverse/ReportAdverse';
+import Trends from './MainComponent/Trends/Trends';
+import SearchedUsers from './MainComponent/SearchedUsers/SearchedUsers';
+import SearchedClacks from './MainComponent/SearchedClacks/SearchedClacks';
+import SearchedTrendClacks from './MainComponent/SearchedTrendClacks/SearchedTrendClacks';
 
 const appEl = document.getElementById('root')
 if (appEl) {
     ReactDOM.render(<App />, appEl);
 }
+// Home page:
 const e = React.createElement
 const tweetsEl = document.getElementById("tweetme-home")
 if (tweetsEl) {
@@ -18,18 +25,62 @@ if (tweetsEl) {
         e(Home, tweetsEl.dataset), tweetsEl);
 }
 
-const tweetFeedEl = document.getElementById("user-dashboard-view")
-if (tweetFeedEl) {
+// My Wall Page:
+const MyWallElement = document.getElementById("tweetme-profile-myWall")
+if (MyWallElement) {
     ReactDOM.render(
-        e(Dashboard, tweetFeedEl.dataset), tweetFeedEl);
+        e(MyWall, MyWallElement.dataset), MyWallElement);
 }
 
-const tweetPorfileWallEl = document.getElementById("tweetme-profile-myWall")
-if (tweetPorfileWallEl) {
+// Dashboard Page:
+const DashboardElement = document.getElementById("user-dashboard-view")
+if (DashboardElement) {
     ReactDOM.render(
-        e(MyWall, tweetPorfileWallEl.dataset), tweetPorfileWallEl);
+        e(Dashboard, DashboardElement.dataset), DashboardElement);
 }
 
+// Who to Follow Page:
+const WhoToFollowElement = document.getElementById("tweetme-profile-whoToFollow")
+if (WhoToFollowElement) {
+    ReactDOM.render(
+        e(WhoToFollow, WhoToFollowElement.dataset), WhoToFollowElement);
+}
+
+// Report Adverse Page:
+const ReportAdverseElement = document.getElementById("tweetme-profile-reportAdverse")
+if (ReportAdverseElement) {
+    ReactDOM.render(
+        e(ReportAdverse, ReportAdverseElement.dataset), ReportAdverseElement);
+}
+
+// Trends Page:
+const TrendsElement = document.getElementById("tweetme-profile-Trends")
+if (TrendsElement) {
+    ReactDOM.render(
+        e(Trends, TrendsElement.dataset), TrendsElement);
+}
+
+// Searched Users Page:
+const SearchedUsersElement = document.getElementById("tweetme-profile-SearchedUsers")
+if (SearchedUsersElement) {
+    ReactDOM.render(
+        e(SearchedUsers, SearchedUsersElement.dataset), SearchedUsersElement);
+}
+// Searched Clacks Page:
+const SearchedClacksElement = document.getElementById("tweetme-profile-SearchedClacks")
+if (SearchedClacksElement) {
+    ReactDOM.render(
+        e(SearchedClacks, SearchedClacksElement.dataset), SearchedClacksElement);
+}
+
+// Searched Trend Clacks Page:
+const SearchedTrendClacksElement = document.getElementById("tweetme-profile-SearchedTrendClacks")
+if (SearchedTrendClacksElement) {
+    ReactDOM.render(
+        e(SearchedTrendClacks, SearchedTrendClacksElement.dataset), SearchedTrendClacksElement);
+}
+
+// Tweet Details Element:
 const tweetDetailElements = document.querySelectorAll(".tweetme-2-detail")
 console.log("tweetDetailElements: ", tweetDetailElements)
 tweetDetailElements.forEach(container => {
@@ -38,6 +89,7 @@ tweetDetailElements.forEach(container => {
         container);
 })
 
+// User Profile Badge Element:
 const userProfileBadgeElements = document.querySelectorAll(".tweetme-2-profile-badge")
 console.log("userProfileBadgeElements: ", userProfileBadgeElements)
 

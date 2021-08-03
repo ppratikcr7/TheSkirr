@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
+<!-- <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
         <div class="mb-4">
-            <!-- <a href="/profiles/my_wall/"+{{username}}> -->
                 <a href="/profiles/my_wall/{{username}}">
             <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">My Wall</button>
             </a>
@@ -18,11 +17,6 @@
             <a href="/profiles/trending_exclamation">
             <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Trending Exclamation</button>
         </div>
-        <!-- <div class="mb-4">
-            <a href="/">
-            <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Messages</button>
-            </a>
-        </div> -->
         <div class="mb-4">
             <a href="/profiles/more_accounts">
             <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Who to Follow</button>
@@ -36,7 +30,6 @@
     </div>
 
     <div class="w-full lg:w-3/5 bg-white mb-4">
-        <!-- trends -->
         <div class="flex items-center justify-center h-full bg-gray-100">
             <div class="container">
                 <div class="flex justify-center p-4 mb-2">
@@ -53,71 +46,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="w-full lg:w-1/5 pl-4">
-        <div class="bg-white p-3 mb-3">
-            <!-- <div>
-                <span class="text-lg font-bold">Who to follow</span>
-            </div>
-            <div class="flex border-b border-solid border-grey-light">
-                <div class="py-2">
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg" alt="follow1" class="rounded-full h-12 w-12" /></a>
-                </div>
-                <div class="pl-2 py-2 w-full">
-                    <div class="flex justify-between mb-1">
-                        <div>
-                            <a href="#" class="font-bold text-black">Vidhi</a> <a href="#" class="text-grey-dark">@vidhi123</a>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                            Follow
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex border-b border-solid border-grey-light">
-                <div class="py-2">
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow2.jpg" alt="follow1" class="rounded-full h-12 w-12" /></a>
-                </div>
-                <div class="pl-2 py-2 w-full">
-                    <div class="flex justify-between mb-1">
-                        <div>
-                            <a href="#" class="font-bold text-black">Gagan</a> <a href="#" class="text-grey-dark">@gagan123</a>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                            Follow
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex border-b border-solid border-grey-light">
-                <div class="py-2">
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow3.jpg" alt="follow1" class="rounded-full h-12 w-12" /></a>
-                </div>
-                <div class="pl-2 py-2 w-full">
-                    <div class="flex justify-between mb-1">
-                        <div>
-                            <a href="#" class="font-bold text-black">Ketul</a> <a href="#" class="text-grey-dark">@ketulshah</a>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                            Follow
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-between mb-1">
-                <div>
-                    <a href="#" class="font-bold text-black">Show more</a>
-                </div>
-            </div> -->
-        </div>
-    </div>
-</div>
+<div id="tweetme-profile-Trends" data-username="{{ username }}" data-trendlist="{{ trends_list }}"></div>
+<br>
+<br>
+<br>
 {% endblock content %}

@@ -54,9 +54,8 @@ export function Tweet(props) {
   }
 
   const convertLinks = (input) => {
-    console.log("i m in convert links function", input)
     let text = input;
-    const linksFound = text.match(/(?:www|https?)[^\s]+/g);
+    const linksFound = text && text.match(/(?:www|https?)[^\s]+/g);
     const aLink = [];
 
     if (linksFound != null) {
@@ -69,6 +68,7 @@ export function Tweet(props) {
         if (linkText.match(/youtu/)) {
 
           let youtubeID = replace.split('/').slice(-1)[0];
+          console.log("youtube link: ", youtubeID)
           aLink.push('<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + youtubeID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>')
         }
         else if (linkText.match(/vimeo/)) {
@@ -76,7 +76,7 @@ export function Tweet(props) {
           aLink.push('<div class="video-wrapper"><iframe src="https://player.vimeo.com/video/' + vimeoID + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>')
         }
         else {
-          aLink.push('<a href="' + replace + '" target="_blank">' + linkText + '</a>');
+          aLink.push('<a href="' + replace + '" target="_blank" style="text-decoration: underline; color: blue" >' + linkText + '</a>');
         }
         text = text.split(linksFound[i]).map(item => { return aLink[i].includes('iframe') ? item.trim() : item }).join(aLink[i]);
       }
@@ -87,14 +87,6 @@ export function Tweet(props) {
       return input;
     }
   }
-
-  // useEffect(() => {
-  // console.log("i m here", tweet.content)
-  // setNewTweetContent(convertLinks(tweet.content))
-  //tweet.content = convertLinks(tweet.content)
-  // const text = refs[clackContent].innerHTML;
-  // refs[clackContent].innerHTML = convertLinks( text );
-  // }, [tweet.content])
 
   return <div className="flex border-b border-solid border-grey-light">
 
@@ -120,10 +112,7 @@ export function Tweet(props) {
 
       <div>
         <div className="mb-4">
-          <p className="mt-6" id="clack_content">{tweet.content}</p>
-          {/* <p className="mt-6" id="clack_content">{newTweetContent}</p> */}
-          {/* <div dangerouslySetInnerHTML={{__html: '<p className="mt-6" id="clack_content">{newTweetContent}</p>'}}></div> */}
-
+          <p className="mt-6" id="clack_content" dangerouslySetInnerHTML={{ __html: convertLinks(tweet.content) }}></p>
           <ParentTweet tweet={tweet} retweeter={tweet.user} />
         </div>
       </div>
@@ -134,20 +123,14 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
           <ActionBtn className={"fa fa-trash fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
-          
+
         </React.Fragment>
         }
-        <time>&emsp;{tweetTimestampClean}</time>
+        <time className='mr-3'>{tweetTimestampClean}</time>
         {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack Thread</button>}
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack</button>}
-        
+
       </div>
     </div>
-    <script>
-      {/* if(document.getElementById("clack_content").innerHTML) { */}
-      const text = document.getElementById("clack_content").innerHTML
-      document.getElementById('clack_content').innerHTML = convertLinks( text )
-      {/* } */}
-    </script>
   </div>
 }

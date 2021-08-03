@@ -70,4 +70,4 @@ class UserRegisterDetails(AbstractUser):
 
 class TrendsExclamation(models.Model):
     topic = models.TextField(blank=True, null=True)
-    url = models.URLField(blank=True, null=True)
+    # url = models.URLField(blank=True, null=True)
