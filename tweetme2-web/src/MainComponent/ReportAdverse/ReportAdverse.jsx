@@ -247,8 +247,8 @@ export default function ReportAdverse(props) {
             </div>
 
             {/* LEFT SECTION for page navigation: */}
-            <div className="container mx-auto flex lg:flex-row mt-3 text-sm leading-normal">
-                <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
+            <div className="container mx-auto flex justify-left lg:flex-row mt-3 text-sm leading-normal">
+                <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 -mt-2 mb-4">
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
@@ -277,9 +277,9 @@ export default function ReportAdverse(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 490}}>
+                <div style={{ position:"fixed", top: 480}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
-                    <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
+                    <div className="p-1 text-lg font-bold">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
                     </div>
                 </div>
@@ -290,7 +290,7 @@ export default function ReportAdverse(props) {
                         <span className="text-lg font-bold">Who To Follow:</span>
                         <hr className="mt-2 mb-2"></hr>
                     </div> */}
-                    <div class="flex justify-center h-full bg-gray-100">
+                    <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Report Adverse Form: </h1>

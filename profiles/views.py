@@ -299,11 +299,12 @@ def show_more_view(request, *args, **kwargs):
 def search_users(request, value, *args, **kwargs):
     un = request.user.username
     if value is not None:
-        lookups= Q(username__icontains=value) | Q(first_name__icontains=value) | Q(last_name__icontains=value)
-        usernames= UserRegisterDetails.objects.filter(lookups).distinct()
+        lookups= Q(username__icontains=value) | Q(first_name__icontains=value) | Q(last_name__icontains=value) | Q(email__icontains=value)
+        usernames = list(UserRegisterDetails.objects.filter(lookups).distinct().values_list('username', flat=True))
+        print("searched users new: ", usernames)
         context={
             "username": un,
-            'usernames': usernames}
+            'searched_usernames': usernames}
         return render(request, 'profiles/search_users.html', context)
     else:
         return render(request, 'profiles/search_users.html')
@@ -313,11 +314,11 @@ def search_clacks(request, value, *args, **kwargs):
     un = request.user.username
     if value is not None:
         lookups= Q(content__icontains=value)
-        usernames= Tweet.objects.filter(lookups).distinct()
+        searched_clacks= list(Tweet.objects.filter(lookups).distinct().values_list('content', flat=True))
         # TODO: change below context to show tweetlist with those tweets
         context={
             "username": un,
-            'usernames': usernames}
+            'searched_clacks': searched_clacks}
         return render(request, 'profiles/search_clacks.html', context)
     else:
         return render(request, 'profiles/search_clacks.html')
@@ -325,15 +326,17 @@ def search_clacks(request, value, *args, **kwargs):
 def search_trends(request, value, *args, **kwargs):
     un = request.user.username
     if value is not None:
+        print("trends value : ", value)
         lookups= Q(content__icontains=value)
-        usernames= Tweet.objects.filter(lookups).distinct()
-
+        searched_trending_clacks = list(Tweet.objects.filter(lookups).distinct().values_list('content', flat=True))
+        print(searched_trending_clacks)
         # TODO: change below context to show tweetlist with those tweets
         context={
             "username": un,
-            'usernames': usernames}
+            'searched_trending_clacks': searched_trending_clacks}
         return render(request, 'profiles/search_trends.html', context)
     else:
+        print("trends no value : ")
         return render(request, 'profiles/search_trends.html')
 
 def report_adverse_effect_form_view(request, *args, **kwargs):

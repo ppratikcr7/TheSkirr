@@ -68,6 +68,7 @@ export function Tweet(props) {
         if (linkText.match(/youtu/)) {
 
           let youtubeID = replace.split('/').slice(-1)[0];
+          console.log("youtube link: ", youtubeID)
           aLink.push('<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + youtubeID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>')
         }
         else if (linkText.match(/vimeo/)) {
@@ -75,7 +76,7 @@ export function Tweet(props) {
           aLink.push('<div class="video-wrapper"><iframe src="https://player.vimeo.com/video/' + vimeoID + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>')
         }
         else {
-          aLink.push('<a href="' + replace + '" target="_blank">' + linkText + '</a>');
+          aLink.push('<a href="' + replace + '" target="_blank" style="text-decoration: underline; color: blue" >' + linkText + '</a>');
         }
         text = text.split(linksFound[i]).map(item => { return aLink[i].includes('iframe') ? item.trim() : item }).join(aLink[i]);
       }
@@ -86,7 +87,6 @@ export function Tweet(props) {
       return input;
     }
   }
-
 
   return <div className="flex border-b border-solid border-grey-light">
 
@@ -126,17 +126,11 @@ export function Tweet(props) {
 
         </React.Fragment>
         }
-        <time>&emsp;{tweetTimestampClean}</time>
+        <time className='mr-3'>{tweetTimestampClean}</time>
         {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack Thread</button>}
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack</button>}
 
       </div>
     </div>
-    <script>
-      {/* if(document.getElementById("clack_content").innerHTML) { */}
-      const text = document.getElementById("clack_content").innerHTML
-      document.getElementById('clack_content').innerHTML = convertLinks( text )
-      {/* } */}
-    </script>
   </div>
 }

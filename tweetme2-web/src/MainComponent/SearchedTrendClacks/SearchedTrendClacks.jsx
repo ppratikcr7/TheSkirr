@@ -4,7 +4,7 @@ import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { backendLookup } from '../../lookup/index';
-import './WhoToFollow.css';
+import './SearchedTrendClacks.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import {
     UserWhoToFollowDisplay
@@ -65,11 +65,11 @@ export function ProfileBadgeComponent (props) {
 // Search feature
 const { Search } = Input;
 
-export default function WhoToFollow(props) {
-    let {username, usernamelist} = props;
-    usernamelist = usernamelist.replace(/'/g, '"')
-    const usernames = JSON.parse(usernamelist)
-    console.log("usernamelist:", usernames);
+export default function SearchedTrendClacks(props) {
+    let {username, searched_trending_clacklist} = props;
+    searched_trending_clacklist = searched_trending_clacklist.replace(/'/g, '"')
+    const searched_trending_clacks = JSON.parse(searched_trending_clacklist)
+    console.log("clack trend list:", searched_trending_clacks);
     let newUserName = username;
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
@@ -251,8 +251,7 @@ export default function WhoToFollow(props) {
 
             {/* LEFT SECTION for page navigation: */}
             <div className="container mx-auto flex lg:flex-row mt-3 text-sm leading-normal">
-                <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 mt-0 mb-4">
-                <br />
+                <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 -mt-2 mb-4">
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
@@ -281,9 +280,9 @@ export default function WhoToFollow(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 490}}>
+                <div style={{ position:"fixed", top: 480}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
-                    <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
+                    <div className="p-1 text-lg font-bold">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
                     </div>
                 </div>
@@ -294,17 +293,17 @@ export default function WhoToFollow(props) {
                         <span className="text-lg font-bold">Who To Follow:</span>
                         <hr className="mt-2 mb-2"></hr>
                     </div> */}
-                    <div class="flex justify-center h-full bg-gray-100">
+                    <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
-                                <h1 class="text-xl text-blue-500">Who to Follow: </h1>
+                                <h1 class="text-xl text-blue-500">Searched Trending Clacks: </h1>
                             </div>
                             <div class="flex justify-center">
                                 <div class="bg-white shadow-xl rounded-lg w-1/2">
                                     <ul class="divide-y divide-gray-300">
-                                    {(usernames) ? usernames.map(function(name, index){
-                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/dashboard/{{username}}'>{name}</a></li>;
-                                        }) : ""}
+                                    {(searched_trending_clacks) ? searched_trending_clacks.map(function(clack, index){
+                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer">{clack}</li>;
+                                        }) : <h2 class="text-l">No clacks found with the searched keyword!</h2>}
                                     </ul>
                                 </div>
                             </div>

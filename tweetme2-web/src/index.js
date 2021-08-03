@@ -9,6 +9,9 @@ import Footer from './Common/footer';
 import WhoToFollow from './MainComponent/WhoToFollow/WhoToFollow';
 import ReportAdverse from './MainComponent/ReportAdverse/ReportAdverse';
 import Trends from './MainComponent/Trends/Trends';
+import SearchedUsers from './MainComponent/SearchedUsers/SearchedUsers';
+import SearchedClacks from './MainComponent/SearchedClacks/SearchedClacks';
+import SearchedTrendClacks from './MainComponent/SearchedTrendClacks/SearchedTrendClacks';
 
 const appEl = document.getElementById('root')
 if (appEl) {
@@ -55,6 +58,26 @@ const TrendsElement = document.getElementById("tweetme-profile-Trends")
 if (TrendsElement) {
     ReactDOM.render(
         e(Trends, TrendsElement.dataset), TrendsElement);
+}
+
+// Searched Users Page:
+const SearchedUsersElement = document.getElementById("tweetme-profile-SearchedUsers")
+if (SearchedUsersElement) {
+    ReactDOM.render(
+        e(SearchedUsers, SearchedUsersElement.dataset), SearchedUsersElement);
+}
+// Searched Clacks Page:
+const SearchedClacksElement = document.getElementById("tweetme-profile-SearchedClacks")
+if (SearchedClacksElement) {
+    ReactDOM.render(
+        e(SearchedClacks, SearchedClacksElement.dataset), SearchedClacksElement);
+}
+
+// Searched Trend Clacks Page:
+const SearchedTrendClacksElement = document.getElementById("tweetme-profile-SearchedTrendClacks")
+if (SearchedTrendClacksElement) {
+    ReactDOM.render(
+        e(SearchedTrendClacks, SearchedTrendClacksElement.dataset), SearchedTrendClacksElement);
 }
 
 // Tweet Details Element:
