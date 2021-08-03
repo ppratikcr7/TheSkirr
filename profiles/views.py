@@ -222,11 +222,13 @@ def dashboard_view(request, username, *args, **kwargs):
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
     }
-    print("username: ", profile_obj.username);
+    print("username: ", profile_obj.username)
     return render(request, "profiles/dashboard.html", context)
 
 def trends_view(request, *args, **kwargs):
-    trends_list = TrendsExclamation.objects.all()
+    # trends_list = TrendsExclamation.objects.all()
+    trends_list = list(TrendsExclamation.objects.values())
+    print("trends list in django: ", trends_list)
     username = request.user.username
     
     context = {
