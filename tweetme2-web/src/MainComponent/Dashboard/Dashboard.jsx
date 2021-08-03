@@ -435,7 +435,7 @@ export default function Dashboard(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 510}}>
+                <div style={{ position:"fixed", top: 490}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}

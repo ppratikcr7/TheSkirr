@@ -7,6 +7,8 @@ import { Dashboard, Home, MyWall, FeedComponent, TweetsComponent, TweetDetailCom
 import * as serviceWorker from './serviceWorker';
 import Footer from './Common/footer';
 import WhoToFollow from './MainComponent/WhoToFollow/WhoToFollow';
+import ReportAdverse from './MainComponent/ReportAdverse/ReportAdverse';
+import Trends from './MainComponent/Trends/Trends';
 
 const appEl = document.getElementById('root')
 if (appEl) {
@@ -39,6 +41,20 @@ const WhoToFollowElement = document.getElementById("tweetme-profile-whoToFollow"
 if (WhoToFollowElement) {
     ReactDOM.render(
         e(WhoToFollow, WhoToFollowElement.dataset), WhoToFollowElement);
+}
+
+// Report Adverse Page:
+const ReportAdverseElement = document.getElementById("tweetme-profile-reportAdverse")
+if (ReportAdverseElement) {
+    ReactDOM.render(
+        e(ReportAdverse, ReportAdverseElement.dataset), ReportAdverseElement);
+}
+
+// Trends Page:
+const TrendsElement = document.getElementById("tweetme-profile-Trends")
+if (TrendsElement) {
+    ReactDOM.render(
+        e(Trends, TrendsElement.dataset), TrendsElement);
 }
 
 // Tweet Details Element:

@@ -290,7 +290,7 @@ def show_more_view(request, *args, **kwargs):
     final = random.sample(temp_list, len(temp_list))
     context = {
         "username": un,
-        "usernames":final,
+        "usernames": final,
     }
     return render(request, "profiles/show_more.html", context)
 
