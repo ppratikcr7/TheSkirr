@@ -12,6 +12,7 @@ import Trends from './MainComponent/Trends/Trends';
 import SearchedUsers from './MainComponent/SearchedUsers/SearchedUsers';
 import SearchedClacks from './MainComponent/SearchedClacks/SearchedClacks';
 import SearchedTrendClacks from './MainComponent/SearchedTrendClacks/SearchedTrendClacks';
+import ClacksView from './MainComponent/ClacksView/ClacksView';
 
 const appEl = document.getElementById('root')
 if (appEl) {
@@ -80,13 +81,20 @@ if (SearchedTrendClacksElement) {
         e(SearchedTrendClacks, SearchedTrendClacksElement.dataset), SearchedTrendClacksElement);
 }
 
+// Clacks View Page:
+const ClacksViewElement = document.getElementById("tweetme-profile-clacks-view")
+if (ClacksViewElement) {
+    ReactDOM.render(
+        e(ClacksView, ClacksViewElement.dataset), ClacksViewElement);
+}
+
 // Tweet Details Element:
 const tweetDetailElements = document.querySelectorAll(".tweetme-2-detail")
 console.log("tweetDetailElements: ", tweetDetailElements)
 tweetDetailElements.forEach(container => {
+    console.log("container.dataset:", container.dataset)
     ReactDOM.render(
-        e(TweetDetailComponent, container.dataset),
-        container);
+        e(TweetDetailComponent, container.dataset), container);
 })
 
 // User Profile Badge Element:

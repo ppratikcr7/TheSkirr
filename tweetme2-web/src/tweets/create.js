@@ -3,7 +3,9 @@ import {apiTweetCreate} from './lookup'
 
 export function TweetCreate(props){
   const textAreaRef = React.createRef()
-  const {didTweet} = props
+  console.log("props:", props)
+  const {didTweet, clackTextId} = props
+  console.log("clackTextId: ", clackTextId)
     const handleBackendUpdate = (response, status) =>{
       if (status === 201){
         didTweet(response)
@@ -34,9 +36,9 @@ export function TweetCreate(props){
     }
     return <div className={props.className}>
           <form onSubmit={handleSubmit}>
-            <textarea ref={textAreaRef} id="clackText" required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 200 characters...'></textarea>
-            <div id="info" className="text-right text-sm"></div>
-            <div id="error" className="text-center text-sm"></div>
+            <textarea ref={textAreaRef} id={clackTextId} required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 200 characters...'></textarea>
+            { clackTextId == 'clackText' ? <div id="info1" className="text-right text-sm"></div> : <div id="info2" className="text-right text-sm"></div>}
+            { clackTextId == 'clackText' ? <div id="error1" className="text-center text-sm"></div> : <div id="error2" className="text-center text-sm"></div>}
             <button id="clack_btn" type='submit' className='btn btn-primary my-3 mr-3'>Clack</button>
             {/* <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button> */}
             {/* <button className='btn btn-primary my-3 mr-2' disabled>News</button> */}

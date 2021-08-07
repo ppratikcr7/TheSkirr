@@ -4,7 +4,7 @@ import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { backendLookup } from '../../lookup/index';
-import './SearchedUsers.css';
+import './ClacksView.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import {
     UserWhoToFollowDisplay
@@ -66,11 +66,9 @@ export function ProfileBadgeComponent (props) {
 // Search feature
 const { Search } = Input;
 
-export default function SearchedUsers(props) {
-    let {username, usernamelist} = props;
-    usernamelist = usernamelist.replace(/'/g, '"')
-    const usernames = JSON.parse(usernamelist)
-    console.log("usernamelist:", usernames);
+export default function ClacksView(props) {
+    let {username, tweet_id} = props;
+    console.log("tweet id: ", tweet_id);
     let newUserName = username;
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
@@ -211,7 +209,6 @@ export default function SearchedUsers(props) {
         </Menu>
     );
 
-
     const onSearch = value => {
         const key = window.localStorage.getItem('search_type');
         try {
@@ -324,17 +321,13 @@ export default function SearchedUsers(props) {
                     <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
-                                <h1 class="text-xl text-blue-500">Searched User: </h1>
+                                <h1 class="text-xl text-blue-500">Clack Thread: </h1>
                             </div>
-                            <div class="flex justify-center">
-                                <div class="bg-white shadow-xl rounded-lg w-1/2">
-                                    <ul class="divide-y divide-gray-300">
-                                    {(usernames) ? usernames.map(function(name, index){
-                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer"><a href={"/profiles/dashboard/" + name}>{name}</a></li>;
-                                        }) : <h2 class="text-l">No user found with the searched keyword!</h2>}
-                                    </ul>
-                                </div>
+                            <div class="flex justify-center w-full bg-white mb-2">
+                            <div class='tweetme-2-detail' data-tweetid={ tweet_id }
+                                data-class-name='col-6 mx-auto'>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

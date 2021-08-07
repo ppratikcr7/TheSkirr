@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
+<!-- <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
         <div class="mb-4">
                 <a href="/profiles/my_wall/{{username}}">
@@ -17,11 +17,6 @@
             <a href="/profiles/trending_exclamation">
             <button class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Trending Exclamation</button>
         </div>
-        <!-- <div class="mb-4">
-            <a href="/">
-            <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Messages</button>
-            </a>
-        </div> -->
         <div class="mb-4">
             <a href="/profiles/more_accounts">
             <button href="" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-full w-full h-10" style="outline: none;">Who to Follow</button>
@@ -44,5 +39,10 @@
         <div class="bg-white p-3 mb-3">
         </div>
     </div>
-</div>
+</div> -->
+
+<div id="tweetme-profile-clacks-view" data-username="{{ username }}" data-tweet_id="{{ tweet_id}}"></div>
+<br>
+<br>
+<br>
 {% endblock content %}

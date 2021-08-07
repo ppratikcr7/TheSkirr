@@ -25,7 +25,6 @@ import Box from '@material-ui/core/Box';
 
 import {apiProfileDetail, apiProfileFollowToggle} from '../../profiles/lookup'
 import ReactDOM from 'react-dom';
-
 function TabPanel(props) {
 const { children, value, index, ...other } = props;
 
@@ -296,6 +295,33 @@ export default function Dashboard(props) {
         }
     }
 
+    const MAX_TWEET_LENGTH = 200;
+
+    function myfunction2(thisObj2){
+        $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+    }
+
+    function myfunction2a(thisObj2a){
+        var charLength = thisObj2a.val().length;
+        if (charLength >= MAX_TWEET_LENGTH) {
+            $("#error2").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            return false;
+        }
+        var textareaLength = document.getElementById("smallclackText").length;
+        if (textareaLength < MAX_TWEET_LENGTH) {
+            $("#error2").text((''));
+            return false;
+        }
+    }
+
+    $("#smallclackText").keyup(function () {
+        myfunction2($(this));
+    });
+
+    $('#smallclackText').keypress(function () {
+        myfunction2a($(this));
+    });
+
     const menu = (
         <Menu onClick={handleClick}>
             <Menu.Item key="0">
@@ -437,7 +463,7 @@ export default function Dashboard(props) {
                 <div style={{ position:"fixed", top: 480}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-9 mb-3' />}
                     </div>
                 </div>
 

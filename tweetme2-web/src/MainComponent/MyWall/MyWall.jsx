@@ -134,21 +134,54 @@ export default function MyWall(props) {
 
     const MAX_TWEET_LENGTH = 200;
 
-    $("#clackText").keyup(function () {
-        $("#info").text(($(this).val().length) + " / " + MAX_TWEET_LENGTH)
-    });
+    function myfunction1(thisObj1){
+        $("#info1").text((thisObj1.val().length) + " / " + MAX_TWEET_LENGTH)
+    }
 
-    $('#clackText').keypress(function () {
-        var charLength = $(this).val().length;
+    function myfunction1a(thisObj1a){
+        var charLength = thisObj1a.val().length;
         if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            $("#error1").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
             return false;
         }
         var textareaLength = document.getElementById("clackText").length;
         if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error").text((''));
+            $("#error1").text((''));
             return false;
         }
+    }
+      
+    function myfunction2(thisObj2){
+        $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+    }
+
+    function myfunction2a(thisObj2a){
+        var charLength = thisObj2a.val().length;
+        if (charLength >= MAX_TWEET_LENGTH) {
+            $("#error2").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            return false;
+        }
+        var textareaLength = document.getElementById("smallclackText").length;
+        if (textareaLength < MAX_TWEET_LENGTH) {
+            $("#error2").text((''));
+            return false;
+        }
+    }
+
+    $("#clackText").keyup(function () {
+        myfunction1($(this));
+    });
+
+    $('#clackText').keypress(function () {
+        myfunction1a($(this));
+    });
+
+    $("#smallclackText").keyup(function () {
+        myfunction2($(this));
+    });
+
+    $('#smallclackText').keypress(function () {
+        myfunction2a($(this));
     });
 
     const handleClick = ({ key }) => {
@@ -272,7 +305,7 @@ export default function MyWall(props) {
                 <div style={{ position:"fixed", top: 480}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-9 mb-3' />}
                     </div>
                 </div>
 
@@ -286,7 +319,7 @@ export default function MyWall(props) {
                     <br />
                     <span className="mb-2 pl-4"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-2 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='clackText' className='col-12 mb-3' />}
                     </div>
                     <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}
