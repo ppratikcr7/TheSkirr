@@ -1,8 +1,11 @@
 
 import React, { useEffect, useState } from 'react'
+import { MoreOutlined, EditOutlined } from "@ant-design/icons";
+import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
 import formatDate from './date'
 import { ActionBtn } from './buttons'
 import BlankImage from '../Assets/blank.png';
+import { TweetCreate } from './create';
 import DeleteBtn from '../Assets/delete.png';
 import {
   UserDisplay,
@@ -16,6 +19,21 @@ export function ParentTweet(props) {
   return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} /> : null
 }
 export function Tweet(props) {
+  let [isEditable, setIsEditable] = useState(false);
+  const menu = (
+    <Menu onClick={handleMenuItemClick}>
+      <Menu.Item key="1" icon={<EditOutlined />}>
+        Edit
+      </Menu.Item>
+    </Menu>
+  );
+  function handleMenuItemClick(e) {
+    setIsEditable(true);
+  }
+  function handleButtonClick(e) {
+    message.info('Click on left button.');
+    console.log('click left button', e);
+  }
   const clackContent = React.createRef()
   const { tweet, didRetweet, hideActions, isRetweet, retweeter } = props
   const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
@@ -87,6 +105,14 @@ export function Tweet(props) {
       return input;
     }
   }
+  const handleNewTweet = (newTweet) => {
+    console.log("newTweet1:", newTweet);
+    setIsEditable(false);
+    // let tempNewTweets = [...newTweets]
+    // tempNewTweets.unshift(newTweet)
+    // console.log("tempNewTweets2:", tempNewTweets);
+    // setNewTweets(tempNewTweets)
+  }
 
   return <div className="flex border-b border-solid border-grey-light">
 
@@ -100,10 +126,16 @@ export function Tweet(props) {
     <div className="w-15/16 p-3 pl-0">
       <div className="flex justify-between">
         <div>
+
           <UserDisplay includeFullName user={tweet.user} />
-          {/* use the below for color encoding */}
-          {/* <span class="text-grey-dark">&middot;</span> */}
+
         </div>
+        <div>
+          {/* <MoreOutlined /> */}
+          <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
+          </Dropdown.Button>
+        </div>
+
         <div>
           {/* use this to populate delete clack option */}
           {/* <a href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></a> */}
@@ -111,10 +143,20 @@ export function Tweet(props) {
       </div>
 
       <div>
-        <div className="mb-4">
-          <p className="mt-6" id="clack_content" dangerouslySetInnerHTML={{ __html: convertLinks(tweet.content) }}></p>
-          <ParentTweet tweet={tweet} retweeter={tweet.user} />
-        </div>
+        {!isEditable ?
+          <div className="mb-4">
+
+            <p className="mt-6" id="clack_content" dangerouslySetInnerHTML={{ __html: convertLinks(tweet.content) }}></p>
+
+            <ParentTweet tweet={tweet} retweeter={tweet.user} />
+          </div>
+          :
+          <div>
+            <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
+              {
+                <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' clack={tweet.content} editableClack={isEditable} />}
+            </div>
+          </div>}
       </div>
       <div className="pb-2">
         {(actionTweet && hideActions !== true) && <React.Fragment>
