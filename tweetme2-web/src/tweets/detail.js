@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
-import { MoreOutlined, EditOutlined } from "@ant-design/icons";
-import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
+import { MoreOutlined, EditOutlined, WechatOutlined } from "@ant-design/icons";
+import { Menu, Dropdown, Button, message, Comment, Avatar, Form, List, Input } from 'antd';
 import formatDate from './date'
 import { ActionBtn } from './buttons'
 import BlankImage from '../Assets/blank.png';
@@ -19,7 +19,49 @@ export function ParentTweet(props) {
   return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} /> : null
 }
 export function Tweet(props) {
-  let [isEditable, setIsEditable] = useState(false);
+  let [isEditable, setIsEditable] = useState(false),
+    [isCommentable, setIsCommentable] = useState(false),
+    [submitting, setSubmitting] = useState(false),
+    [replyValue, setReplyValue] = useState('');
+
+  const { TextArea } = Input;
+  const Editor = ({ onChange, onSubmit, submitting, value }) => (
+    <>
+      <Form.Item>
+        <TextArea rows={4} onChange={onChange} value={value} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+          Add Reply
+        </Button>
+      </Form.Item>
+    </>
+  );
+  function handleSubmit() {
+    if (!replyValue) {
+      return;
+    }
+
+    setSubmitting(true);
+
+    setTimeout(() => {
+      setSubmitting(false);
+      setReplyValue('')
+      // comments: [
+      //   ...this.state.comments,
+      //   {
+      //     author: 'Han Solo',
+      //     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+      //     content: <p>{this.state.value}</p>,
+      //     datetime: moment().fromNow(),
+      //   },
+      // ],
+    }, 1000);
+  };
+
+  function handleChange(e) {
+    setReplyValue(e.target.value);
+  };
   const menu = (
     <Menu onClick={handleMenuItemClick}>
       <Menu.Item key="1" icon={<EditOutlined />}>
@@ -159,7 +201,8 @@ export function Tweet(props) {
       </div>
       <div className="pb-2">
         {(actionTweet && hideActions !== true) && <React.Fragment>
-          <ActionBtn className={"fa fa-reply fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "reply", display: "Reply" }} />
+          {/* <ActionBtn className={"fa fa-reply fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "reply", display: "Reply" }} /> */}
+          <WechatOutlined onClick={() => setIsCommentable(true)} /> {"     Reply   "}
           <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
@@ -172,6 +215,24 @@ export function Tweet(props) {
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack</button>}
 
       </div>
+      {isCommentable &&
+        <div>
+          {/* {comments.length > 0 && <CommentList comments={comments} />} */}
+          <Comment
+            avatar={
+              <UserPicture user={tweet.user}></UserPicture>
+            }
+            content={
+              <Editor
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                value={replyValue}
+              />
+            }
+          />
+        </div>
+      }
     </div>
     <script>
       {/* if(document.getElementById("clack_content").innerHTML) { */}
