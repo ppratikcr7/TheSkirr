@@ -154,7 +154,7 @@ export function Tweet(props) {
           <div>
             <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
               {
-                <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' clack={tweet.content} editableClack={isEditable} />}
+                <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' clack={tweet.content}  tweetid={tweet.id} editableClack={isEditable} />}
             </div>
           </div>}
       </div>

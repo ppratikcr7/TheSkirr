@@ -17,6 +17,10 @@ class TweetActionSerializer(serializers.Serializer):
             raise serializers.ValidationError("This is not a valid action for tweets")
         return value
 
+class TweetEditSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    content = serializers.CharField(allow_blank=True, required=False)
+
 
 class TweetCreateSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True) # serializers.SerializerMethodField(read_only=True)

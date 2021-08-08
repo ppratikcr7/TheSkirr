@@ -1,9 +1,12 @@
 import React from 'react'
 import { apiTweetCreate } from './lookup'
+import { apiTweetEdit } from './lookup'
 
 export function TweetCreate(props) {
   const textAreaRef = React.createRef()
   textAreaRef.current = props.clack && props.clack;
+  const tweetid = props.tweetid;
+  // let tweetid = "22";
   // textAreaRef.current.value && (textAreaRef.current.value = props.clack && props.clack)
   const { didTweet, clackTextId} = props
   const handleBackendUpdate = (response, status) => {
@@ -22,7 +25,7 @@ export function TweetCreate(props) {
     const newVal = textAreaRef.current.value
     // backend api request
     if (props.editableClack) {
-      // apiTweetCreate(newVal, handleBackendUpdate)
+      apiTweetEdit(tweetid, newVal, handleBackendUpdate)
     } else {
       apiTweetCreate(newVal, handleBackendUpdate)
     }
