@@ -26,15 +26,6 @@
         <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
         {% endfor %}
 
-
-        <div class="form-group" style="text-align: left;">
-
-            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
-            {{ form.photo |as_crispy_field }}
-            {{ form.photo.errors }}
-
-        </div>
-
         <div class="form-group" style="text-align: left;">
 
             {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
@@ -106,6 +97,14 @@
             {{ form.password2 }}
             {{ form.password2.errors }}
         </div> {% endcomment %}
+
+        <div class="form-group" style="text-align: left;">
+
+            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
+            {{ form.photo |as_crispy_field }}
+            {{ form.photo.errors }}
+
+        </div>
 
         <button type='submit' class='btn btn-primary'>{% if btn_label %}
             {{btn_label}} {% else %}Update{% endif %}</button>

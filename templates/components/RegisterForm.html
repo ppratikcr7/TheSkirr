@@ -10,18 +10,6 @@
     {{ form.non_field_errors }}
 
     <div class="form-group">
-        <label for="{{ form.photo.id_for_label }}">Photo: </label>        
-        {{ form.photo }}
-        <br/>
-        <br/>
-        <div class="flex">
-            <input class="mt-1" type="checkbox" name="clear" id="clear" value="True">
-            <label for="photo-clear_id">&emsp;If you want to clear uploaded photo select the checkbox</label>
-        </div>
-        {{ form.photo.errors }}
-    </div>
-
-    <div class="form-group">
         <label for="{{ form.first_name.id_for_label }}">First Name: <span style="color:red"> *</span></label>
         {{ form.first_name }}
         {{ form.first_name.errors }}
@@ -149,6 +137,18 @@
         <label for="{{ form.password2.id_for_label }}">Confirm Password: <span style="color:red"> *</span></label>
         {{ form.password2 }}
         {{ form.password2.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.photo.id_for_label }}">Photo: </label>        
+        {{ form.photo }}
+        <br/>
+        <br/>
+        <div class="flex">
+            <input class="mt-1" type="checkbox" name="clear" id="clear" value="True">
+            <label for="photo-clear_id">&emsp;If you want to clear uploaded photo select the checkbox</label>
+        </div>
+        {{ form.photo.errors }}
     </div>
 
     <!-- <div class="g-recaptcha" data-sitekey="6LdLTIQbAAAAABWsr9HAF2uAxCxh8Q0SFzJVieDh" data-size="compact" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div> -->

@@ -161,7 +161,7 @@ export function Tweet(props) {
     {isRetweet === true && <div className='mb-2'>
       <span className='small text-muted'>ReClack via <UserDisplay user={retweeter} /></span>
     </div>}
-    <div className="w-1/16 text-left pl-0 pt-3">
+    <div className="w-1/16 text-left pl-0 pt-3 ml-2">
       <UserLink username={tweet.user.username}><UserPicture user={tweet.user}></UserPicture></UserLink>
       {/* <div><a href="#"><img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="45px" height="45px" /></a></div> */}
     </div>
@@ -203,8 +203,8 @@ export function Tweet(props) {
       <div className="pb-2">
         {(actionTweet && hideActions !== true) && <React.Fragment>
           {/* <ActionBtn className={"fa fa-reply fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "reply", display: "Reply" }} /> */}
-          <WechatOutlined onClick={() => setIsCommentable(true)} /> {"     Reply   "}
-          <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
+          <WechatOutlined className={"mr-2"} onClick={() => setIsCommentable(true)} /> {"Reply"}
+          <ActionBtn className={"fa fa-retweet fa-lg ml-2 mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
           <ActionBtn className={"fa fa-trash fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />

@@ -272,7 +272,7 @@ export default function Trends(props) {
                             allowClear
                             enterButton="Search"
                             size="large"
-                            onSearch={onSearch} style={{ width: 300, color: "#3b82f6" }}
+                            onSearch={onSearch} style={{ width: 300, color: "#3b83f6" }}
                         />
                     </div>
                 </div>

@@ -8,13 +8,16 @@ import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
 import './Mywall.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
+import tick from '../../Assets/tick.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
 import $ from 'jquery';
-
+import news1 from "../../Assets/news1.png";
+import news2 from "../../Assets/news2.png";
+import news3 from "../../Assets/news3.png";
 const { Search } = Input;
 
 export default function MyWall(props) {
@@ -266,7 +269,7 @@ export default function MyWall(props) {
                             allowClear
                             enterButton="Search"
                             size="large"
-                            onSearch={onSearch} style={{ width: 300, color: "#3b82f6" }}
+                            onSearch={onSearch} style={{ width: 300, color: "#3b83f6" }}
                         />
                     </div>
                 </div>
@@ -356,20 +359,22 @@ export default function MyWall(props) {
                         </div>
                         <br />
                         <br />
-                        <br />
                         {/* new section */}
                         <div>
                             <span className="text-lg font-bold p-2">News</span>
-                            <hr className="mt-2 mb-2"></hr>
+                            <hr className="mt-2 mb-1"></hr>
                         </div>
                         <div className="p-3">
-                            <p>News article 1</p>
+                            {/* <p>News article 1</p> */}
+                            <img src={news1} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 2</p>
+                        {/* <p>News article 2</p> */}
+                        <img src={news2} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 3</p>
+                        {/* <p>News article 3</p> */}
+                        <img src={news3} alt="" width="100%" height="70%" />
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                         {/* <div className="flex justify-between mb-1">

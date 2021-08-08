@@ -184,7 +184,7 @@ def forgot_uname(request):
             email_from = settings.EMAIL_HOST_USER 
             recipient_list = [email, ] 
             send_mail( subject, message, email_from, recipient_list ) 
-            return redirect('/login')
+            return render(request, 'accounts/forgot_uname_sent.html')
         else:
             messages.warning(request, 'Email not registered')
             return redirect('forgot_uname')
