@@ -28,11 +28,31 @@ class ProfileForm(forms.ModelForm):
     gender = forms.CharField(required=True, disabled=True)
     areaOfInterest = forms.CharField(required=False)
     photo = forms.ImageField(required=False)
+    # first_name_public_access = forms.ChoiceField(required=False)
+    # gender_public_access = forms.ChoiceField(required=True)
+    # dob_public_access = forms.ChoiceField(required=True)
+    # phone_number_public_access = forms.ChoiceField(required=True)
+    # email_public_access = forms.ChoiceField(required=True)
     
+    first_name_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
+        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
+
+    phone_number_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
+        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
+
+    email_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
+        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
+    
+    dob_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(
+        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
+
+    gender_public_access = forms.ChoiceField(error_messages={'required':''},widget=forms.RadioSelect(
+        attrs={'class': 'Radio', }), choices=(('True','Public'),('False','NonPublic'),))
     class Meta:
         model = UserRegisterDetails
-        fields = ['first_name', 'last_name', 'username', 'phone_number', 'email',
-        'email2', 'city', 'dob', 'gender', 'areaOfInterest', 'photo']
+        fields = ['first_name', 'last_name', 'username', 'phone_number', 'email','email2', 
+        'city', 'dob', 'gender', 'areaOfInterest', 'photo', 'first_name_public_access',
+        'gender_public_access', 'dob_public_access', 'phone_number_public_access', 'email_public_access' ]
 
 class SignUpForm(forms.ModelForm):
     first_name = forms.CharField(required=True)

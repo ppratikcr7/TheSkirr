@@ -18,7 +18,7 @@ def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
         return redirect("/login?next=/profile/update")
     user = request.user
-   
+    # profile = UserRegisterDetails.objects.get(user=request.user)
     user_data = {
         "first_name": user.first_name,
         "last_name": user.last_name,
@@ -30,13 +30,29 @@ def profile_update_view(request, *args, **kwargs):
         "dob":user.dob,
         "gender":user.gender,
         "areaOfInterest":user.areaOfInterest,
-        "photo":user.photo
+        "photo":user.photo,
+        "first_name_public_access":user.first_name_public_access,
+        "phone_number_public_access": user.phone_number_public_access,
+        "email_public_access":user.email_public_access,
+        "dob_public_access":user.dob_public_access,
+        "gender_public_access":user.gender_public_access
     }
+    print(user_data)
+    print("**************************")
+    print(user.gender_public_access)
+    print("**************************")
+    print(user)
     # matcha = user_data.get('last_name')
     # print(matcha)
     my_profile = user.profile
+    print(my_profile)
+    print(ProfileForm)
     form = ProfileForm(request.POST or None, instance=my_profile, initial=user_data)
     # print(form)
+    if form.is_valid():
+        print("valid")
+    else:
+        print("invalid")
     if form.is_valid():
         profile_obj = form.save(commit=False)
         first_name = form.cleaned_data.get('first_name')
@@ -49,7 +65,13 @@ def profile_update_view(request, *args, **kwargs):
         dob = form.cleaned_data.get('dob')
         gender = form.cleaned_data.get('gender')
         areaOfInterest = form.cleaned_data.get('areaOfInterest')
+        first_name_public_access = form.cleaned_data.get('first_name_public_access')
+        phone_number_public_access = form.cleaned_data.get('phone_number_public_access')
+        email_public_access = form.cleaned_data.get('email_public_access')
+        dob_public_access = form.cleaned_data.get('dob_public_access')
+        gender_public_access = form.cleaned_data.get('gender_public_access')
         # photo = form.cleaned_data.get('photo')
+        print(first_name_public_access)
         user.first_name = first_name
         user.last_name = last_name
         user.username = username
@@ -60,6 +82,13 @@ def profile_update_view(request, *args, **kwargs):
         user.dob = dob
         user.gender = gender
         user.areaOfInterest = areaOfInterest
+        user.first_name_public_access = first_name_public_access
+        user.phone_number_public_access = phone_number_public_access
+        user.email_public_access = email_public_access
+        user.dob_public_access = dob_public_access
+        user.gender_public_access = gender_public_access
+        print(user.first_name_public_access)
+
 
 
         if 'photo' in request.FILES:
