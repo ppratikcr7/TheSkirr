@@ -22,9 +22,6 @@
             <li class="nav-item" {% if request.path == "/logout" %}active{% endif %}>
               <a class="nav-link" href="/logout">Logout</a>
             </li>
-            <!-- <li class="nav-item" {% if request.path == "/profile/edit" %}active{% endif %}>
-              <a class="nav-link" href="/profile/edit">Edit Profile</a>
-            </li> -->
           {% endif %}
           {% if 'edit' in request.path %}
             <li class="nav-item" >
@@ -33,9 +30,22 @@
             <li class="nav-item" {% if request.path == "/logout" %}active{% endif %}>
               <a class="nav-link" href="/logout">Logout</a>
             </li>
-            <!-- <li class="nav-item" {% if request.path == "/profile/edit" %}active{% endif %}>
-              <a class="nav-link" href="/profile/edit">Edit Profile</a>
-            </li> -->
+          {% endif %}
+          {% if 'more_accounts' in request.path %}
+            <li class="nav-item" >
+              <a class="nav-link" href="/">My Wall <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" {% if request.path == "/logout" %}active{% endif %}>
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          {% endif %}
+          {% if 'trending_exclamation' in request.path %}
+            <li class="nav-item" >
+              <a class="nav-link" href="/">My Wall <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" {% if request.path == "/logout" %}active{% endif %}>
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
           {% endif %}
         {% else %}
           <!-- <li class="nav-item" active >
