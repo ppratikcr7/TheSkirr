@@ -120,7 +120,7 @@ def tweet_action_view(request, *args, **kwargs):
             #  to delete complete tweet
             # obj.delete()
             # to update tweet text with deleted text
-            obj.content = "This Clack is deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
+            obj.content = "This Clack was deleted on " + str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M"))
             obj.save()
             return Response(serializer.data, status=200)
         

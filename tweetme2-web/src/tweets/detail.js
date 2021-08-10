@@ -77,9 +77,9 @@ export function Tweet(props) {
       <Menu.Item key="1" icon={<EditOutlined />}>
         Edit
       </Menu.Item>
-      <Menu.Item key="2" icon={<DeleteOutlined />}>
+      {/* <Menu.Item key="2" icon={<DeleteOutlined />}>
         Delete
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
   function handleMenuItemClick(e) {
@@ -214,7 +214,6 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
           <ActionBtn className={"fa fa-trash fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
-
         </React.Fragment>
         }
         <time className='mr-3'>{tweetTimestampClean}</time>
