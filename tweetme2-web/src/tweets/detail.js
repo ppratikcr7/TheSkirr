@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { MoreOutlined, EditOutlined, WechatOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button, message, Comment, Avatar, Form, List, Input } from 'antd';
 import formatDate from './date'
@@ -24,11 +24,19 @@ export function Tweet(props) {
     [submitting, setSubmitting] = useState(false),
     [replyValue, setReplyValue] = useState('');
 
+  let commentRef = useRef(null);
+
+
   const { TextArea } = Input;
+  useEffect(() => {
+    if (commentRef.current) {
+      commentRef.current.focus();
+    }
+  }, [commentRef]);
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
       <Form.Item>
-        <TextArea rows={4} onChange={onChange} value={value} />
+        <TextArea rows={4} onChange={onChange} value={value} ref={commentRef} />
       </Form.Item>
       <Form.Item>
         <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
@@ -60,7 +68,9 @@ export function Tweet(props) {
   };
 
   function handleChange(e) {
+    console.log("e.target.value:", e, e.target.value);
     setReplyValue(e.target.value);
+    commentRef.current.focus();
   };
   const menu = (
     <Menu onClick={handleMenuItemClick}>
@@ -128,7 +138,6 @@ export function Tweet(props) {
         if (linkText.match(/youtu/)) {
 
           let youtubeID = replace.split('/').slice(-1)[0];
-          console.log("youtube link: ", youtubeID)
           aLink.push('<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + youtubeID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>')
         }
         else if (linkText.match(/vimeo/)) {
@@ -147,9 +156,10 @@ export function Tweet(props) {
       return input;
     }
   }
-  const handleNewTweet = (newTweet) => {
-    console.log("newTweet1:", newTweet);
+  const handleNewTweet = (action) => {
+    console.log("newTweet1:", action);
     setIsEditable(false);
+    props.tweetHandle(action);
     // let tempNewTweets = [...newTweets]
     // tempNewTweets.unshift(newTweet)
     // console.log("tempNewTweets2:", tempNewTweets);
@@ -196,7 +206,7 @@ export function Tweet(props) {
           <div>
             <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
               {
-                <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' clack={tweet.content}  tweetid={tweet.id} editableClack={isEditable} />}
+                <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' clack={tweet.content} tweetid={tweet.id} editableClack={isEditable} />}
             </div>
           </div>}
       </div>
