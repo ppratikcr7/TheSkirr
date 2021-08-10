@@ -144,7 +144,7 @@ export default function MyWall(props) {
     function myfunction1a(thisObj1a){
         var charLength = thisObj1a.val().length;
         if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error1").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            $("#error1").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
             return false;
         }
         var textareaLength = document.getElementById("clackText").length;
@@ -161,7 +161,7 @@ export default function MyWall(props) {
     function myfunction2a(thisObj2a){
         var charLength = thisObj2a.val().length;
         if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error2").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
             return false;
         }
         var textareaLength = document.getElementById("smallclackText").length;
@@ -305,10 +305,10 @@ export default function MyWall(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 480}}>
+                <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-9 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
                     </div>
                 </div>
 
