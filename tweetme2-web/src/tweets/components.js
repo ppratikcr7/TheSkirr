@@ -37,7 +37,7 @@ export function TweetsComponent(props) {
 
 export function TweetDetailComponent(props) {
   let { tweetid } = props
-  console.log("tweetId in components:", tweetid)
+  // console.log("tweetId in components:", tweetid)
   const [didLookup, setDidLookup] = useState(false)
   const [tweet, setTweet] = useState(null)
 

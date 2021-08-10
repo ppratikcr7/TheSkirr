@@ -8,9 +8,9 @@ export function TweetCreate(props) {
   const tweetid = props.tweetid;
   // let tweetid = "22";
   // textAreaRef.current.value && (textAreaRef.current.value = props.clack && props.clack)
-  const { didTweet, clackTextId} = props
+  const { didTweet, clackTextId } = props
   const handleBackendUpdate = (response, status) => {
-    if (status === 201) {
+    if (status === 201 || status === 200) {
       didTweet(response)
     }
     else {
@@ -45,8 +45,8 @@ export function TweetCreate(props) {
   return <div className={props.className}>
     <form onSubmit={handleSubmit}>
       <textarea ref={textAreaRef} id={clackTextId} required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 200 characters...'>{props.clack && props.clack}</textarea>
-      { clackTextId == 'clackText' ? <div id="info1" className="text-right text-sm"></div> : <div id="info2" className="text-right text-sm"></div>}
-      { clackTextId == 'clackText' ? <div id="error1" className="text-center text-sm"></div> : <div id="error2" className="text-center text-sm"></div>}
+      {clackTextId == 'clackText' ? <div id="info1" className="text-right text-sm"></div> : <div id="info2" className="text-right text-sm"></div>}
+      {clackTextId == 'clackText' ? <div id="error1" className="text-center text-sm"></div> : <div id="error2" className="text-center text-sm"></div>}
       {/* <textarea ref={textAreaRef} id="clackText" required={true} className='form-control' name='tweet' placeholder='Enter Your Clack of less than 200 characters...'>{props.clack && props.clack}</textarea>
       <div id="info" className="text-right text-sm"></div>
       <div id="error" className="text-center text-sm"></div> */}

@@ -33,7 +33,7 @@ export function apiTweetList(username, callback, nextUrl) {
         endpoint = `/tweets/?username=${username}`
     }
     if (nextUrl !== null && nextUrl !== undefined) {
-        console.log("nextUrl:", nextUrl);
+        // console.log("nextUrl:", nextUrl);
         // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
         endpoint = nextUrl.replace("http://localhost:8000/api", "")
     }
