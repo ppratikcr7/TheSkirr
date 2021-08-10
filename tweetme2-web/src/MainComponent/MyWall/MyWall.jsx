@@ -14,10 +14,10 @@ import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
-import $ from 'jquery';
 import news1 from "../../Assets/news1.png";
 import news2 from "../../Assets/news2.png";
 import news3 from "../../Assets/news3.png";
+import $ from 'jquery';
 const { Search } = Input;
 
 export default function MyWall(props) {

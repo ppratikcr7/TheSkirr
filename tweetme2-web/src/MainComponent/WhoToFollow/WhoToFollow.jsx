@@ -12,6 +12,9 @@ import {
 import { TweetCreate } from '../../tweets/create';
 import {apiProfileDetail, apiProfileFollowToggle} from '../../profiles/lookup'
 import ReactDOM from 'react-dom';
+import news1 from "../../Assets/news1.png";
+import news2 from "../../Assets/news2.png";
+import news3 from "../../Assets/news3.png";
 import $ from 'jquery';
 
 function ProfileBadge(props) {
@@ -282,10 +285,10 @@ export default function WhoToFollow(props) {
                 <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 -mt-2 mb-4">
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
+                            <a href={"/profiles/my_wall/" + currentUserName} style={{ textDecoration: "none" }}>My wall</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/dashboard/" + newUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
+                            <a href={"/profiles/dashboard/" + currentUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
@@ -371,20 +374,22 @@ export default function WhoToFollow(props) {
                         </div>
                         <br />
                         <br />
-                        <br />
                         {/* new section */}
                         <div>
                             <span className="text-lg font-bold p-2">News</span>
-                            <hr className="mt-2 mb-2"></hr>
+                            <hr className="mt-2 mb-1"></hr>
                         </div>
                         <div className="p-3">
-                            <p>News article 1</p>
+                            {/* <p>News article 1</p> */}
+                            <img src={news1} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 2</p>
+                        {/* <p>News article 2</p> */}
+                        <img src={news2} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                            <p>News article 3</p>
+                        {/* <p>News article 3</p> */}
+                        <img src={news3} alt="" width="100%" height="70%" />
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                         {/* <div className="flex justify-between mb-1">

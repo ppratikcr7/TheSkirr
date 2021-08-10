@@ -13,6 +13,7 @@ import SearchedUsers from './MainComponent/SearchedUsers/SearchedUsers';
 import SearchedClacks from './MainComponent/SearchedClacks/SearchedClacks';
 import SearchedTrendClacks from './MainComponent/SearchedTrendClacks/SearchedTrendClacks';
 import ClacksView from './MainComponent/ClacksView/ClacksView';
+import EditProfile from './MainComponent/EditProfile/EditProfile';
 
 const appEl = document.getElementById('root')
 if (appEl) {
@@ -86,6 +87,13 @@ const ClacksViewElement = document.getElementById("tweetme-profile-clacks-view")
 if (ClacksViewElement) {
     ReactDOM.render(
         e(ClacksView, ClacksViewElement.dataset), ClacksViewElement);
+}
+
+// Edit Profile Page:
+const EditProfileElement = document.getElementById("tweetme-profile-edit")
+if (EditProfileElement) {
+    ReactDOM.render(
+        e(EditProfile, EditProfileElement.dataset), EditProfileElement);
 }
 
 // Tweet Details Element:

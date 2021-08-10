@@ -4,7 +4,7 @@ import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { backendLookup } from '../../lookup/index';
-import './SearchedClacks.css';
+import './WhoToFollow.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import {
     UserWhoToFollowDisplay
@@ -69,11 +69,11 @@ export function ProfileBadgeComponent (props) {
 // Search feature
 const { Search } = Input;
 
-export default function SearchedClacks(props) {
-    let {username, searched_clacklist} = props;
-    searched_clacklist = searched_clacklist.replace(/'/g, '"')
-    const searched_clackslist = JSON.parse(searched_clacklist)
-    console.log("searched_clackslist:", searched_clackslist);
+export default function WhoToFollow(props) {
+    let {username, usernamelist} = props;
+    usernamelist = usernamelist.replace(/'/g, '"')
+    const usernames = JSON.parse(usernamelist)
+    console.log("usernamelist:", usernames);
     let newUserName = username;
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
@@ -326,16 +326,7 @@ export default function SearchedClacks(props) {
                     <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
-                                <h1 class="text-xl text-blue-500">Searched Clacks: </h1>
-                            </div>
-                            <div class="flex justify-center">
-                                <div class="bg-white shadow-xl rounded-lg w-1/2">
-                                    <ul class="divide-y divide-gray-300">
-                                    {(searched_clackslist) ? searched_clackslist.map(function(clack, index){
-                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer">{clack}</li>;
-                                        }) : <h2 class="text-l">No clacks found with the searched keyword!</h2>}
-                                    </ul>
-                                </div>
+                                <h1 class="text-xl text-blue-500">Title: </h1>
                             </div>
                         </div>
                     </div>

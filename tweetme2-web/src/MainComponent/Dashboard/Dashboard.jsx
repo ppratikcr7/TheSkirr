@@ -13,6 +13,9 @@ import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
+import news1 from "../../Assets/news1.png";
+import news2 from "../../Assets/news2.png";
+import news3 from "../../Assets/news3.png";
 import $ from 'jquery';
 
 import PropTypes from 'prop-types';
@@ -374,14 +377,20 @@ export default function Dashboard(props) {
             <div className="bg-white shadow">
                 {/* style={{ marginTop: 104 }} */}
                 <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
-                    <div className="w-full lg:w-1/5">
+                    <div className="w-full lg:w-1/6">
                     </div>
-                    <div className="w-full lg:w-2/5">
+                    <div className="w-full lg:w-3/6">
                         <ul className="list-reset flex">
                             <li className="text-center px-4 border-b-2 border-solid border-transparent border-teal">
                                 <a href="#" className="text-grey-darker no-underline hover:no-underline">
                                     <div className="text-sm font-bold tracking-tight mb-1">Clacks</div>
                                     <div className="text-lg tracking-tight font-bold text-teal">{currentUserTotalClacks ? currentUserTotalClacks : "0"}</div>
+                                </a>
+                            </li>
+                            <li className="text-center px-4 border-b-2 border-solid border-transparent border-teal">
+                                <a href="#" className="text-grey-darker no-underline hover:no-underline">
+                                    <div className="text-sm font-bold tracking-tight mb-1">ReClacks</div>
+                                    <div className="text-lg tracking-tight font-bold text-teal">0</div>
                                 </a>
                             </li>
                             <li className="text-center px-4 border-b-2 border-solid border-transparent hover:border-teal">
@@ -410,7 +419,7 @@ export default function Dashboard(props) {
                             </li>
                         </ul>
                     </div>
-                    <div className="w-full lg:w-2/5 flex lg:my-0 lg:justify-end items-center">
+                    <div className="w-full lg:w-2/6 flex lg:my-0 lg:justify-end items-center">
                         <div className="mr-2">
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -430,14 +439,14 @@ export default function Dashboard(props) {
                 </div>
             </div>
 
-                <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
+            <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
                 <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 -mt-2 mb-4">
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
+                            <a href={"/profiles/my_wall/" + currentUserName} style={{ textDecoration: "none" }}>My wall</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/dashboard/" + newUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
+                            <a href={"/profiles/dashboard/" + currentUserName} style={{ textDecoration: "none" }}>Dashboard</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
@@ -467,16 +476,16 @@ export default function Dashboard(props) {
                     </div>
                 </div>
 
-                <div className="w-full lg:w-6/7 bg-white mb-20">
+                <div className="w-full lg:w-5/6 bg-white mb-20">
                     <div className="flex justify-center mb-1">
-                        <span className="text-lg font-bold">My Dashboard</span>
+                        <span className="text-lg font-bold">Dashboard</span>
                         <hr className="mt-2 mb-2"></hr>
                     </div>
-                    <div className="flex justify-between mb-1">
+                    <div className="mb-1">
                         <div class="bg-gray-100">
                             <div class="w-full text-white bg-main-color">
-                                <div class="container mx-auto my-2 p-2">
-                                    <div class="md:flex no-wrap md:-mx-2 ">
+                                <div class="container my-2 p-2">
+                                    <div class="md:flex nwrap md:-mx-2 ">
                                         {/* Left Side */}
                                         <div class="w-full md:w-2/12 md:mx-2">
                                             {/* Profile Card */}
@@ -535,7 +544,9 @@ export default function Dashboard(props) {
                                                     <div className="grid md:grid-cols-2 text-xs">
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">First Name</div>
-                                                            <div class="px-2 py-2">{newProfile ? newProfile.first_name : "-"}</div>
+                                                            { (newProfile && newProfile.first_name_public_access) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.first_name}</div> :
+                                                            <div class="px-2 py-2">-</div> }
                                                         </div>
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">Last Name</div>
@@ -543,22 +554,30 @@ export default function Dashboard(props) {
                                                         </div>
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">Gender</div>
-                                                            <div class="px-2 py-2">{newProfile ? newProfile.gender : "-"}</div>
+                                                            { (newProfile && newProfile.gender_public_access) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.gender}</div> :
+                                                            <div class="px-2 py-2">-</div> }
                                                         </div>
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">Contact No.</div>
-                                                            <div class="px-2 py-2">{newProfile ? newProfile.phone_number : "-"}</div>
+                                                            { (newProfile && newProfile.phone_number_public_access) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.phone_number}</div> :
+                                                            <div class="px-2 py-2">-</div> }
                                                         </div>
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">Email</div>
+                                                            { (newProfile && newProfile.email_public_access) ?
                                                             <div class="px-2 py-2">
                                                                 {/* <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a> */}
-                                                                {newProfile ? newProfile.email : "-"}
-                                                            </div>
+                                                                {newProfile && newProfile.email}
+                                                            </div> :
+                                                            <div class="px-2 py-2">-</div> }
                                                         </div>
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">Birthday</div>
-                                                            <div class="px-2 py-2">{newProfile ? newProfile.dob : "-"}</div>
+                                                            { (newProfile && newProfile.dob_public_access) ?
+                                                            <div class="px-2 py-2">{ newProfile && newProfile.dob}</div> :
+                                                            <div class="px-2 py-2">-</div> }
                                                         </div>
                                                         <div class="grid grid-cols-2">
                                                             <div class="px-2 py-2 font-semibold">Sec.Email</div>
@@ -567,13 +586,37 @@ export default function Dashboard(props) {
                                                                 {newProfile ? newProfile.email2 : "-"}
                                                             </div>
                                                         </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Fans</div>
+                                                            <div class="px-2 py-2">
+                                                                {newProfile && newProfile.follower_count}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Companions</div>
+                                                            <div class="px-2 py-2">
+                                                                {newProfile && newProfile.following_count}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             {/* End of about section  */}
-                                            <button className="btn btn-primary  my-3 mr-3"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
-                                            <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
-                                            <hr class="mt-1 mb-1"></hr>
+                                            { (newUserName && newUserName != currentUserName) ?
+                                                <div>
+                                                    <div className="tweetme-2-profile-badge" data-username={`${newUserName}`} ><br/></div>
+                                                    <div className="d-none" id='tweetme-2' data-username={`${newUserName}`} data-can-tweet="false"></div>
+                                                    <br />
+                                                </div>
+                                                :
+                                                <div>
+                                                    <button className="btn btn-primary  my-3 mr-3"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
+                                                    <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
+                                                    <br />
+                                                </div>
+                                            }
+                                            
+                                            {/* <hr class="mt-1 mb-1"></hr> */}
                                             </div>
                                             {/* End of profile tab */}
                                         </div>
@@ -638,20 +681,22 @@ export default function Dashboard(props) {
                         </div>
                         <br />
                         <br />
-                        <br />
                         {/* new section */}
                         <div>
                             <span className="text-lg font-bold p-2">News</span>
-                            <hr className="mt-2 mb-2"></hr>
+                            <hr className="mt-2 mb-1"></hr>
                         </div>
                         <div className="p-3">
-                            <p>News article 1</p>
+                            {/* <p>News article 1</p> */}
+                            <img src={news1} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 2</p>
+                        {/* <p>News article 2</p> */}
+                        <img src={news2} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                            <p>News article 3</p>
+                        {/* <p>News article 3</p> */}
+                        <img src={news3} alt="" width="100%" height="70%" />
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                         {/* <div className="flex justify-between mb-1">

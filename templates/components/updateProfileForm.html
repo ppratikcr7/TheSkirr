@@ -99,8 +99,6 @@
         </div> {% endcomment %}
 
         <div class="form-group" style="text-align: left;">
-
-            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
             {{ form.photo |as_crispy_field }}
             {{ form.photo.errors }}
 

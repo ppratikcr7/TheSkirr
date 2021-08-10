@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { MoreOutlined, EditOutlined, WechatOutlined } from "@ant-design/icons";
+import { MoreOutlined, EditOutlined, DeleteOutlined, WechatOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button, message, Comment, Avatar, Form, List, Input } from 'antd';
 import formatDate from './date'
 import { ActionBtn } from './buttons'
@@ -66,6 +66,9 @@ export function Tweet(props) {
     <Menu onClick={handleMenuItemClick}>
       <Menu.Item key="1" icon={<EditOutlined />}>
         Edit
+      </Menu.Item>
+      <Menu.Item key="2" icon={<DeleteOutlined />}>
+        Delete
       </Menu.Item>
     </Menu>
   );
@@ -168,19 +171,12 @@ export function Tweet(props) {
     <div className="w-15/16 p-3 pl-0">
       <div className="flex justify-between">
         <div>
-
           <UserDisplay includeFullName user={tweet.user} />
-
         </div>
         <div>
           {/* <MoreOutlined /> */}
           <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
           </Dropdown.Button>
-        </div>
-
-        <div>
-          {/* use this to populate delete clack option */}
-          {/* <a href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></a> */}
         </div>
       </div>
 
