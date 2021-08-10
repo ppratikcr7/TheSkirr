@@ -1,6 +1,7 @@
 {% load crispy_forms_tags %}
 <center>
-    <form method='POST' enctype = "multipart/form-data"> {% csrf_token %}
+    <form method='POST' enctype="multipart/form-data"> {% csrf_token %}
+        {% comment %} {{ form|crispy }} {% endcomment %}
         {{ form.non_field_errors }}
 
         {% comment %} <div class="form-group" style="text-align: left;">
@@ -14,7 +15,7 @@
                             d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 </span>
-                <input type ="file">
+                <input type="file">
                 <button type="button"
                     class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Change
@@ -33,6 +34,24 @@
             {{ form.first_name.errors }}
 
         </div>
+
+        {% comment %} <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            <label for="first_name_public_access"><input type="radio" name="first_name_public_access" value="True"
+                    class="Radio" id="public" required="False">
+                Public</label>
+            <label for="first_name_public_access"><input type="radio" name="first_name_public_access" value="False"
+                    class="Radio" id="nonpublic" required="False">
+                NonPublic</label>
+        </div> {% endcomment %}
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.first_name_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
         <div class="form-group" style="text-align: left;">
 
             {% comment %} <label for="{{ form.last_name.id_for_label }}">Last Name: </label> {% endcomment %}
@@ -52,11 +71,47 @@
             {{ form.phone_number |as_crispy_field}}
             {{ form.phone_number.errors }}
         </div>
+
+        {% comment %} <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            <label for="phone_number_public_access"><input type="radio" name="phone_number_public_access" value="True"
+                    class="Radio" id="public" required="">
+                Public</label>
+            <label for="phone_number_public_access"><input type="radio" name="phone_number_public_access" value="False"
+                    class="Radio" id="nonpublic" required="">
+                NonPublic</label>
+        </div> {% endcomment %}
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.phone_number_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
         <div class="form-group" style="text-align: left;">
             {% comment %} <label for="{{ form.email.id_for_label }}">Email: </label> {% endcomment %}
             {{ form.email |as_crispy_field}}
             {{ form.email.errors }}
         </div>
+
+        {% comment %} <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            <label for="email_public_access"><input type="radio" name="email_public_access" value="True" class="Radio"
+                    id="public" required="">
+                Public</label>
+            <label for="email_public_access"><input type="radio" name="email_public_access" value="False" class="Radio"
+                    id="nonpublic" required="">
+                NonPublic</label>
+        </div> {% endcomment %}
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.email_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
         <div class="form-group" style="text-align: left;">
             {% comment %} <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label>
             {% endcomment %}
@@ -73,11 +128,48 @@
             {{ form.dob |as_crispy_field}}
             {{ form.dob.errors }}
         </div>
+
+        {% comment %} <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            <label for="dob_public_access"><input type="radio" name="dob_public_access" value="True" class="Radio"
+                    id="public" required="">
+                Public</label>
+            <label for="dob_public_access"><input type="radio" name="dob_public_access" value="False" class="Radio"
+                    id="nonpublic" required="">
+                NonPublic</label>
+        </div> {% endcomment %}
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.dob_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
         <div class="form-group" style="text-align: left;">
             {% comment %} <label for="{{ form.gender.id_for_label }}">Gender: </label> {% endcomment %}
             {{ form.gender |as_crispy_field}}
             {{ form.gender.errors }}
         </div>
+
+        {% comment %} <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            <label for="gender_public_access"><input type="radio" name="gender_public_access" value="True" class="Radio"
+                    id="public" required="">
+                Public</label>
+            <label for="gender_public_access"><input type="radio" name="gender_public_access" value="False"
+                    class="Radio" id="nonpublic" required="">
+                NonPublic</label>
+        </div> {% endcomment %}
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.gender_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
+
         <div class="form-group" style="text-align: left;">
             {% comment %} <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest: </label>
             {% endcomment %}
