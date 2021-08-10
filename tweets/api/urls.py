@@ -6,6 +6,7 @@ from .views import (
     tweet_feed_view,
     tweet_list_view,
     tweet_create_view,
+    tweet_edit_view,
 )
 '''
 CLIENT
@@ -16,5 +17,6 @@ urlpatterns = [
     path('feed/', tweet_feed_view),
     path('action/', tweet_action_view),
     path('create/', tweet_create_view),
+    path('edit/', tweet_edit_view),
     path('<int:tweet_id>/', tweet_detail_view),
 ]

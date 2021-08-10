@@ -1,8 +1,11 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
+import { MoreOutlined, EditOutlined, DeleteOutlined, WechatOutlined } from "@ant-design/icons";
+import { Menu, Dropdown, Button, message, Comment, Avatar, Form, List, Input } from 'antd';
 import formatDate from './date'
 import { ActionBtn } from './buttons'
 import BlankImage from '../Assets/blank.png';
+import { TweetCreate } from './create';
 import DeleteBtn from '../Assets/delete.png';
 import {
   UserDisplay,
@@ -16,6 +19,76 @@ export function ParentTweet(props) {
   return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} /> : null
 }
 export function Tweet(props) {
+  let [isEditable, setIsEditable] = useState(false),
+    [isCommentable, setIsCommentable] = useState(false),
+    [submitting, setSubmitting] = useState(false),
+    [replyValue, setReplyValue] = useState('');
+
+  let commentRef = useRef(null);
+
+
+  const { TextArea } = Input;
+  useEffect(() => {
+    if (commentRef.current) {
+      commentRef.current.focus();
+    }
+  }, [commentRef]);
+  const Editor = ({ onChange, onSubmit, submitting, value }) => (
+    <>
+      <Form.Item>
+        <TextArea rows={4} onChange={onChange} value={value} ref={commentRef} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+          Add Reply
+        </Button>
+      </Form.Item>
+    </>
+  );
+  function handleSubmit() {
+    if (!replyValue) {
+      return;
+    }
+
+    setSubmitting(true);
+
+    setTimeout(() => {
+      setSubmitting(false);
+      setReplyValue('')
+      // comments: [
+      //   ...this.state.comments,
+      //   {
+      //     author: 'Han Solo',
+      //     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+      //     content: <p>{this.state.value}</p>,
+      //     datetime: moment().fromNow(),
+      //   },
+      // ],
+    }, 1000);
+  };
+
+  function handleChange(e) {
+    console.log("e.target.value:", e, e.target.value);
+    setReplyValue(e.target.value);
+    commentRef.current.focus();
+  };
+  const menu = (
+    <Menu onClick={handleMenuItemClick}>
+      <Menu.Item key="1" icon={<EditOutlined />}>
+        Edit
+      </Menu.Item>
+      {/* <Menu.Item key="2" icon={<DeleteOutlined />}>
+        Delete
+      </Menu.Item> */}
+    </Menu>
+  );
+  function handleMenuItemClick(e) {
+    setIsEditable(true);
+  }
+  function handleButtonClick(e) {
+    message.info('Click on left button.');
+    console.log('click left button', e);
+  }
   const clackContent = React.createRef()
   const { tweet, didRetweet, hideActions, isRetweet, retweeter } = props
   const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
@@ -68,7 +141,6 @@ export function Tweet(props) {
         if (linkText.match(/youtu/)) {
 
           let youtubeID = replace.split('/').slice(-1)[0];
-          console.log("youtube link: ", youtubeID)
           aLink.push('<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + youtubeID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>')
         }
         else if (linkText.match(/vimeo/)) {
@@ -87,13 +159,22 @@ export function Tweet(props) {
       return input;
     }
   }
+  const handleNewTweet = (action) => {
+    console.log("newTweet1:", action);
+    setIsEditable(false);
+    props.tweetHandle(action);
+    // let tempNewTweets = [...newTweets]
+    // tempNewTweets.unshift(newTweet)
+    // console.log("tempNewTweets2:", tempNewTweets);
+    // setNewTweets(tempNewTweets)
+  }
 
   return <div className="flex border-b border-solid border-grey-light">
 
     {isRetweet === true && <div className='mb-2'>
       <span className='small text-muted'>ReClack via <UserDisplay user={retweeter} /></span>
     </div>}
-    <div className="w-1/16 text-left pl-0 pt-3">
+    <div className="w-1/16 text-left pl-0 pt-3 ml-2">
       <UserLink username={tweet.user.username}><UserPicture user={tweet.user}></UserPicture></UserLink>
       {/* <div><a href="#"><img src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light' width="45px" height="45px" /></a></div> */}
     </div>
@@ -101,29 +182,38 @@ export function Tweet(props) {
       <div className="flex justify-between">
         <div>
           <UserDisplay includeFullName user={tweet.user} />
-          {/* use the below for color encoding */}
-          {/* <span class="text-grey-dark">&middot;</span> */}
         </div>
         <div>
-          {/* use this to populate delete clack option */}
-          {/* <a href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></a> */}
+          {/* <MoreOutlined /> */}
+          <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
+          </Dropdown.Button>
         </div>
       </div>
 
       <div>
-        <div className="mb-4">
-          <p className="mt-6" id="clack_content" dangerouslySetInnerHTML={{ __html: convertLinks(tweet.content) }}></p>
-          <ParentTweet tweet={tweet} retweeter={tweet.user} />
-        </div>
+        {!isEditable ?
+          <div className="mb-4">
+
+            <p className="mt-6" id="clack_content" dangerouslySetInnerHTML={{ __html: convertLinks(tweet.content) }}></p>
+
+            <ParentTweet tweet={tweet} retweeter={tweet.user} />
+          </div>
+          :
+          <div>
+            <div className="p-1 text-lg font-bold border-b border-solid border-grey-light">
+              {
+                <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' clack={tweet.content} tweetid={tweet.id} editableClack={isEditable} />}
+            </div>
+          </div>}
       </div>
       <div className="pb-2">
         {(actionTweet && hideActions !== true) && <React.Fragment>
-          <ActionBtn className={"fa fa-reply fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "reply", display: "Reply" }} />
-          <ActionBtn className={"fa fa-retweet fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
+          {/* <ActionBtn className={"fa fa-reply fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "reply", display: "Reply" }} /> */}
+          <WechatOutlined className={"mr-2"} onClick={() => setIsCommentable(true)} /> {"Reply"}
+          <ActionBtn className={"fa fa-retweet fa-lg ml-2 mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
           <ActionBtn className={"fa fa-trash fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
-
         </React.Fragment>
         }
         <time className='mr-3'>{tweetTimestampClean}</time>
@@ -131,6 +221,24 @@ export function Tweet(props) {
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack</button>}
 
       </div>
+      {isCommentable &&
+        <div>
+          {/* {comments.length > 0 && <CommentList comments={comments} />} */}
+          <Comment
+            avatar={
+              <UserPicture user={tweet.user}></UserPicture>
+            }
+            content={
+              <Editor
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                value={replyValue}
+              />
+            }
+          />
+        </div>
+      }
     </div>
   </div>
 }

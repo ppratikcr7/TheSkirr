@@ -36,7 +36,8 @@ export function TweetsComponent(props) {
 
 
 export function TweetDetailComponent(props) {
-  const { tweetId } = props
+  let { tweetid } = props
+  // console.log("tweetId in components:", tweetid)
   const [didLookup, setDidLookup] = useState(false)
   const [tweet, setTweet] = useState(null)
 
@@ -50,10 +51,10 @@ export function TweetDetailComponent(props) {
   useEffect(() => {
     if (didLookup === false) {
 
-      apiTweetDetail(tweetId, handleBackendLookup)
+      apiTweetDetail(tweetid, handleBackendLookup)
       setDidLookup(true)
     }
-  }, [tweetId, didLookup, setDidLookup])
+  }, [tweetid, didLookup, setDidLookup])
 
   return tweet === null ? null : <Tweet tweet={tweet} className={props.className} />
 }

@@ -12,6 +12,10 @@ import {
 import { TweetCreate } from '../../tweets/create';
 import {apiProfileDetail, apiProfileFollowToggle} from '../../profiles/lookup'
 import ReactDOM from 'react-dom';
+import news1 from "../../Assets/news1.png";
+import news2 from "../../Assets/news2.png";
+import news3 from "../../Assets/news3.png";
+import $ from 'jquery';
 
 function ProfileBadge(props) {
     const {user, didFollowToggle, profileLoading} = props
@@ -168,6 +172,33 @@ export default function SearchedClacks(props) {
         }
     }
 
+    const MAX_TWEET_LENGTH = 200;
+
+    function myfunction2(thisObj2){
+        $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+    }
+
+    function myfunction2a(thisObj2a){
+        var charLength = thisObj2a.val().length;
+        if (charLength >= MAX_TWEET_LENGTH) {
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
+            return false;
+        }
+        var textareaLength = document.getElementById("smallclackText").length;
+        if (textareaLength < MAX_TWEET_LENGTH) {
+            $("#error2").text((''));
+            return false;
+        }
+    }
+    
+    $("#smallclackText").keyup(function () {
+        myfunction2($(this));
+    });
+
+    $('#smallclackText').keypress(function () {
+        myfunction2a($(this));
+    });
+
     const menu = (
         <Menu onClick={handleClick}>
             <Menu.Item key="0">
@@ -182,7 +213,6 @@ export default function SearchedClacks(props) {
             </Menu.Item>
         </Menu>
     );
-
 
     const onSearch = value => {
         const key = window.localStorage.getItem('search_type');
@@ -243,7 +273,7 @@ export default function SearchedClacks(props) {
                             allowClear
                             enterButton="Search"
                             size="large"
-                            onSearch={onSearch} style={{ width: 300, color: "#3b82f6" }}
+                            onSearch={onSearch} style={{ width: 300, color: "#3b83f6" }}
                         />
                     </div>
                 </div>
@@ -254,10 +284,10 @@ export default function SearchedClacks(props) {
                 <div className="w-full lg:w-1/6 pl-2 lg:pl-0 pr-2 -mt-2 mb-4">
                     <Col span={7} >
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/my_wall/" + newUserName} style={{ textDecoration: "none" }}>My wall</a>
+                            <a href={"/profiles/my_wall/" + currentUserName} style={{ textDecoration: "none" }}>My wall</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
-                            <a href={"/profiles/dashboard/" + newUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
+                            <a href={"/profiles/dashboard/" + currentUserName} style={{ textDecoration: "none" }}>My Dashboard</a>
                         </Button>
                         <Button type={'primary'} style={{ width: 180, height: 35, margin: 3}} shape="round" size='sm' block htmlType="submit" className="bg-blue-500 login-form-button button-container">
                             <a href="/profiles/trending_exclamation" style={{ textDecoration: "none" }}>Trending Exclamation</a>
@@ -280,10 +310,10 @@ export default function SearchedClacks(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 480}}>
+                <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
                     </div>
                 </div>
             
@@ -343,20 +373,22 @@ export default function SearchedClacks(props) {
                         </div>
                         <br />
                         <br />
-                        <br />
                         {/* new section */}
                         <div>
                             <span className="text-lg font-bold p-2">News</span>
-                            <hr className="mt-2 mb-2"></hr>
+                            <hr className="mt-2 mb-1"></hr>
                         </div>
                         <div className="p-3">
-                            <p>News article 1</p>
+                            {/* <p>News article 1</p> */}
+                            <img src={news1} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 2</p>
+                        {/* <p>News article 2</p> */}
+                        <img src={news2} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                            <p>News article 3</p>
+                        {/* <p>News article 3</p> */}
+                        <img src={news3} alt="" width="100%" height="70%" />
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                         {/* <div className="flex justify-between mb-1">

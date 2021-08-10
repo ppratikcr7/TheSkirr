@@ -11,7 +11,7 @@ function ProfileBadge(props) {
             didFollowToggle(currentVerb)
         }
     }
-    return user ? <div style={{ paddingTop: 0, paddingBottom: 4, paddingRight: 20, paddingLeft: 80,  margin: 5 }}>
+    return user ? <div style={{ paddingTop: 0, paddingBottom: 0, paddingRight: 0, paddingLeft: 0,  margin: 2 }}>
         <button className='btn btn-primary' onClick={handleFollowToggle}>{currentVerb}</button>
     </div> : null
 }

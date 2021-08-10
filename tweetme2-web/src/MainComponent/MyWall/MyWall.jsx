@@ -8,13 +8,16 @@ import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
 import './Mywall.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
+import tick from '../../Assets/tick.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
+import news1 from "../../Assets/news1.png";
+import news2 from "../../Assets/news2.png";
+import news3 from "../../Assets/news3.png";
 import $ from 'jquery';
-
 const { Search } = Input;
 
 export default function MyWall(props) {
@@ -134,21 +137,54 @@ export default function MyWall(props) {
 
     const MAX_TWEET_LENGTH = 200;
 
-    $("#clackText").keyup(function () {
-        $("#info").text(($(this).val().length) + " / " + MAX_TWEET_LENGTH)
-    });
+    function myfunction1(thisObj1){
+        $("#info1").text((thisObj1.val().length) + " / " + MAX_TWEET_LENGTH)
+    }
 
-    $('#clackText').keypress(function () {
-        var charLength = $(this).val().length;
+    function myfunction1a(thisObj1a){
+        var charLength = thisObj1a.val().length;
         if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error").text(('You cannot enter more than ' + MAX_TWEET_LENGTH + ' characters'));
+            $("#error1").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
             return false;
         }
         var textareaLength = document.getElementById("clackText").length;
         if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error").text((''));
+            $("#error1").text((''));
             return false;
         }
+    }
+      
+    function myfunction2(thisObj2){
+        $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+    }
+
+    function myfunction2a(thisObj2a){
+        var charLength = thisObj2a.val().length;
+        if (charLength >= MAX_TWEET_LENGTH) {
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
+            return false;
+        }
+        var textareaLength = document.getElementById("smallclackText").length;
+        if (textareaLength < MAX_TWEET_LENGTH) {
+            $("#error2").text((''));
+            return false;
+        }
+    }
+
+    $("#clackText").keyup(function () {
+        myfunction1($(this));
+    });
+
+    $('#clackText').keypress(function () {
+        myfunction1a($(this));
+    });
+
+    $("#smallclackText").keyup(function () {
+        myfunction2($(this));
+    });
+
+    $('#smallclackText').keypress(function () {
+        myfunction2a($(this));
     });
 
     const handleClick = ({ key }) => {
@@ -233,7 +269,7 @@ export default function MyWall(props) {
                             allowClear
                             enterButton="Search"
                             size="large"
-                            onSearch={onSearch} style={{ width: 300, color: "#3b82f6" }}
+                            onSearch={onSearch} style={{ width: 300, color: "#3b83f6" }}
                         />
                     </div>
                 </div>
@@ -269,10 +305,10 @@ export default function MyWall(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 480}}>
+                <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-9 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
                     </div>
                 </div>
 
@@ -286,7 +322,7 @@ export default function MyWall(props) {
                     <br />
                     <span className="mb-2 pl-4"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-2 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='clackText' className='col-12 mb-3' />}
                     </div>
                     <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}
@@ -323,20 +359,22 @@ export default function MyWall(props) {
                         </div>
                         <br />
                         <br />
-                        <br />
                         {/* new section */}
                         <div>
                             <span className="text-lg font-bold p-2">News</span>
-                            <hr className="mt-2 mb-2"></hr>
+                            <hr className="mt-2 mb-1"></hr>
                         </div>
                         <div className="p-3">
-                            <p>News article 1</p>
+                            {/* <p>News article 1</p> */}
+                            <img src={news1} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 2</p>
+                        {/* <p>News article 2</p> */}
+                        <img src={news2} alt="" width="100%" height="70%" />
                         </div>
                         <div className="p-3">
-                        <p>News article 3</p>
+                        {/* <p>News article 3</p> */}
+                        <img src={news3} alt="" width="100%" height="70%" />
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                         {/* <div className="flex justify-between mb-1">

@@ -3,10 +3,11 @@
 {% load crispy_forms_field %}
 
 {% block content %}
-
+<br/>
+<br/>
 <div class='col-10 col-md-4 mx-auto'>
     <h1 style="text-align: center; padding: 10px; font-size: 22px;">{{ title }}</h1>
-    <hr class="mt-0 mb-4">
+    <hr class="mt-2 mb-4">
     {% if description %}
     <p style="text-align: left; padding: 10px">{{ description }} </p>
     {% endif %}
@@ -15,6 +16,7 @@
 </div>
 </br>
 </br>
+<!-- <div id="tweetme-profile-edit" data-username="{{ username }}" ></div> -->
 </br>
 </br>
 {% endblock content %}
