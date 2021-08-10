@@ -217,8 +217,8 @@ export default function WhoToFollow(props) {
     const onSearch = value => {
         const key = window.localStorage.getItem('search_type');
         try {
-            // let domain = "https://www.theskirr.com/";
-            let domain = "http://localhost:8000/";
+            let domain = "https://www.theskirr.com/";
+            // let domain = "http://localhost:8000/";
 
             if(key == 0){
                 window.open(`${domain}profiles/search_users/${value}`, '_self')
