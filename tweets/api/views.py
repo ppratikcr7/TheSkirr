@@ -153,9 +153,17 @@ def tweet_list_view(request, *args, **kwargs):
     username = request.GET.get('username') # ?username=Pratik
     if username != None:
         qs = qs.by_username(username)
+        print("clacks: ", qs.values)
     return get_paginated_queryset_response(qs, request)
 
-
+@api_view(['GET'])
+def tweet_reclack_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    username = request.GET.get('username') # ?username=Pratik
+    if username != None:
+        qs = qs.by_username(username).filter(parent_id__isnull=False)
+        print("reclacks: ", qs.values)
+    return get_paginated_queryset_response(qs, request)
 
 def tweet_create_view_pure_django(request, *args, **kwargs):
     '''

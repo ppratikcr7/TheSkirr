@@ -6,10 +6,12 @@ import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
+import { ReclacksList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
+import { apiReclackList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
@@ -275,13 +277,20 @@ export default function Dashboard(props) {
     function handleTweetList(value) {
         console.log("value:", value);
         if (value !== "like" && value !== "unlike") {
-            // console.log("enter1");
             apiTweetList(null, handleListLookup);
         } else {
             getCurrentUserTotalLikes();
             getCurrentUserTotalClacks();
-            // console.log("enter2");
-            // console.log("setNewTweets", newTweets);
+        }
+    }
+
+    function handleReclackList(value) {
+        console.log("value:", value);
+        if (value !== "like" && value !== "unlike") {
+            apiReclackList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
         }
     }
 
@@ -638,13 +647,14 @@ export default function Dashboard(props) {
                         <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                        No Replies
+                            No Replies
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                        No Reclacks
+                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} />
+                        {/* No Reclacks */}
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                        No Liked Clacks
+                            No Liked Clacks
                         </TabPanel>
                     </div>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}

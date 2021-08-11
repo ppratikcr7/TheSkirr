@@ -26,11 +26,24 @@ export function apiTweetFeed(callback, nextUrl) {
     backendLookup("GET", endpoint, callback)
 }
 
-
 export function apiTweetList(username, callback, nextUrl) {
     let endpoint = "/tweets/"
     if (username) {
         endpoint = `/tweets/?username=${username}`
+    }
+    if (nextUrl !== null && nextUrl !== undefined) {
+        // console.log("nextUrl:", nextUrl);
+        // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
+        endpoint = nextUrl.replace("http://localhost:8000/api", "")
+    }
+    backendLookup("GET", endpoint, callback)
+}
+
+export function apiReclackList(username, callback, nextUrl) {
+    console.log("i m in apiReclackList")
+    let endpoint = "/tweets/reclacks/"
+    if (username) {
+        endpoint = `/tweets/reclacks/?username=${username}`
     }
     if (nextUrl !== null && nextUrl !== undefined) {
         // console.log("nextUrl:", nextUrl);
