@@ -1,0 +1,86 @@
+{% load crispy_forms_tags %}
+<center>
+    <form method='POST' enctype="multipart/form-data"> {% csrf_token %}
+        {% comment %} {{ form|crispy }} {% endcomment %}
+        {{ form.non_field_errors }}
+
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+
+        <div class="form-group" style="text-align: left;">
+
+            {% comment %} <label for="{{ form.first_name.id_for_label }}">First Name: </label> {% endcomment %}
+            {{ form.first_name |as_crispy_field }}
+            {{ form.first_name.errors }}
+
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+
+            {% comment %} <label for="{{ form.last_name.id_for_label }}">Last Name: </label> {% endcomment %}
+            {{ form.last_name |as_crispy_field }}
+            {{ form.last_Name.errors }}
+
+        </div>
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.phone_number.id_for_label }}">Phone Number: </label> {% endcomment %}
+            {{ form.phone_number |as_crispy_field}}
+            {{ form.phone_number.errors }}
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.phone_number_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.email.id_for_label }}">Email: </label> {% endcomment %}
+            {{ form.email |as_crispy_field}}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label>
+            {% endcomment %}
+            {{ form.email2 |as_crispy_field}}
+            {{ form.email2.errors }}
+        </div>
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.city.id_for_label }}">City: </label> {% endcomment %}
+            {{ form.city |as_crispy_field}}
+            {{ form.city.errors }}
+        </div>
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.dob.id_for_label }}">DOB: </label> {% endcomment %}
+            {{ form.dob |as_crispy_field}}
+            {{ form.dob.errors }}
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.gender.id_for_label }}">Gender: </label> {% endcomment %}
+            {{ form.gender |as_crispy_field}}
+            {{ form.gender.errors }}
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+            Would you like to make it public?
+            {% for choice in form.gender_public_access %}
+            {{ choice }}
+            {% endfor %}
+        </div>
+
+
+        <div class="form-group" style="text-align: left;">
+            {% comment %} <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest: </label>
+            {% endcomment %}
+            {{ form.areaOfInterest |as_crispy_field}}
+            {{ form.areaOfInterest.errors }}
+        </div>
+
+        <button type='submit' class='btn btn-primary'>{% if btn_label %}
+            {{btn_label}} {% else %}Submit{% endif %}</button>
+    </form>
+</center>
