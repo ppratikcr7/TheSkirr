@@ -8,6 +8,7 @@ from .views import (
     tweet_create_view,
     tweet_edit_view,
     tweet_reclack_view,
+    tweet_liked_clacks_view,
 )
 '''
 CLIENT
@@ -16,6 +17,7 @@ Base ENDPOINT /api/tweets/
 urlpatterns = [
     path('', tweet_list_view),
     path('reclacks/', tweet_reclack_view),
+    path('liked_clacks/', tweet_liked_clacks_view),
     path('feed/', tweet_feed_view),
     path('action/', tweet_action_view),
     path('create/', tweet_create_view),

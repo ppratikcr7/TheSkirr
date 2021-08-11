@@ -119,6 +119,17 @@ def get_total_clacks(request, *args, **kwargs):
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
+def get_total_reclacks(request, *args, **kwargs):
+    # get the profile for the passed username
+    me = request.user
+    qs = Profile.objects.filter(user__username=me)
+    if not qs.exists():
+        return Response({"detail": "User not found"}, status=404)
+    total_reclacks = Tweet.objects.filter(user__username=me).filter(parent_id__isnull=False).count()
+    return Response( total_reclacks, status=200)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def profile_details(request, username, *args, **kwargs):
     # get the profile for the passed username
     qs = Profile.objects.filter(user__username=username)

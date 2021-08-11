@@ -11,7 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from ..forms import TweetForm
-from ..models import Tweet
+from ..models import Tweet, TweetLike, UserRegisterDetails
 from ..serializers import (
     TweetSerializer, 
     TweetActionSerializer,
@@ -153,7 +153,6 @@ def tweet_list_view(request, *args, **kwargs):
     username = request.GET.get('username') # ?username=Pratik
     if username != None:
         qs = qs.by_username(username)
-        print("clacks: ", qs.values)
     return get_paginated_queryset_response(qs, request)
 
 @api_view(['GET'])
@@ -162,8 +161,17 @@ def tweet_reclack_view(request, *args, **kwargs):
     username = request.GET.get('username') # ?username=Pratik
     if username != None:
         qs = qs.by_username(username).filter(parent_id__isnull=False)
-        print("reclacks: ", qs.values)
     return get_paginated_queryset_response(qs, request)
+
+@api_view(['GET'])
+def tweet_liked_clacks_view(request, *args, **kwargs):
+    qs = TweetLike.objects.all()
+    username = request.GET.get('username') # ?username=Pratik
+    user_id  = UserRegisterDetails.objects.filter(username=username).values_list('id', flat=True).first()
+    if username != None:
+        liked_clack_ids = qs.filter(user_id = user_id).values("tweet_id")
+        liked_clacks = Tweet.objects.filter(id__in = liked_clack_ids)
+    return get_paginated_queryset_response(liked_clacks, request)
 
 def tweet_create_view_pure_django(request, *args, **kwargs):
     '''

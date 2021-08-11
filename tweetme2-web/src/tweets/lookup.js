@@ -32,7 +32,6 @@ export function apiTweetList(username, callback, nextUrl) {
         endpoint = `/tweets/?username=${username}`
     }
     if (nextUrl !== null && nextUrl !== undefined) {
-        // console.log("nextUrl:", nextUrl);
         // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
         endpoint = nextUrl.replace("http://localhost:8000/api", "")
     }
@@ -40,13 +39,23 @@ export function apiTweetList(username, callback, nextUrl) {
 }
 
 export function apiReclackList(username, callback, nextUrl) {
-    console.log("i m in apiReclackList")
     let endpoint = "/tweets/reclacks/"
     if (username) {
         endpoint = `/tweets/reclacks/?username=${username}`
     }
     if (nextUrl !== null && nextUrl !== undefined) {
-        // console.log("nextUrl:", nextUrl);
+        // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
+        endpoint = nextUrl.replace("http://localhost:8000/api", "")
+    }
+    backendLookup("GET", endpoint, callback)
+}
+
+export function apiLikedClacksList(username, callback, nextUrl) {
+    let endpoint = "/tweets/liked_clacks/"
+    if (username) {
+        endpoint = `/tweets/liked_clacks/?username=${username}`
+    }
+    if (nextUrl !== null && nextUrl !== undefined) {
         // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
         endpoint = nextUrl.replace("http://localhost:8000/api", "")
     }

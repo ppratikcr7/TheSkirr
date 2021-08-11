@@ -7,11 +7,14 @@ import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
 import { ReclacksList } from '../../tweets/list';
+import { LikedClacksList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
 import { apiReclackList } from '../../tweets/lookup';
+import { apiLikedClacksList} from '../../tweets/lookup';
+
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
@@ -138,6 +141,7 @@ export default function Dashboard(props) {
     // let [newUserName, setUserName] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
+    let [currentUserTotalReClacks, setCurrentUserTotalReClacks] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
@@ -174,6 +178,7 @@ export default function Dashboard(props) {
     useEffect(() => {
         getCurrentUserTotalLikes();
         getCurrentUserTotalClacks();
+        getCurrentUserTotalReClacks();
     })
 
     const handleCurrentUsername = (currentUserName) => {
@@ -190,6 +195,10 @@ export default function Dashboard(props) {
 
     const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
         setCurrentUserTotalClacks(currentUserTotalClacks)
+    }
+
+    const handleCurrentUserTotalReClacks = (currentUserTotalReClacks) => {
+        setCurrentUserTotalReClacks(currentUserTotalReClacks)
     }
 
     // who to follow:
@@ -248,6 +257,15 @@ export default function Dashboard(props) {
         }
     }
 
+    function getCurrentUserTotalReClacks() {
+        try {
+            let endpoint = `/profiles/current_user/reclacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalReClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
     // function getMainProfile(username) {
     //     try {
     //         let endpoint = `/profiles/user/${username}/`;
@@ -275,25 +293,35 @@ export default function Dashboard(props) {
     }
 
     function handleTweetList(value) {
-        console.log("value:", value);
         if (value !== "like" && value !== "unlike") {
             apiTweetList(null, handleListLookup);
         } else {
             getCurrentUserTotalLikes();
             getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
         }
     }
 
     function handleReclackList(value) {
-        console.log("value:", value);
         if (value !== "like" && value !== "unlike") {
             apiReclackList(null, handleListLookup);
         } else {
             getCurrentUserTotalLikes();
             getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
         }
     }
 
+    function handleLikedClacksList(value) {
+        if (value !== "like" && value !== "unlike") {
+            apiLikedClacksList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
+        }
+    }
+    
     const handleClick = ({ key }) => {
         window.localStorage.setItem('search_type', key);
         if (key == 0) {
@@ -399,7 +427,7 @@ export default function Dashboard(props) {
                             <li className="text-center px-4 border-b-2 border-solid border-transparent border-teal">
                                 <a href="#" className="text-grey-darker no-underline hover:no-underline">
                                     <div className="text-sm font-bold tracking-tight mb-1">ReClacks</div>
-                                    <div className="text-lg tracking-tight font-bold text-teal">0</div>
+                                    <div className="text-lg tracking-tight font-bold text-teal">{currentUserTotalReClacks ? currentUserTotalReClacks : "0"}</div>
                                 </a>
                             </li>
                             <li className="text-center px-4 border-b-2 border-solid border-transparent hover:border-teal">
@@ -640,7 +668,7 @@ export default function Dashboard(props) {
                             <Tab label="Clacks" {...a11yProps(0)} />
                             <Tab label="Replies" {...a11yProps(1)} disabled/>
                             <Tab label="Reclacks" {...a11yProps(2)} />
-                            <Tab label="Likes" {...a11yProps(3)} disabled/>
+                            <Tab label="Likes" {...a11yProps(3)} />
                         </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
@@ -650,11 +678,13 @@ export default function Dashboard(props) {
                             No Replies
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} />
+                        { (<ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} />) ? 
+                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} /> : "No Reclacks" }
                         {/* No Reclacks */}
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                            No Liked Clacks
+                        { (<LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} />) ? 
+                        <LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} /> : "No Liked Clacks" }
                         </TabPanel>
                     </div>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}
