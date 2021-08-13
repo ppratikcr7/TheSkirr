@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
-
+from django.db.models import Q
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.pagination import PageNumberPagination
@@ -172,6 +172,22 @@ def tweet_liked_clacks_view(request, *args, **kwargs):
         liked_clack_ids = qs.filter(user_id = user_id).values("tweet_id")
         liked_clacks = Tweet.objects.filter(id__in = liked_clack_ids)
     return get_paginated_queryset_response(liked_clacks, request)
+
+@api_view(['GET'])
+def tweet_searched_clacks_view(request, *args, **kwargs):
+    value = request.GET.get('value')
+    if value is not None:
+        lookups= Q(content__icontains=value)
+        searched_clacks = Tweet.objects.filter(lookups).distinct()
+    return get_paginated_queryset_response(searched_clacks, request)
+
+@api_view(['GET'])
+def tweet_searched_trending_clacks_view(request, *args, **kwargs):
+    value = request.GET.get('value')
+    if value is not None:
+        lookups= Q(content__icontains=value)
+        searched_trend_clacks = Tweet.objects.filter(lookups).distinct()
+    return get_paginated_queryset_response(searched_trend_clacks, request)
 
 def tweet_create_view_pure_django(request, *args, **kwargs):
     '''

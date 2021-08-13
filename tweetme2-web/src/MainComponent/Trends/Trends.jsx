@@ -330,11 +330,12 @@ export default function Trends(props) {
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Trending Exclamations to follow: </h1>
                             </div>
+                            <hr className="mt-2 mb-4"></hr>
                             <div class="flex justify-center">
                                 <div class="bg-white shadow-xl rounded-lg w-1/2">
                                     <ul class="divide-y divide-gray-300">
                                     {(trends) ? trends.map(function(trend, index){
-                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer"><a href=''>{trend.topic}</a></li>;
+                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer"><a href={"/profiles/search_trends/" + trend.topic}>{trend.topic}</a></li>;
                                         }) : ""}
                                     </ul>
                                 </div>
@@ -348,7 +349,7 @@ export default function Trends(props) {
                 <div className="w-full lg:w-1/6 pl-0">
                     <div className="bg-white p-3 mb-3">
                         <div>
-                            <span className="text-lg font-bold p-2">Trending Exclamations:</span>
+                            <span className="text-lg font-bold p-2">Who to Follow:</span>
                             <hr className="mt-2 mb-2"></hr>
                         </div>
                         <div className="p-3">

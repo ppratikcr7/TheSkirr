@@ -324,17 +324,18 @@ export default function SearchedUsers(props) {
                         <span className="text-lg font-bold">Who To Follow:</span>
                         <hr className="mt-2 mb-2"></hr>
                     </div> */}
-                    <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
+                    <div class="flex justify-center h-full" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Searched User: </h1>
                             </div>
+                            <hr className="mt-2 mb-4"></hr>
                             <div class="flex justify-center">
                                 <div class="bg-white shadow-xl rounded-lg w-1/2">
                                     <ul class="divide-y divide-gray-300">
-                                    {(usernames) ? usernames.map(function(name, index){
+                                    {usernames.length ? usernames.map(function(name, index){
                                             return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer"><a href={"/profiles/dashboard/" + name}>{name}</a></li>;
-                                        }) : <h2 class="text-l">No user found with the searched keyword!</h2>}
+                                        }) : <div class="flex justify-center p-1 mb-2">"No user found with the searched keyword!!"</div>}
                                     </ul>
                                 </div>
                             </div>

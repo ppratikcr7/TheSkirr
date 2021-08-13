@@ -400,7 +400,6 @@ export default function Dashboard(props) {
         }
     }
 
-
     // $('#clackText').trigger(function () {
     //     var maxLength = $(this).val().length;
     //     if (maxLength < MAX_TWEET_LENGTH) {
@@ -672,19 +671,20 @@ export default function Dashboard(props) {
                         </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
-                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                        { (<TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />) ? 
+                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} /> : "No Clacks by you!!!" }
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             No Replies
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                         { (<ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} />) ? 
-                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} /> : "No Reclacks" }
+                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} /> : "No Reclacks by you!!!" }
                         {/* No Reclacks */}
                         </TabPanel>
                         <TabPanel value={value} index={3}>
                         { (<LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} />) ? 
-                        <LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} /> : "No Liked Clacks" }
+                        <LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} /> : "No Liked Clacks by you!!!" }
                         </TabPanel>
                     </div>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}

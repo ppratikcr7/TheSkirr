@@ -61,3 +61,21 @@ export function apiLikedClacksList(username, callback, nextUrl) {
     }
     backendLookup("GET", endpoint, callback)
 }
+
+export function apiSearchedClacksList(value, callback, nextUrl) {
+    let endpoint = `/tweets/searched_clacks/?value=${value}`
+    if (nextUrl !== null && nextUrl !== undefined) {
+        // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
+        endpoint = nextUrl.replace("http://localhost:8000/api", "")
+    }
+    backendLookup("GET", endpoint, callback)
+}
+
+export function apiSearchedTrendAllClacksList(value, callback, nextUrl) {
+    let endpoint = `/tweets/searched_trending_clacks/?value=${value}`
+    if (nextUrl !== null && nextUrl !== undefined) {
+        // endpoint = nextUrl.replace("https://www.theskirr.com/api", "")
+        endpoint = nextUrl.replace("http://localhost:8000/api", "")
+    }
+    backendLookup("GET", endpoint, callback)
+}

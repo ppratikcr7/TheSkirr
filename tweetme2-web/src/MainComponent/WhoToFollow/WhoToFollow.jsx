@@ -329,6 +329,7 @@ export default function WhoToFollow(props) {
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Who to Follow: </h1>
                             </div>
+                            <hr className="mt-2 mb-4"></hr>
                             <div class="flex justify-center">
                                 <div class="bg-white shadow-xl rounded-lg w-1/2">
                                     <ul class="divide-y divide-gray-300">

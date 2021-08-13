@@ -326,6 +326,7 @@ export default function ReportAdverse(props) {
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Report Adverse Form: </h1>
                             </div>
+                            <hr className="mt-2 mb-4"></hr>
                             <div class="flex justify-center">
                             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe3Nt4qWVbpqHTo2QwMfviYo2FbknHh7Fk7PnD_pMQTpWFsEA/viewform?embedded=true" width="740" height="8127" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
                             </div>

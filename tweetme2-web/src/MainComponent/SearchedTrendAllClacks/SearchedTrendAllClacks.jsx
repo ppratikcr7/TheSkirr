@@ -4,7 +4,7 @@ import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { backendLookup } from '../../lookup/index';
-import './SearchedTrendClacks.css';
+import './SearchedTrendAllClacks.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import {
     UserWhoToFollowDisplay
@@ -16,6 +16,8 @@ import news1 from "../../Assets/news1.png";
 import news2 from "../../Assets/news2.png";
 import news3 from "../../Assets/news3.png";
 import $ from 'jquery';
+import {SearchedTrendAllClacksList } from '../../tweets/list';
+import { apiSearchedTrendAllClacksList} from '../../tweets/lookup';
 
 function ProfileBadge(props) {
     const {user, didFollowToggle, profileLoading} = props
@@ -69,12 +71,13 @@ export function ProfileBadgeComponent (props) {
 // Search feature
 const { Search } = Input;
 
-export default function SearchedTrendClacks(props) {
-    let {username, searched_trending_clacklist} = props;
-    searched_trending_clacklist = searched_trending_clacklist.replace(/'/g, '"')
-    const searched_trending_clacks = JSON.parse(searched_trending_clacklist)
-    console.log("clack trend list:", searched_trending_clacks);
+export default function SearchedTrendAllClacks(props) {
+    let {username, value} = props;
+    console.log("trend in jsx: ", value);
     let newUserName = username;
+    let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
+    let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
+    let [currentUserTotalReClacks, setCurrentUserTotalReClacks] = useState();
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
@@ -111,6 +114,9 @@ export default function SearchedTrendClacks(props) {
     }, [])
 
     useEffect(() => {
+        getCurrentUserTotalLikes();
+        getCurrentUserTotalClacks();
+        getCurrentUserTotalReClacks();
     })
 
     const handleCurrentUsername = (currentUserName) => {
@@ -119,6 +125,18 @@ export default function SearchedTrendClacks(props) {
 
     const handleNewProfile = (newProfile) => {
         setNewProfile(newProfile)
+    }
+
+    const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
+        setCurrentUserTotalLikes(currentUserTotalLikes)
+    }
+
+    const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
+        setCurrentUserTotalClacks(currentUserTotalClacks)
+    }
+
+    const handleCurrentUserTotalReClacks = (currentUserTotalReClacks) => {
+        setCurrentUserTotalReClacks(currentUserTotalReClacks)
     }
 
     // who to follow:
@@ -156,6 +174,50 @@ export default function SearchedTrendClacks(props) {
             backendLookup("GET", endpoint, handleWhoToFollowUser3)
         } catch (error) {
             console.log("error:", error);
+        }
+    }
+
+    function getCurrentUserTotalLikes() {
+        try {
+            let endpoint = `/profiles/current_user/likes/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalLikes)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getCurrentUserTotalClacks() {
+        try {
+            let endpoint = `/profiles/current_user/clacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getCurrentUserTotalReClacks() {
+        try {
+            let endpoint = `/profiles/current_user/reclacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalReClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+    const handleListLookup = (response, status) => {
+        if (status === 200) {
+            setNewTweets(response.results)
+        } else {
+            alert("There was an error")
+        }
+    }
+
+    function handleSearchedTrendAllClacks(value) {
+        if (value !== "like" && value !== "unlike") {
+            apiSearchedTrendAllClacksList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
         }
     }
 
@@ -323,20 +385,22 @@ export default function SearchedTrendClacks(props) {
                         <span className="text-lg font-bold">Who To Follow:</span>
                         <hr className="mt-2 mb-2"></hr>
                     </div> */}
-                    <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
+                    <div class="flex justify-center h-full" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Searched Trending Clacks: </h1>
                             </div>
                             <hr className="mt-2 mb-4"></hr>
-                            <div class="flex justify-center">
-                                <div class="bg-white shadow-xl rounded-lg w-1/2">
+                            <div>
+                            { (<SearchedTrendAllClacksList newTweets={newTweets} tweetHandle={handleSearchedTrendAllClacks} {...props} />) ? 
+                                <SearchedTrendAllClacksList newTweets={newTweets} tweetHandle={handleSearchedTrendAllClacks} {...props} /> : "No Searched Trending Clacks found!!!" }
+                                {/* <div class="bg-white shadow-xl rounded-lg w-1/2">
                                     <ul class="divide-y divide-gray-300">
-                                    {(searched_trending_clacks) ? searched_trending_clacks.map(function(clack, index){
-                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer"><a href={"/tweets/searched_trending_clacks/" + clack}>{clack}</a></li>;
+                                    {(searched_clackslist) ? searched_clackslist.map(function(clack, index){
+                                            return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer">{clack}</li>;
                                         }) : <h2 class="text-l">No clacks found with the searched keyword!</h2>}
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

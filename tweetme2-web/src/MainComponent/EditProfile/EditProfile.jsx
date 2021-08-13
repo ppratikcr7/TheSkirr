@@ -323,8 +323,9 @@ export default function EditProfile(props) {
                     <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
-                                <h1 class="text-xl text-blue-500">Title: </h1>
+                                <h1 class="text-xl text-blue-500">Update Profile: </h1>
                             </div>
+                            <hr className="mt-2 mb-4"></hr>
                         </div>
                     </div>
                 </div>

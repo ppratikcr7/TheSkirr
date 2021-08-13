@@ -326,6 +326,7 @@ export default function ClacksView(props) {
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Clack Thread: </h1>
                             </div>
+                            <hr className="mt-2 mb-4"></hr>
                             <div class="flex justify-center w-full bg-white mb-2">
                             <div class='tweetme-2-detail' data-tweetid={ tweet_id }
                                 data-class-name='col-6 mx-auto'>
