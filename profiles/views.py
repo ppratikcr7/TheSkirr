@@ -237,6 +237,7 @@ def dashboard_view(request, username, *args, **kwargs):
         em2 = profile_obj.email2
 
     context = {
+        "request_username":request.user.username,
         "username": username,        
         "profile": profile_obj,
         "fans": profile_obj2.followers.count(),

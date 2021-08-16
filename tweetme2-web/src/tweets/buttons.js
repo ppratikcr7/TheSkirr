@@ -22,5 +22,5 @@ export function ActionBtn(props) {
 
   }
   const display = action.type === 'like' ? `${likes} ${actionDisplay}` : actionDisplay
-  return <span className="mr-3"><a href="#" className="text-grey-dark hover:no-underline hover:text-red" onClick={handleClick}><i className={className}></i> {display}</a></span>
+  return <span className="mr-4 text-xs"><a href="#" className="text-grey-dark hover:no-underline hover:text-red" onClick={handleClick}><i className={className}></i> {display}</a></span>
 }

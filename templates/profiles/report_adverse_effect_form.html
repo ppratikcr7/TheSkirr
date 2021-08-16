@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
+<!-- <div class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
     <div class="w-full lg:w-1/5 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
         <div class="mb-4">
                 <a href="/profiles/my_wall/{{username}}">
@@ -32,16 +32,14 @@
     <div class="w-full lg:w-4/5 bg-white mb-4">
         <div class="flex items-center justify-center h-full bg-gray-100">
             <div class="container">
-                <!-- Replace this below iframe with your form -->
-                <!-- <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe3Nt4qWVbpqHTo2QwMfviYo2FbknHh7Fk7PnD_pMQTpWFsEA/viewform?embedded=true" width="940" height="8127" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
                 {% include "profiles/ReportAdverseForm.html" with form=form btn_label=btn_label %}
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- This below is the div which replace the reactjs component for the complete page -->
-<!-- <div id="tweetme-profile-reportAdverse" data-username="{{ username }}"></div> -->
+<div id="tweetme-profile-reportAdverse" data-username="{{ username }}"></div>
 <br>
 <br>
 <br>

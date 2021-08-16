@@ -134,7 +134,7 @@ export default function Dashboard(props) {
         setValue(newValue);
     };
 
-    const {username} = props;
+    const {username, requsername} = props;
     let newUserName = username;
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
@@ -339,28 +339,31 @@ export default function Dashboard(props) {
 
     function myfunction2(thisObj2){
         $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+        if (thisObj2.val().length > MAX_TWEET_LENGTH) {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = true;
+            }
+        }
+        else {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").empty();
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = false;
+            }
+        }
     }
 
-    function myfunction2a(thisObj2a){
-        var charLength = thisObj2a.val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
-        }
-        var textareaLength = document.getElementById("smallclackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error2").text((''));
-            return false;
-        }
-    }
+    
 
     $("#smallclackText").keyup(function () {
         myfunction2($(this));
     });
 
-    $('#smallclackText').keypress(function () {
-        myfunction2a($(this));
-    });
+    
 
     const menu = (
         <Menu onClick={handleClick}>
@@ -400,13 +403,7 @@ export default function Dashboard(props) {
         }
     }
 
-    // $('#clackText').trigger(function () {
-    //     var maxLength = $(this).val().length;
-    //     if (maxLength < MAX_TWEET_LENGTH) {
-    //         $("#error").text((''));
-    //         return false;
-    //     }
-    // });
+    
 
     return (
             <>  
@@ -508,7 +505,7 @@ export default function Dashboard(props) {
                 <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
                     </div>
                 </div>
 
@@ -646,8 +643,8 @@ export default function Dashboard(props) {
                                                 </div>
                                                 :
                                                 <div>
-                                                    <button className="btn btn-primary  my-3 mr-3"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
-                                                    <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
+                                                    <button className="btn text-xs btn-primary my-1 mr-5"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
+                                                    <button className='btn text-xs btn-primary my-1 mr-5'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
                                                     <br />
                                                 </div>
                                             }
@@ -671,20 +668,20 @@ export default function Dashboard(props) {
                         </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
-                        { (<TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />) ? 
-                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} /> : "No Clacks by you!!!" }
+                        { (<TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} req_user={newUserName}/>) ? 
+                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} req_user={newUserName}/> : "No Clacks by you!!!" }
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             No Replies
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                        { (<ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} />) ? 
-                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} /> : "No Reclacks by you!!!" }
+                        { (<ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} req_user={newUserName}/>) ? 
+                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} req_user={newUserName}/> : "No Reclacks by you!!!" }
                         {/* No Reclacks */}
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                        { (<LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} />) ? 
-                        <LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} /> : "No Liked Clacks by you!!!" }
+                        { (<LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} req_user={newUserName}/>) ? 
+                        <LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} req_user={newUserName}/> : "No Liked Clacks by you!!!" }
                         </TabPanel>
                     </div>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}

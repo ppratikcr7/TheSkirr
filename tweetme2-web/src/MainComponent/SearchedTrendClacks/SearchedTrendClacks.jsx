@@ -176,28 +176,31 @@ export default function SearchedTrendClacks(props) {
 
     function myfunction2(thisObj2){
         $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+        if (thisObj2.val().length > MAX_TWEET_LENGTH) {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = true;
+            }
+        }
+        else {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").empty();
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = false;
+            }
+        }
     }
 
-    function myfunction2a(thisObj2a){
-        var charLength = thisObj2a.val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
-        }
-        var textareaLength = document.getElementById("smallclackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error2").text((''));
-            return false;
-        }
-    }
+    
     
     $("#smallclackText").keyup(function () {
         myfunction2($(this));
     });
 
-    $('#smallclackText').keypress(function () {
-        myfunction2a($(this));
-    });
+    
 
     const menu = (
         <Menu onClick={handleClick}>
@@ -236,13 +239,7 @@ export default function SearchedTrendClacks(props) {
         }
     }
 
-    // $('#clackText').trigger(function () {
-    //     var maxLength = $(this).val().length;
-    //     if (maxLength < MAX_TWEET_LENGTH) {
-    //         $("#error").text((''));
-    //         return false;
-    //     }
-    // });
+    
     // let uname = [];
     // { (usernamelist) ? (uname = usernamelist.map((username) =>
     // <li className="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/dashboard/{{username}}'>{username}</a></li>)) : uname=[]}
@@ -313,7 +310,7 @@ export default function SearchedTrendClacks(props) {
                 <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
                     </div>
                 </div>
             

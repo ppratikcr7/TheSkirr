@@ -7,9 +7,6 @@ import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
 import './Mywall.css';
-import NSAII_logo from '../../Assets/nsaii_logo.png';
-import tick from '../../Assets/tick.png';
-import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
 import {
     UserWhoToFollowDisplay
@@ -18,11 +15,14 @@ import news1 from "../../Assets/news1.png";
 import news2 from "../../Assets/news2.png";
 import news3 from "../../Assets/news3.png";
 import $ from 'jquery';
+import LinkPreview from '@ashwamegh/react-link-preview'
+// If you're using built in layout, you will need to import this css
+import '@ashwamegh/react-link-preview/dist/index.css'
+
 const { Search } = Input;
 
+
 export default function MyWall(props) {
-    // const {username} = props;
-    // let newUserName = username;
     let [newProfile, setNewProfile] = useState();
     let [newUserName, setUserName] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
@@ -32,10 +32,8 @@ export default function MyWall(props) {
     const [newTweets, setNewTweets] = useState([]);
     const canTweet = props.canTweet === "false" ? false : true
     const handleNewTweet = (newTweet) => {
-        console.log("newTweet1:", newTweet);
         let tempNewTweets = [...newTweets]
         tempNewTweets.unshift(newTweet)
-        console.log("tempNewTweets2:", tempNewTweets);
         setNewTweets(tempNewTweets)
     }
     const handleNewUsername = (newUserName) => {
@@ -98,15 +96,6 @@ export default function MyWall(props) {
         }
     }
 
-    // join date update:
-    if (newProfile && newProfile.date_joined) {
-        var date = newProfile.date_joined;
-        var cleanDate = formatDate(date)
-    }
-    else {
-        var cleanDate = "1 Jan 2021, 12AM";
-    }
-
     const handleListLookup = (response, status) => {
         if (status === 200) {
             setNewTweets(response.results)
@@ -116,12 +105,9 @@ export default function MyWall(props) {
     }
 
     function handleTweetList(value) {
-        console.log("value:", value);
         if (value !== "like" && value !== "unlike") {
-            console.log("enter1");
             apiTweetList(null, handleListLookup);
         } else {
-            console.log("enter2");
             console.log("setNewTweets", newTweets);
         }
     }
@@ -138,36 +124,54 @@ export default function MyWall(props) {
     const MAX_TWEET_LENGTH = 200;
 
     function myfunction1(thisObj1){
-        $("#info1").text((thisObj1.val().length) + " / " + MAX_TWEET_LENGTH)
-    }
+        var text = $('textarea#clackText').val();
+        let clack_length = thisObj1.val().length;
+        const linksFound = text && text.match(/(?:www|https?)[^\s]+/g);
+        console.log("linksFound: ", linksFound);
+        if (linksFound != null) {
+            for (let i = 0; i < linksFound.length; i++) {
+              let url = linksFound[i];
+              let url_char_length = url.length;
+              clack_length = clack_length - url_char_length + 1
+            }
+        }
+        $("#info1").text(clack_length + " / " + MAX_TWEET_LENGTH)
 
-    function myfunction1a(thisObj1a){
-        var charLength = thisObj1a.val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
+        if (thisObj1.val().length > MAX_TWEET_LENGTH) {
+            var element = document.getElementById("clack_btn1");
             $("#error1").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = true;
+            }
         }
-        var textareaLength = document.getElementById("clackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error1").text((''));
-            return false;
+        else {
+            var element = document.getElementById("clack_btn1");
+            $("#error1").empty();
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = false;
+            }
         }
     }
-      
+    
     function myfunction2(thisObj2){
         $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
-    }
-
-    function myfunction2a(thisObj2a){
-        var charLength = thisObj2a.val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
+        if (thisObj2.val().length > MAX_TWEET_LENGTH) {
+            var element = document.getElementById("clack_btn2");
             $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = true;
+            }
         }
-        var textareaLength = document.getElementById("smallclackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error2").text((''));
-            return false;
+        else {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").empty();
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = false;
+            }
         }
     }
 
@@ -175,16 +179,8 @@ export default function MyWall(props) {
         myfunction1($(this));
     });
 
-    $('#clackText').keypress(function () {
-        myfunction1a($(this));
-    });
-
     $("#smallclackText").keyup(function () {
         myfunction2($(this));
-    });
-
-    $('#smallclackText').keypress(function () {
-        myfunction2a($(this));
     });
 
     const handleClick = ({ key }) => {
@@ -237,14 +233,6 @@ export default function MyWall(props) {
             console.log("error in search:", error);
         }
     }
-
-    // $('#clackText').trigger(function () {
-    //     var maxLength = $(this).val().length;
-    //     if (maxLength < MAX_TWEET_LENGTH) {
-    //         $("#error").text((''));
-    //         return false;
-    //     }
-    // });
 
     return (
         <>
@@ -308,7 +296,7 @@ export default function MyWall(props) {
                 <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
                     </div>
                 </div>
 
@@ -319,12 +307,13 @@ export default function MyWall(props) {
                         </div>
                         <hr className="mt-2 mb-2"></hr>
                     </div>
+                    {/* <LinkPreview url="https://www.google.co.in" /> */}
                     <br />
                     <span className="mb-2 pl-4"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-2 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='clackText' className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='clackText' btnid='clack_btn1' className='col-12 mb-3' />}
                     </div>
-                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                    <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} req_user={newUserName}/>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}
 
                 </div>
