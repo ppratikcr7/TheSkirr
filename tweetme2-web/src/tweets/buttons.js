@@ -1,11 +1,9 @@
 import React from 'react'
-
 import { apiTweetAction } from './lookup'
 
 export function ActionBtn(props) {
   const { tweet, action, didPerformAction } = props
   const likes = tweet.likes ? tweet.likes : 0
-  // console.log("likes:", tweet, likes)
   // debugger
   const className = props.className ? props.className : 'btn btn-primary btn-sm'
   const actionDisplay = action.display ? action.display : 'Action'
