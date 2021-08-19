@@ -11,6 +11,15 @@ class TweetLike(models.Model):
     tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+class TweetUnLike(models.Model):
+    user1 = models.ForeignKey(UserRegisterDetails, on_delete=models.CASCADE)
+    tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+class TweetReClack(models.Model):
+    user2 = models.ForeignKey(UserRegisterDetails, on_delete=models.CASCADE)
+    tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 class TweetQuerySet(models.QuerySet):
     def by_username(self, username):
         return self.filter(user__username__iexact=username)
@@ -38,6 +47,8 @@ class Tweet(models.Model):
     parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(UserRegisterDetails, on_delete=models.CASCADE, related_name="tweets") # many users can many tweets
     likes = models.ManyToManyField(UserRegisterDetails, related_name='tweet_user', blank=True, through=TweetLike)
+    unlikes = models.ManyToManyField(UserRegisterDetails, related_name='tweet_user1', blank=True, through=TweetUnLike)
+    reclacks = models.ManyToManyField(UserRegisterDetails, related_name='tweet_user2', blank=True, through=TweetReClack)
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='images/', blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -61,4 +72,5 @@ class Tweet(models.Model):
             "id": self.id,
             "content": self.content,
             "likes": random.randint(0, 200)
+            # "reclacks": random.randint(0, 200)
         }

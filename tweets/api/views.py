@@ -11,7 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from ..forms import TweetForm
-from ..models import Tweet, TweetLike, UserRegisterDetails
+from ..models import Tweet, TweetLike, TweetUnLike, UserRegisterDetails
 from ..serializers import (
     TweetSerializer, 
     TweetActionSerializer,
@@ -85,23 +85,32 @@ def tweet_action_view(request, *args, **kwargs):
         action = data.get("action")
         content = data.get("content")
         qs = Tweet.objects.filter(id=tweet_id)
-        print("qs:", qs.values())
         if not qs.exists():
             return Response({}, status=404)
         obj = qs.first()
-        # print("first obj:", obj.likes)
+        me = request.user
+        user_id = UserRegisterDetails.objects.filter(username=me).values_list('id', flat=True).first()
+        
         if action == "like":
-            obj.likes.add(request.user)
-            # print("like obj:", obj)
+            like_obj = TweetLike.objects.filter(tweet_id=tweet_id).filter(user_id=user_id).exists()
+            if(like_obj):
+                obj.likes.remove(request.user)
+            else:
+                obj.likes.add(request.user)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
 
         elif action == "unlike":
-            obj.likes.remove(request.user)
+            unlike_obj = TweetUnLike.objects.filter(tweet_id=tweet_id).filter(user1_id=user_id).exists()
+            if(unlike_obj):
+                obj.unlikes.remove(request.user)
+            else:
+                obj.unlikes.add(request.user)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
 
         elif action == "retweet":
+            obj.reclacks.add(request.user)
             new_tweet = Tweet.objects.create(
                     user=request.user, 
                     parent=obj,

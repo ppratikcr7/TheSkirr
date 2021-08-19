@@ -92,6 +92,7 @@ export function Tweet(props) {
     console.log("action:", action);
     if (status === 200) {
       setActionTweet(newActionTweet)
+      console.log("delete update done:", action);
       // if (action === "delete") {
       props.tweetHandle(action);
       // }
@@ -103,7 +104,7 @@ export function Tweet(props) {
   }
 
   const handleActionBackendEvent = (response, status) => {
-    console.log(response, status)
+    console.log("in delete backend: ", response, status)
     if ((status === 200 || status === 201) && handlePerformAction) {
       handlePerformAction(response, status, "delete")
     }
@@ -113,6 +114,7 @@ export function Tweet(props) {
     apiTweetAction(actionTweet.id, "delete", handleActionBackendEvent)
   }
   function handleMenuItemClick({ key }) {
+    console.log("key: ", key)
     if (key == 1) {
       setIsEditable(true);
     } else {
@@ -236,7 +238,7 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
         </React.Fragment>
         }
-        <time className='mr-3 text-xs'>{tweetTimestampClean}</time>
+        <time className='mr-8 text-xs'>{tweetTimestampClean}</time>
         {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm text-xs mt-1' onClick={handleLink}>View Clack Thread</button>}
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm text-xs mt-1' onClick={handleLink}>View Clack</button>}
 

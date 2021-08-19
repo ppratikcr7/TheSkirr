@@ -25,14 +25,22 @@ class TweetEditSerializer(serializers.Serializer):
 class TweetCreateSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True) # serializers.SerializerMethodField(read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
+    unlikes = serializers.SerializerMethodField(read_only=True)
+    reclacks = serializers.SerializerMethodField(read_only=True)
     
     class Meta:
         model = Tweet
-        fields = ['user', 'id', 'content', 'likes', 'timestamp']
+        fields = ['user', 'id', 'content', 'likes', 'unlikes', 'reclacks', 'timestamp']
     
     def get_likes(self, obj):
         return obj.likes.count()
     
+    def get_unlikes(self, obj):
+        return obj.unlikes.count()
+
+    def get_reclacks(self, obj):
+        return obj.reclacks.count()
+
     def validate_content(self, value):
         if len(value) > MAX_TWEET_LENGTH:
             raise serializers.ValidationError("This tweet is too long")
@@ -45,6 +53,8 @@ class TweetCreateSerializer(serializers.ModelSerializer):
 class TweetSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
+    unlikes = serializers.SerializerMethodField(read_only=True)
+    reclacks = serializers.SerializerMethodField(read_only=True)
     parent = TweetCreateSerializer(read_only=True)
     class Meta:
         model = Tweet
@@ -53,9 +63,17 @@ class TweetSerializer(serializers.ModelSerializer):
                 'id', 
                 'content',
                 'likes',
+                'unlikes',
+                'reclacks',
                 'is_retweet',
                 'parent',
                 'timestamp']
 
     def get_likes(self, obj):
         return obj.likes.count()
+    
+    def get_unlikes(self, obj):
+        return obj.unlikes.count()
+
+    def get_reclacks(self, obj):
+        return obj.reclacks.count()

@@ -573,6 +573,68 @@ export default function Dashboard(props) {
                                                     </span>
                                                     <span class="tracking-wide">About</span>
                                                 </div>
+                                                { (currentUserName == username) ?
+                                                <div class="text-gray-700">
+                                                    <div className="grid md:grid-cols-2 text-xs">
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">First Name</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.first_name}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Last Name</div>
+                                                            <div class="px-2 py-2">{newProfile ? newProfile.last_name : "-"}</div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Gender</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.gender}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Contact No.</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.phone_number}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Email</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">
+                                                                {/* <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a> */}
+                                                                {newProfile && newProfile.email}
+                                                            </div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Birthday</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{ newProfile && newProfile.dob}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Sec.Email</div>
+                                                            <div class="px-2 py-2">
+                                                                {/* <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a> */}
+                                                                {newProfile ? newProfile.email2 : "-"}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Fans</div>
+                                                            <div class="px-2 py-2">
+                                                                {newProfile && newProfile.follower_count}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Companions</div>
+                                                            <div class="px-2 py-2">
+                                                                {newProfile && newProfile.following_count}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                :
                                                 <div class="text-gray-700">
                                                     <div className="grid md:grid-cols-2 text-xs">
                                                         <div class="grid grid-cols-2">
@@ -632,7 +694,7 @@ export default function Dashboard(props) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> }
                                             </div>
                                             {/* End of about section  */}
                                             { (newUserName && newUserName != currentUserName) ?
