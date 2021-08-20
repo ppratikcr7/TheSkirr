@@ -11,9 +11,9 @@ import {
   UserPicture,
   UserLink
 } from '../profiles'
-import LinkPreview from '@ashwamegh/react-link-preview'
+// import LinkPreview from '@ashwamegh/react-link-preview'
 // If you're using built in layout, you will need to import this css
-import '@ashwamegh/react-link-preview/dist/index.css'
+// import '@ashwamegh/react-link-preview/dist/index.css'
 import { apiTweetAction } from './lookup'
 
 export function ParentTweet(props) {
@@ -238,7 +238,7 @@ export function Tweet(props) {
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
         </React.Fragment>
         }
-        <time className='mr-8 text-xs'>{tweetTimestampClean}</time>
+        <time className='mr-10 text-xs'>{tweetTimestampClean}</time>
         {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm text-xs mt-1' onClick={handleLink}>View Clack Thread</button>}
         {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm text-xs mt-1' onClick={handleLink}>View Clack</button>}
 
