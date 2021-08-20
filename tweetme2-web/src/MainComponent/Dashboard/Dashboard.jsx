@@ -10,6 +10,7 @@ import { ReclacksList } from '../../tweets/list';
 import { LikedClacksList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
+import tick from '../../Assets/tick.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
 import { apiReclackList } from '../../tweets/lookup';
