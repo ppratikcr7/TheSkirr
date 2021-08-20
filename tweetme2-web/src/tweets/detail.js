@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react'
 import { MoreOutlined, EditOutlined, DeleteOutlined, WechatOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button, message, Comment, Avatar, Form, List, Input } from 'antd';
@@ -12,12 +11,16 @@ import {
   UserPicture,
   UserLink
 } from '../profiles'
-
+// import LinkPreview from '@ashwamegh/react-link-preview'
+// If you're using built in layout, you will need to import this css
+// import '@ashwamegh/react-link-preview/dist/index.css'
+import { apiTweetAction } from './lookup'
 
 export function ParentTweet(props) {
-  const { tweet } = props
-  return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} /> : null
+  const { tweet, request_user } = props
+  return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} request_user={request_user} /> : null
 }
+
 export function Tweet(props) {
   let [isEditable, setIsEditable] = useState(false),
     [isCommentable, setIsCommentable] = useState(false),
@@ -25,14 +28,14 @@ export function Tweet(props) {
     [replyValue, setReplyValue] = useState('');
 
   let commentRef = useRef(null);
-
-
   const { TextArea } = Input;
+
   useEffect(() => {
     if (commentRef.current) {
       commentRef.current.focus();
     }
   }, [commentRef]);
+
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
       <Form.Item>
@@ -45,6 +48,7 @@ export function Tweet(props) {
       </Form.Item>
     </>
   );
+
   function handleSubmit() {
     if (!replyValue) {
       return;
@@ -72,27 +76,60 @@ export function Tweet(props) {
     setReplyValue(e.target.value);
     commentRef.current.focus();
   };
+
   const menu = (
     <Menu onClick={handleMenuItemClick}>
       <Menu.Item key="1" icon={<EditOutlined />}>
         Edit
       </Menu.Item>
-      {/* <Menu.Item key="2" icon={<DeleteOutlined />}>
+      <Menu.Item key="2" icon={<DeleteOutlined />}>
         Delete
-      </Menu.Item> */}
+      </Menu.Item>
     </Menu>
   );
-  function handleMenuItemClick(e) {
-    setIsEditable(true);
+
+  const handlePerformAction = (newActionTweet, status, action) => {
+    console.log("action:", action);
+    if (status === 200) {
+      setActionTweet(newActionTweet)
+      console.log("delete update done:", action);
+      // if (action === "delete") {
+      props.tweetHandle(action);
+      // }
+    } else if (status === 201) {
+      if (didRetweet) {
+        didRetweet(newActionTweet)
+      }
+    }
   }
+
+  const handleActionBackendEvent = (response, status) => {
+    console.log("in delete backend: ", response, status)
+    if ((status === 200 || status === 201) && handlePerformAction) {
+      handlePerformAction(response, status, "delete")
+    }
+  }
+
+  function deleteClack(){
+    apiTweetAction(actionTweet.id, "delete", handleActionBackendEvent)
+  }
+  function handleMenuItemClick({ key }) {
+    console.log("key: ", key)
+    if (key == 1) {
+      setIsEditable(true);
+    } else {
+      deleteClack();
+    }
+  }
+
   function handleButtonClick(e) {
     message.info('Click on left button.');
     console.log('click left button', e);
   }
+
   const clackContent = React.createRef()
-  const { tweet, didRetweet, hideActions, isRetweet, retweeter } = props
+  const { tweet, didRetweet, hideActions, isRetweet, retweeter, req_user } = props
   const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
-  // console.log("props.tweet:", props.tweet);
   const [newTweetContent, setNewTweetContent] = useState();
   let className = props.className ? props.className : 'col-10 mx-auto col-md-6'
   className = isRetweet === true ? `${className} p-2 border rounded` : className
@@ -112,19 +149,7 @@ export function Tweet(props) {
     event.preventDefault()
     window.location.href = `/${tweet.id}`
   }
-  const handlePerformAction = (newActionTweet, status, action) => {
-    // console.log("action:", action);
-    if (status === 200) {
-      setActionTweet(newActionTweet)
-      // if (action === "delete") {
-      props.tweetHandle(action);
-      // }
-    } else if (status === 201) {
-      if (didRetweet) {
-        didRetweet(newActionTweet)
-      }
-    }
-  }
+  
 
   const convertLinks = (input) => {
     let text = input;
@@ -135,6 +160,8 @@ export function Tweet(props) {
 
       for (let i = 0; i < linksFound.length; i++) {
         let replace = linksFound[i];
+        // aLink.push('<div><LinkPreview url="'+ replace + '" /></div>')
+        
         if (!(linksFound[i].match(/(http(s?)):\/\//))) { replace = 'http://' + linksFound[i] }
         let linkText = replace.split('/')[2];
         if (linkText.substring(0, 3) == 'www') { linkText = linkText.replace('www.', '') }
@@ -160,13 +187,8 @@ export function Tweet(props) {
     }
   }
   const handleNewTweet = (action) => {
-    console.log("newTweet1:", action);
     setIsEditable(false);
     props.tweetHandle(action);
-    // let tempNewTweets = [...newTweets]
-    // tempNewTweets.unshift(newTweet)
-    // console.log("tempNewTweets2:", tempNewTweets);
-    // setNewTweets(tempNewTweets)
   }
 
   return <div className="flex border-b border-solid border-grey-light">
@@ -185,8 +207,9 @@ export function Tweet(props) {
         </div>
         <div>
           {/* <MoreOutlined /> */}
+          { (tweet.user.username == req_user) ?
           <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
-          </Dropdown.Button>
+          </Dropdown.Button> : <div></div> }
         </div>
       </div>
 
@@ -209,16 +232,15 @@ export function Tweet(props) {
       <div className="pb-2">
         {(actionTweet && hideActions !== true) && <React.Fragment>
           {/* <ActionBtn className={"fa fa-reply fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "reply", display: "Reply" }} /> */}
-          <WechatOutlined className={"mr-2"} onClick={() => setIsCommentable(true)} /> {"Reply"}
-          <ActionBtn className={"fa fa-retweet fa-lg ml-2 mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
+          <WechatOutlined className={"mr-2"} onClick={() => setIsCommentable(true)} /> <span className={"text-xs"}>Reply</span>
+          <ActionBtn className={"fa fa-retweet fa-lg ml-3 mr-3"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "retweet", display: "Reclack" }} />
           <ActionBtn className={"fa fa-thumbs-up"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "like", display: "Likes" }} />
           <ActionBtn className={"fa fa-thumbs-down"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "unlike", display: "Unlike" }} />
-          <ActionBtn className={"fa fa-trash fa-lg mr-2"} tweet={actionTweet} didPerformAction={handlePerformAction} action={{ type: "delete", display: "Delete" }} />
         </React.Fragment>
         }
-        <time className='mr-3'>{tweetTimestampClean}</time>
-        {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack Thread</button>}
-        {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm mt-1' onClick={handleLink}>View Clack</button>}
+        <time className='mr-10 text-xs'>{tweetTimestampClean}</time>
+        {(isDetail !== true && hideActions === true) ? null : <button className='btn btn-outline-primary btn-sm text-xs mt-1' onClick={handleLink}>View Clack Thread</button>}
+        {(hideActions !== true) ? null : <button className='btn btn-outline-primary btn-sm text-xs mt-1' onClick={handleLink}>View Clack</button>}
 
       </div>
       {isCommentable &&

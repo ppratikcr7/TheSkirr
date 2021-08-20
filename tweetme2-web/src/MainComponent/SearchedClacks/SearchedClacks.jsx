@@ -16,6 +16,8 @@ import news1 from "../../Assets/news1.png";
 import news2 from "../../Assets/news2.png";
 import news3 from "../../Assets/news3.png";
 import $ from 'jquery';
+import { SearchedclacksList } from '../../tweets/list';
+import { apiSearchedClacksList} from '../../tweets/lookup';
 
 function ProfileBadge(props) {
     const {user, didFollowToggle, profileLoading} = props
@@ -70,11 +72,14 @@ export function ProfileBadgeComponent (props) {
 const { Search } = Input;
 
 export default function SearchedClacks(props) {
-    let {username, searched_clacklist} = props;
-    searched_clacklist = searched_clacklist.replace(/'/g, '"')
-    const searched_clackslist = JSON.parse(searched_clacklist)
-    console.log("searched_clackslist:", searched_clackslist);
+    let {username, value} = props;
+    // searched_clacklist = searched_clacklist.replace(/'/g, '"')
+    // const searched_clackslist = JSON.parse(searched_clacklist)
+    console.log("searched value:", value);
     let newUserName = username;
+    let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
+    let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
+    let [currentUserTotalReClacks, setCurrentUserTotalReClacks] = useState();
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
@@ -111,6 +116,9 @@ export default function SearchedClacks(props) {
     }, [])
 
     useEffect(() => {
+        getCurrentUserTotalLikes();
+        getCurrentUserTotalClacks();
+        getCurrentUserTotalReClacks();
     })
 
     const handleCurrentUsername = (currentUserName) => {
@@ -119,6 +127,18 @@ export default function SearchedClacks(props) {
 
     const handleNewProfile = (newProfile) => {
         setNewProfile(newProfile)
+    }
+
+    const handleCurrentUserTotalLikes = (currentUserTotalLikes) => {
+        setCurrentUserTotalLikes(currentUserTotalLikes)
+    }
+
+    const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
+        setCurrentUserTotalClacks(currentUserTotalClacks)
+    }
+
+    const handleCurrentUserTotalReClacks = (currentUserTotalReClacks) => {
+        setCurrentUserTotalReClacks(currentUserTotalReClacks)
     }
 
     // who to follow:
@@ -159,6 +179,50 @@ export default function SearchedClacks(props) {
         }
     }
 
+    function getCurrentUserTotalLikes() {
+        try {
+            let endpoint = `/profiles/current_user/likes/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalLikes)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getCurrentUserTotalClacks() {
+        try {
+            let endpoint = `/profiles/current_user/clacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
+    function getCurrentUserTotalReClacks() {
+        try {
+            let endpoint = `/profiles/current_user/reclacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalReClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+    const handleListLookup = (response, status) => {
+        if (status === 200) {
+            setNewTweets(response.results)
+        } else {
+            alert("There was an error")
+        }
+    }
+
+    function handleSearchedclackList(value) {
+        if (value !== "like" && value !== "unlike") {
+            apiSearchedClacksList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
+        }
+    }
+
     const handleClick = ({ key }) => {
         window.localStorage.setItem('search_type', key);
         if (key == 0) {
@@ -176,28 +240,31 @@ export default function SearchedClacks(props) {
 
     function myfunction2(thisObj2){
         $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+        if (thisObj2.val().length > MAX_TWEET_LENGTH) {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = true;
+            }
+        }
+        else {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").empty();
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = false;
+            }
+        }
     }
 
-    function myfunction2a(thisObj2a){
-        var charLength = thisObj2a.val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
-        }
-        var textareaLength = document.getElementById("smallclackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error2").text((''));
-            return false;
-        }
-    }
+    
     
     $("#smallclackText").keyup(function () {
         myfunction2($(this));
     });
 
-    $('#smallclackText').keypress(function () {
-        myfunction2a($(this));
-    });
+    
 
     const menu = (
         <Menu onClick={handleClick}>
@@ -236,13 +303,7 @@ export default function SearchedClacks(props) {
         }
     }
 
-    // $('#clackText').trigger(function () {
-    //     var maxLength = $(this).val().length;
-    //     if (maxLength < MAX_TWEET_LENGTH) {
-    //         $("#error").text((''));
-    //         return false;
-    //     }
-    // });
+    
     // let uname = [];
     // { (usernamelist) ? (uname = usernamelist.map((username) =>
     // <li className="p-4 hover:bg-gray-50 cursor-pointer"><a href='/profiles/dashboard/{{username}}'>{username}</a></li>)) : uname=[]}
@@ -313,7 +374,7 @@ export default function SearchedClacks(props) {
                 <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
                     </div>
                 </div>
             
@@ -323,19 +384,22 @@ export default function SearchedClacks(props) {
                         <span className="text-lg font-bold">Who To Follow:</span>
                         <hr className="mt-2 mb-2"></hr>
                     </div> */}
-                    <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
+                    <div class="flex justify-center h-full" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">
                                 <h1 class="text-xl text-blue-500">Searched Clacks: </h1>
                             </div>
-                            <div class="flex justify-center">
-                                <div class="bg-white shadow-xl rounded-lg w-1/2">
+                            <hr className="mt-2 mb-4"></hr>
+                            <div>
+                            { (<SearchedclacksList newTweets={newTweets} tweetHandle={handleSearchedclackList} {...props} />) ? 
+                                <SearchedclacksList newTweets={newTweets} tweetHandle={handleSearchedclackList} {...props} /> : "No Searched Clacks found!!!" }
+                                {/* <div class="bg-white shadow-xl rounded-lg w-1/2">
                                     <ul class="divide-y divide-gray-300">
                                     {(searched_clackslist) ? searched_clackslist.map(function(clack, index){
                                             return <li key={index} className="p-4 hover:bg-gray-50 cursor-pointer">{clack}</li>;
                                         }) : <h2 class="text-l">No clacks found with the searched keyword!</h2>}
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -4,14 +4,14 @@ from django.conf import settings
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
-
+from django.db.models import Q
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from ..forms import TweetForm
-from ..models import Tweet
+from ..models import Tweet, TweetLike, TweetUnLike, UserRegisterDetails
 from ..serializers import (
     TweetSerializer, 
     TweetActionSerializer,
@@ -85,23 +85,32 @@ def tweet_action_view(request, *args, **kwargs):
         action = data.get("action")
         content = data.get("content")
         qs = Tweet.objects.filter(id=tweet_id)
-        print("qs:", qs.values())
         if not qs.exists():
             return Response({}, status=404)
         obj = qs.first()
-        # print("first obj:", obj.likes)
+        me = request.user
+        user_id = UserRegisterDetails.objects.filter(username=me).values_list('id', flat=True).first()
+        
         if action == "like":
-            obj.likes.add(request.user)
-            # print("like obj:", obj)
+            like_obj = TweetLike.objects.filter(tweet_id=tweet_id).filter(user_id=user_id).exists()
+            if(like_obj):
+                obj.likes.remove(request.user)
+            else:
+                obj.likes.add(request.user)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
 
         elif action == "unlike":
-            obj.likes.remove(request.user)
+            unlike_obj = TweetUnLike.objects.filter(tweet_id=tweet_id).filter(user1_id=user_id).exists()
+            if(unlike_obj):
+                obj.unlikes.remove(request.user)
+            else:
+                obj.unlikes.add(request.user)
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
 
         elif action == "retweet":
+            obj.reclacks.add(request.user)
             new_tweet = Tweet.objects.create(
                     user=request.user, 
                     parent=obj,
@@ -155,7 +164,39 @@ def tweet_list_view(request, *args, **kwargs):
         qs = qs.by_username(username)
     return get_paginated_queryset_response(qs, request)
 
+@api_view(['GET'])
+def tweet_reclack_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    username = request.GET.get('username') # ?username=Pratik
+    if username != None:
+        qs = qs.by_username(username).filter(parent_id__isnull=False)
+    return get_paginated_queryset_response(qs, request)
 
+@api_view(['GET'])
+def tweet_liked_clacks_view(request, *args, **kwargs):
+    qs = TweetLike.objects.all()
+    username = request.GET.get('username') # ?username=Pratik
+    user_id  = UserRegisterDetails.objects.filter(username=username).values_list('id', flat=True).first()
+    if username != None:
+        liked_clack_ids = qs.filter(user_id = user_id).values("tweet_id")
+        liked_clacks = Tweet.objects.filter(id__in = liked_clack_ids)
+    return get_paginated_queryset_response(liked_clacks, request)
+
+@api_view(['GET'])
+def tweet_searched_clacks_view(request, *args, **kwargs):
+    value = request.GET.get('value')
+    if value is not None:
+        lookups= Q(content__icontains=value)
+        searched_clacks = Tweet.objects.filter(lookups).distinct()
+    return get_paginated_queryset_response(searched_clacks, request)
+
+@api_view(['GET'])
+def tweet_searched_trending_clacks_view(request, *args, **kwargs):
+    value = request.GET.get('value')
+    if value is not None:
+        lookups= Q(content__icontains=value)
+        searched_trend_clacks = Tweet.objects.filter(lookups).distinct()
+    return get_paginated_queryset_response(searched_trend_clacks, request)
 
 def tweet_create_view_pure_django(request, *args, **kwargs):
     '''

@@ -1,0 +1,137 @@
+<style>
+    .errorlist
+        {
+            color: red;
+        }
+</style>
+
+<form method='POST' enctype = "multipart/form-data" autocomplete="on" class="mb-3"> 
+{% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="form-group">
+        <label for="{{ form.first_name.id_for_label }}">First Name: <span style="color:red"> *</span></label>
+        {{ form.first_name }}
+        {{ form.first_name.errors }}
+    </div>
+
+    <div class="form-group">
+        Would you like to make it public?
+        {% comment %} <label for="public">Public</label>
+        <input type="radio" id="public" name="first_name_public_access" value="Yes">
+        <label for="nonpublic">Non Public</label>
+        <input type="radio" id="nonpublic" name="first_name_public_access" value="No"> {% endcomment %}
+        {% comment %} <label for="{{ form.first_name_public_access.id_for_label }}">Public<span style="color:red">
+                *</span></label> {% endcomment %}
+        {% comment %} {{ form.first_name_public_access }} {% endcomment %}
+
+        {% for choice in form.first_name_public_access %}
+        {{ choice }}
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.last_name.id_for_label }}">Last Name (Optional): </label>
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
+    </div>
+
+    <!-- <div class="form-group">
+        Would you like to make it public?
+        {% for choice in form.last_name_public_access %}
+        {{ choice }}
+        {% endfor %}
+        {{ form.last_name_public_access.errors }}
+    </div> -->
+
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">User Name: <span style="color:red"> *</span></label>
+        {{ form.username }}
+        {{ form.username.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.phone_number.id_for_label }}">Phone Number: <span style="color:red"> *</span></label>
+        {{ form.phone_number }}
+        {{ form.phone_number.errors }}
+    </div>
+
+    <div class="form-group">
+        Would you like to make it public?
+        {% for choice in form.phone_number_public_access %}
+        {{ choice }}
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email: <span style="color:red"> *</span></label>
+        {{ form.email }}
+        {{ form.email.errors }}
+    </div>
+
+    <div class="form-group">
+        Would you like to make it public?
+        {% for choice in form.email_public_access %}
+        {{ choice }}
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.email2.id_for_label }}">Secondary Email (optional): </label>
+        {{ form.email2 }}
+        {{ form.email2.errors }}
+    </div>
+
+    <!-- <div class="form-group">
+        Would you like to make it public?
+        {% for choice in form.email2_public_access %}
+        {{ choice }}
+        {% endfor %}
+    </div> -->
+
+    <div class="form-group">
+        <label for="{{ form.city.id_for_label }}">City: <span style="color:red"> *</span></label>
+        {{ form.city }}
+        {{ form.city.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.dob.id_for_label }}">DOB: <span style="color:red"> *</span></label>
+        {{ form.dob}}
+        {{ form.dob.errors }}
+    </div>
+
+    <div class="form-group">
+        Would you like to make it public?
+        {% for choice in form.dob_public_access %}
+        {{ choice }}
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.gender.id_for_label }}">Gender: <span style="color:red"> *</span></label>
+        {{ form.gender }}
+        {{ form.gender.errors }}
+    </div>
+
+    <div class="form-group">
+        Would you like to make it public?
+        {% for choice in form.gender_public_access %}
+        {{ choice }}
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.areaOfInterest.id_for_label }}">Area of Interest (optional): </label>
+        {{ form.areaOfInterest }}
+        {{ form.areaOfInterest.errors }}
+    </div>
+
+
+
+    <br>
+    <center>
+        <button type='submit' class='btn btn-primary'>{% if btn_label %}
+            {{btn_label}} {% else %}Submit{% endif %}</button>
+    </center>
+</form>

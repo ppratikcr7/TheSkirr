@@ -237,6 +237,7 @@ def dashboard_view(request, username, *args, **kwargs):
         em2 = profile_obj.email2
 
     context = {
+        "request_username":request.user.username,
         "username": username,        
         "profile": profile_obj,
         "fans": profile_obj2.followers.count(),
@@ -342,12 +343,12 @@ def search_users(request, value, *args, **kwargs):
 def search_clacks(request, value, *args, **kwargs):
     un = request.user.username
     if value is not None:
-        lookups= Q(content__icontains=value)
-        searched_clacks= list(Tweet.objects.filter(lookups).distinct().values_list('content', flat=True))
+        # lookups= Q(content__icontains=value)
+        # searched_clacks= list(Tweet.objects.filter(lookups).distinct().values_list('content', flat=True))
         # TODO: change below context to show tweetlist with those tweets
         context={
             "username": un,
-            'searched_clacks': searched_clacks}
+            'value': value}
         return render(request, 'profiles/search_clacks.html', context)
     else:
         return render(request, 'profiles/search_clacks.html')
@@ -356,13 +357,13 @@ def search_trends(request, value, *args, **kwargs):
     un = request.user.username
     if value is not None:
         print("trends value : ", value)
-        lookups= Q(content__icontains=value)
-        searched_trending_clacks = list(Tweet.objects.filter(lookups).distinct().values_list('content', flat=True))
-        print(searched_trending_clacks)
+        # lookups= Q(content__icontains=value)
+        # searched_trending_clacks = list(Tweet.objects.filter(lookups).distinct().values_list('content', flat=True))
+        # print(searched_trending_clacks)
         # TODO: change below context to show tweetlist with those tweets
         context={
             "username": un,
-            'searched_trending_clacks': searched_trending_clacks}
+            'value': value}
         return render(request, 'profiles/search_trends.html', context)
     else:
         print("trends no value : ")

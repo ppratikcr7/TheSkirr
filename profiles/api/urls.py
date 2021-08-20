@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     get_total_clacks,
+    get_total_reclacks,
     get_total_likes,
     profile_detail_api_view,
     profile_details,
@@ -28,6 +29,8 @@ urlpatterns = [
     path('current_user/likes/', get_total_likes),
     # to get total clacks of current user:
     path('current_user/clacks/', get_total_clacks),
+    # to get total reclacks of current user:
+    path('current_user/reclacks/', get_total_reclacks),
     # view function call to fetch 3 users for who to follow
     path('who_to_follow_users/user1/', who_to_follow_user1),
     path('who_to_follow_users/user2/', who_to_follow_user2),

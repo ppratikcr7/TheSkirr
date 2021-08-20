@@ -5,13 +5,12 @@ import App from './App';
 import { ProfileBadgeComponent } from './profiles'
 import { Dashboard, Home, MyWall, FeedComponent, TweetsComponent, TweetDetailComponent } from './tweets'
 import * as serviceWorker from './serviceWorker';
-import Footer from './Common/footer';
 import WhoToFollow from './MainComponent/WhoToFollow/WhoToFollow';
 import ReportAdverse from './MainComponent/ReportAdverse/ReportAdverse';
 import Trends from './MainComponent/Trends/Trends';
 import SearchedUsers from './MainComponent/SearchedUsers/SearchedUsers';
 import SearchedClacks from './MainComponent/SearchedClacks/SearchedClacks';
-import SearchedTrendClacks from './MainComponent/SearchedTrendClacks/SearchedTrendClacks';
+import SearchedTrendAllClacks from './MainComponent/SearchedTrendAllClacks/SearchedTrendAllClacks';
 import ClacksView from './MainComponent/ClacksView/ClacksView';
 import EditProfile from './MainComponent/EditProfile/EditProfile';
 
@@ -76,10 +75,10 @@ if (SearchedClacksElement) {
 }
 
 // Searched Trend Clacks Page:
-const SearchedTrendClacksElement = document.getElementById("tweetme-profile-SearchedTrendClacks")
-if (SearchedTrendClacksElement) {
+const SearchedTrendAllClacksElement = document.getElementById("tweetme-profile-SearchedTrendClacks")
+if (SearchedTrendAllClacksElement) {
     ReactDOM.render(
-        e(SearchedTrendClacks, SearchedTrendClacksElement.dataset), SearchedTrendClacksElement);
+        e(SearchedTrendAllClacks, SearchedTrendAllClacksElement.dataset), SearchedTrendAllClacksElement);
 }
 
 // Clacks View Page:

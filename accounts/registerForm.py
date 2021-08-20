@@ -105,7 +105,7 @@ class SignUpForm(UserCreationForm):
     
     # dob = forms.DateField(widget=forms.TextInput(
     #     attrs={'class': 'datepicker', 'placeholder': 'DOB', 'id'Register: 'username'}))
-    dob = forms.DateField(error_messages={'required':''}, validators = [validate_dob, validate_future_dob], widget=DateInput(attrs={'class': 'datepicker', 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder': 'YYYY-MM-DD', 'id': 'username'}))
+    dob = forms.DateField(error_messages={'required':''}, validators = [validate_dob, validate_future_dob, validate_age], widget=DateInput(attrs={'class': 'datepicker', 'style': 'border-width: 1; border-color: #ced4da;', 'placeholder': 'YYYY-MM-DD', 'id': 'username'}))
     # dob = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     dob_public_access = forms.ChoiceField(error_messages={'required':''}, widget=forms.RadioSelect(

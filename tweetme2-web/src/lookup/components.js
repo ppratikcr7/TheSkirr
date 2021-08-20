@@ -17,9 +17,9 @@ function getCookie(name) {
 export function backendLookup(method, endpoint, callback, data) {
   let jsonData;
   if (data) {
-    console.log("data for edit clack: ", data)
+    console.log("data for reclack: ", data)
     jsonData = JSON.stringify(data)
-    console.log("json data for edit clack: ", jsonData)
+    console.log("json data relack: ", jsonData)
   }
   const xhr = new XMLHttpRequest()
   const url = `https://www.theskirr.com/api${endpoint}`

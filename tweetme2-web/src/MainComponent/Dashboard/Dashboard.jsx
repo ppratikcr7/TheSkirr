@@ -6,10 +6,15 @@ import 'antd/dist/antd.css';
 import { TweetCreate } from '../../tweets/create';
 import { backendLookup } from '../../lookup/index';
 import { TweetsList } from '../../tweets/list';
+import { ReclacksList } from '../../tweets/list';
+import { LikedClacksList } from '../../tweets/list';
 import './Dashboard.css';
 import NSAII_logo from '../../Assets/nsaii_logo.png';
 import formatDate from './date';
 import { apiTweetList } from '../../tweets/lookup';
+import { apiReclackList } from '../../tweets/lookup';
+import { apiLikedClacksList} from '../../tweets/lookup';
+
 import {
     UserWhoToFollowDisplay
 } from '../../profiles'
@@ -129,13 +134,14 @@ export default function Dashboard(props) {
         setValue(newValue);
     };
 
-    const {username} = props;
+    const {username, requsername} = props;
     let newUserName = username;
     let [currentUserName, setCurrentUserName] = useState();
     let [newProfile, setNewProfile] = useState();
     // let [newUserName, setUserName] = useState();
     let [currentUserTotalLikes, setCurrentUserTotalLikes] = useState();
     let [currentUserTotalClacks, setCurrentUserTotalClacks] = useState();
+    let [currentUserTotalReClacks, setCurrentUserTotalReClacks] = useState();
     let [whoToFollowUser1, setwhoToFollowUser1] = useState();
     let [whoToFollowUser2, setwhoToFollowUser2] = useState();
     let [whoToFollowUser3, setwhoToFollowUser3] = useState();
@@ -172,6 +178,7 @@ export default function Dashboard(props) {
     useEffect(() => {
         getCurrentUserTotalLikes();
         getCurrentUserTotalClacks();
+        getCurrentUserTotalReClacks();
     })
 
     const handleCurrentUsername = (currentUserName) => {
@@ -188,6 +195,10 @@ export default function Dashboard(props) {
 
     const handleCurrentUserTotalClacks = (currentUserTotalClacks) => {
         setCurrentUserTotalClacks(currentUserTotalClacks)
+    }
+
+    const handleCurrentUserTotalReClacks = (currentUserTotalReClacks) => {
+        setCurrentUserTotalReClacks(currentUserTotalReClacks)
     }
 
     // who to follow:
@@ -246,6 +257,15 @@ export default function Dashboard(props) {
         }
     }
 
+    function getCurrentUserTotalReClacks() {
+        try {
+            let endpoint = `/profiles/current_user/reclacks/`;
+            backendLookup("GET", endpoint, handleCurrentUserTotalReClacks)
+        } catch (error) {
+            console.log("error:", error);
+        }
+    }
+
     // function getMainProfile(username) {
     //     try {
     //         let endpoint = `/profiles/user/${username}/`;
@@ -273,18 +293,35 @@ export default function Dashboard(props) {
     }
 
     function handleTweetList(value) {
-        console.log("value:", value);
         if (value !== "like" && value !== "unlike") {
-            // console.log("enter1");
             apiTweetList(null, handleListLookup);
         } else {
             getCurrentUserTotalLikes();
             getCurrentUserTotalClacks();
-            // console.log("enter2");
-            // console.log("setNewTweets", newTweets);
+            getCurrentUserTotalReClacks();
         }
     }
 
+    function handleReclackList(value) {
+        if (value !== "like" && value !== "unlike") {
+            apiReclackList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
+        }
+    }
+
+    function handleLikedClacksList(value) {
+        if (value !== "like" && value !== "unlike") {
+            apiLikedClacksList(null, handleListLookup);
+        } else {
+            getCurrentUserTotalLikes();
+            getCurrentUserTotalClacks();
+            getCurrentUserTotalReClacks();
+        }
+    }
+    
     const handleClick = ({ key }) => {
         window.localStorage.setItem('search_type', key);
         if (key == 0) {
@@ -302,28 +339,31 @@ export default function Dashboard(props) {
 
     function myfunction2(thisObj2){
         $("#info2").text((thisObj2.val().length) + " / " + MAX_TWEET_LENGTH)
+        if (thisObj2.val().length > MAX_TWEET_LENGTH) {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = true;
+            }
+        }
+        else {
+            var element = document.getElementById("clack_btn2");
+            $("#error2").empty();
+            // it's a good idea to check whether the element exists
+            if (element != null && element != undefined) {
+                element.disabled = false;
+            }
+        }
     }
 
-    function myfunction2a(thisObj2a){
-        var charLength = thisObj2a.val().length;
-        if (charLength >= MAX_TWEET_LENGTH) {
-            $("#error2").text(('Use less than ' + MAX_TWEET_LENGTH + ' characters'));
-            return false;
-        }
-        var textareaLength = document.getElementById("smallclackText").length;
-        if (textareaLength < MAX_TWEET_LENGTH) {
-            $("#error2").text((''));
-            return false;
-        }
-    }
+    
 
     $("#smallclackText").keyup(function () {
         myfunction2($(this));
     });
 
-    $('#smallclackText').keypress(function () {
-        myfunction2a($(this));
-    });
+    
 
     const menu = (
         <Menu onClick={handleClick}>
@@ -363,14 +403,7 @@ export default function Dashboard(props) {
         }
     }
 
-
-    // $('#clackText').trigger(function () {
-    //     var maxLength = $(this).val().length;
-    //     if (maxLength < MAX_TWEET_LENGTH) {
-    //         $("#error").text((''));
-    //         return false;
-    //     }
-    // });
+    
 
     return (
             <>  
@@ -390,7 +423,7 @@ export default function Dashboard(props) {
                             <li className="text-center px-4 border-b-2 border-solid border-transparent border-teal">
                                 <a href="#" className="text-grey-darker no-underline hover:no-underline">
                                     <div className="text-sm font-bold tracking-tight mb-1">ReClacks</div>
-                                    <div className="text-lg tracking-tight font-bold text-teal">0</div>
+                                    <div className="text-lg tracking-tight font-bold text-teal">{currentUserTotalReClacks ? currentUserTotalReClacks : "0"}</div>
                                 </a>
                             </li>
                             <li className="text-center px-4 border-b-2 border-solid border-transparent hover:border-teal">
@@ -472,7 +505,7 @@ export default function Dashboard(props) {
                 <div style={{ position:"fixed", top: 475}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
-                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' className='col-12 mb-3' />}
+                        {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
                     </div>
                 </div>
 
@@ -540,6 +573,68 @@ export default function Dashboard(props) {
                                                     </span>
                                                     <span class="tracking-wide">About</span>
                                                 </div>
+                                                { (currentUserName == username) ?
+                                                <div class="text-gray-700">
+                                                    <div className="grid md:grid-cols-2 text-xs">
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">First Name</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.first_name}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Last Name</div>
+                                                            <div class="px-2 py-2">{newProfile ? newProfile.last_name : "-"}</div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Gender</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.gender}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Contact No.</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{newProfile && newProfile.phone_number}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Email</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">
+                                                                {/* <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a> */}
+                                                                {newProfile && newProfile.email}
+                                                            </div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Birthday</div>
+                                                            { (newProfile) ?
+                                                            <div class="px-2 py-2">{ newProfile && newProfile.dob}</div> :
+                                                            <div class="px-2 py-2">-</div> }
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Sec.Email</div>
+                                                            <div class="px-2 py-2">
+                                                                {/* <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a> */}
+                                                                {newProfile ? newProfile.email2 : "-"}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Fans</div>
+                                                            <div class="px-2 py-2">
+                                                                {newProfile && newProfile.follower_count}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-2">
+                                                            <div class="px-2 py-2 font-semibold">Companions</div>
+                                                            <div class="px-2 py-2">
+                                                                {newProfile && newProfile.following_count}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                :
                                                 <div class="text-gray-700">
                                                     <div className="grid md:grid-cols-2 text-xs">
                                                         <div class="grid grid-cols-2">
@@ -599,7 +694,7 @@ export default function Dashboard(props) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> }
                                             </div>
                                             {/* End of about section  */}
                                             { (newUserName && newUserName != currentUserName) ?
@@ -610,8 +705,8 @@ export default function Dashboard(props) {
                                                 </div>
                                                 :
                                                 <div>
-                                                    <button className="btn btn-primary  my-3 mr-3"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
-                                                    <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
+                                                    <button className="btn text-xs btn-primary my-1 mr-5"><a href="/profile/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
+                                                    <button className='btn text-xs btn-primary my-1 mr-5'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
                                                     <br />
                                                 </div>
                                             }
@@ -631,20 +726,24 @@ export default function Dashboard(props) {
                             <Tab label="Clacks" {...a11yProps(0)} />
                             <Tab label="Replies" {...a11yProps(1)} disabled/>
                             <Tab label="Reclacks" {...a11yProps(2)} />
-                            <Tab label="Likes" {...a11yProps(3)} disabled/>
+                            <Tab label="Likes" {...a11yProps(3)} />
                         </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
-                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} />
+                        { (<TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} req_user={newUserName}/>) ? 
+                        <TweetsList newTweets={newTweets} tweetHandle={handleTweetList} {...props} req_user={newUserName}/> : "No Clacks by you!!!" }
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                        No Replies
+                            No Replies
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                        No Reclacks
+                        { (<ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} req_user={newUserName}/>) ? 
+                        <ReclacksList newTweets={newTweets} tweetHandle={handleReclackList} {...props} req_user={newUserName}/> : "No Reclacks by you!!!" }
+                        {/* No Reclacks */}
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                        No Liked Clacks
+                        { (<LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} req_user={newUserName}/>) ? 
+                        <LikedClacksList newTweets={newTweets} tweetHandle={handleLikedClacksList} {...props} req_user={newUserName}/> : "No Liked Clacks by you!!!" }
                         </TabPanel>
                     </div>
                     {/* <TweetsList newTweets={newTweets} {...props} /> */}
