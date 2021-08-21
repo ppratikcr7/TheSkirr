@@ -638,6 +638,7 @@ export default function Dashboard(props) {
                                                 </div>
                                             </div>
                                             {/* End of about section  */}
+<<<<<<< Updated upstream
                                             { (newUserName && newUserName != currentUserName) ?
                                                 <div>
                                                     <div className="tweetme-2-profile-badge" data-username={`${newUserName}`} ><br/></div>
@@ -653,6 +654,11 @@ export default function Dashboard(props) {
                                             }
                                             
                                             {/* <hr class="mt-1 mb-1"></hr> */}
+=======
+                                            <button className="btn btn-primary  my-3 mr-3"><a href="/profiles/edit" style={{ "text-decoration" : "none"}}>Edit Profile</a></button>
+                                            <button className='btn btn-primary my-3 mr-3'><a href="/profiles/report_adverse_effect_form" style={{ "text-decoration" : "none"}}>Report Adverse Effect</a></button>
+                                            <hr class="mt-1 mb-1"></hr>
+>>>>>>> Stashed changes
                                             </div>
                                             {/* End of profile tab */}
                                         </div>
