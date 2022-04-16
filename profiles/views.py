@@ -12,7 +12,6 @@ import random
 from django.contrib import messages
 
 from django.db.models import Q
-from django.utils.crypto import get_random_string
 
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
@@ -89,8 +88,6 @@ def profile_update_view(request, *args, **kwargs):
         user.gender_public_access = gender_public_access
         print(user.first_name_public_access)
 
-
-
         if 'photo' in request.FILES:
             user.photo = request.FILES['photo']
             user.save()
@@ -156,7 +153,7 @@ def my_wall_view(request, username, *args, **kwargs):
         "pn_show" : pn, "em_show" : em, "em2_show" : em2
 
     }
-    print("gender",profile_obj.gender);
+    print("gender",profile_obj.gender)
     return render(request, "profiles/my_wall.html", context)
 
 # def user_dashboard_view(request, username, *args, **kwargs):

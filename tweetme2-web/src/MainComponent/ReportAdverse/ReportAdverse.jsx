@@ -305,7 +305,7 @@ export default function ReportAdverse(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 475}}>
+                <div style={{ position:"fixed", top: 475, left: 0}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
@@ -314,10 +314,6 @@ export default function ReportAdverse(props) {
             
                 {/* CENTRAL AREA FOR EACH PAGE: */}
                 <div className="w-full lg:w-6/7 bg-white mb-20">
-                    {/* <div className="flex justify-center mb-1">
-                        <span className="text-lg font-bold">Who To Follow:</span>
-                        <hr className="mt-2 mb-2"></hr>
-                    </div> */}
                     <div class="flex justify-center h-full bg-gray-100" style={{ width: 850}}>
                         <div class="container">
                             <div class="flex justify-center p-1 mb-2">

@@ -371,7 +371,7 @@ export default function SearchedClacks(props) {
                     </Col>
                     <hr className="mt-2 mb-2"></hr>
                 </div>
-                <div style={{ position:"fixed", top: 475}}>
+                <div style={{ position:"fixed", top: 475, left: 0}}>
                     <span className="mb-2 pl-2"><i className="text-2xl font-bold fa fa-lg text-grey-darker mr-1"></i><a href= {"/profiles/dashboard/" + newUserName} className="text-grey-darker no-underline">{newProfile ? "@" + newProfile.username : "@username"}</a></span>
                     <div className="p-1 text-lg font-bold">
                         {canTweet === true && <TweetCreate didTweet={handleNewTweet} clackTextId='smallclackText' btnid='clack_btn2' className='col-12 mb-3' />}
